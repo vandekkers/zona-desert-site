@@ -1,214 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sell Your Property Fast | Zona Desert Property Solutions</title>
-
-  <!-- Inter font + Tailwind CDN (keeps your existing look) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Get A Fair, As-Is Cash Offer. Close On Your Timeline. No Repairs Or Fees." />
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-    /* Your brand: capitalize each word sitewide (except email input) */
-    .no-capitalize { text-transform: none !important; }
-    *:not(input[type="email"]) { text-transform: capitalize; }
+    /* Site-wide Title-Case */
+    h1, h2, h3, h4, h5, h6, .titlecase, .btn-cap { text-transform: capitalize; }
 
-    /* Inputs: dark-ish boxes + rectangular corners */
-    input, select, textarea {
-      border-radius: 6px !important;
-      border: 1px solid #374151 !important;
-      background: #0f172a0d !important;
-      color: #111827 !important;
+    /* Inputs: rectangular, dark text boxes */
+    input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+      border-radius: 0.375rem; /* rounded-md (rectangular) */
+      border: 1px solid #374151; /* slate-700 */
+      background: #1118270f; /* subtle dark tint */
+      color: #111827; /* slate-900 */
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      outline: none;
     }
-    input::placeholder, textarea::placeholder { color: #9CA3AF; text-transform: none; }
-    input:focus, select:focus, textarea:focus {
-      outline: none !important;
+    input:focus, textarea:focus, select:focus {
+      border-color: #4F46E5; /* indigo-600 */
       box-shadow: 0 0 0 3px rgba(79,70,229,.25);
-      border-color: #4F46E5 !important;
+      background: #ffffff;
     }
 
-    /* Label spacing tweak so labels sit closer to their fields (per your request) */
-    .tight-label { display:block; margin-bottom: .25rem; font-weight:600; }
+    /* Label tightening: keep labels closer to their inputs */
+    label.block { margin-bottom: 0.35rem; }
+    .field { margin-bottom: 0.85rem; }
 
-    /* Hide helper messages until shown */
-    .hidden { display: none; }
+    /* Success / Error banners */
+    .alert { display: none; }
+    .alert.show { display: block; }
+
+    /* Keep email lowercase (requested) */
+    .force-lower { text-transform: none !important; }
   </style>
 </head>
+<body class="bg-slate-50 text-slate-900">
 
-<body class="bg-slate-50">
-  <!-- Header -->
+  <!-- Top Bar -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-full bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
+        <div class="h-9 w-9 rounded-full bg-indigo-600 grid place-items-center text-white font-bold">ZD</div>
         <div>
           <div class="font-semibold">Zona Desert Property Solutions</div>
-          <div class="text-sm text-slate-500 no-capitalize">Sell Your Home, As-Is. We Pay Closing Costs.</div>
+          <div class="text-sm text-slate-500">Sell Your Home, As-Is. We Pay Closing Costs.</div>
         </div>
       </div>
-      <a href="#form" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">
+      <a href="#offer-form" class="btn-cap inline-flex items-center px-4 py-2 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">
         Get An Offer.
       </a>
     </div>
   </header>
 
   <!-- Hero + Form -->
-  <main class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-10">
+  <main class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-8">
+    <!-- LEFT: Pitch -->
     <section>
-      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
         Fair Cash Offer. <span class="text-indigo-600">No Repairs.</span> Your Timeline.
       </h1>
-      <p class="mt-6 text-slate-700">
+      <p class="mt-4 text-slate-700 text-lg">
         We Buy Properties Nationwide As-Is. Skip Showings And Fees. Tell Us A Few Details And We’ll Send A No-Obligation Offer.
       </p>
-      <ul class="mt-6 space-y-3 text-slate-700">
+      <ul class="mt-6 space-y-2 text-slate-700">
         <li>• No Realtor Commissions Or Hidden Fees</li>
         <li>• Close In As Little As 7–14 Days</li>
         <li>• You Pick The Closing Date</li>
       </ul>
     </section>
 
-    <section id="form">
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-        <h2 class="text-2xl font-bold mb-1">Get Your Cash Offer</h2>
-        <p class="text-slate-500 mb-6 no-capitalize">Tell Us About The Property. We’ll Reach Out Within 24 Hours.</p>
+    <!-- RIGHT: Form -->
+    <section id="offer-form" class="bg-white rounded-xl shadow p-5 md:p-6">
+      <h2 class="text-2xl font-semibold">Get Your Cash Offer</h2>
+      <p class="text-slate-500 mt-1">Tell Us About The Property. We’ll Reach Out Within 24 Hours.</p>
 
-        <form id="leadForm" class="space-y-4">
-          <!-- Row 1 -->
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label class="tight-label">First Name</label>
-              <input id="firstName" name="firstName" class="w-full px-3 py-3" placeholder="First Name" required>
-            </div>
-            <div>
-              <label class="tight-label">Last Name</label>
-              <input id="lastName" name="lastName" class="w-full px-3 py-3" placeholder="Last Name" required>
-            </div>
-          </div>
+      <!-- Alerts -->
+      <div id="formSuccess" class="alert mt-4 rounded-md border border-green-200 bg-green-50 text-green-800 px-3 py-2">
+        Thanks — Submitted. We’ll Reach Out Shortly.
+      </div>
+      <div id="formError" class="alert mt-4 rounded-md border border-rose-200 bg-rose-50 text-rose-800 px-3 py-2">
+        Sorry — Something Went Wrong. Please Try Again.
+      </div>
 
-          <!-- Row 2 -->
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label class="tight-label">Phone</label>
-              <input id="phone" name="phone" type="tel" class="w-full px-3 py-3" placeholder="Phone" required>
-            </div>
-            <div>
-              <label class="tight-label">Email</label>
-              <input id="email" name="email" type="email" class="w-full px-3 py-3 no-capitalize" placeholder="email@domain.com" required>
-            </div>
+      <form id="leadForm" class="mt-5">
+        <!-- Row 1 -->
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="field">
+            <label for="firstName" class="block text-sm text-slate-700">First Name</label>
+            <input id="firstName" name="firstName" type="text" required />
           </div>
+          <div class="field">
+            <label for="lastName" class="block text-sm text-slate-700">Last Name</label>
+            <input id="lastName" name="lastName" type="text" required />
+          </div>
+        </div>
 
-          <!-- Address -->
-          <div>
-            <label class="tight-label">Street</label>
-            <input id="street" name="street" class="w-full px-3 py-3" placeholder="Street" required>
+        <!-- Row 2 -->
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="field">
+            <label for="phone" class="block text-sm text-slate-700">Phone</label>
+            <input id="phone" name="phone" type="tel" required />
           </div>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label class="tight-label">City</label>
-              <input id="city" name="city" class="w-full px-3 py-3" placeholder="City" required>
-            </div>
-            <div>
-              <label class="tight-label">Select State</label>
-              <select id="state" name="state" class="w-full px-3 py-3" required>
-                <option value="" selected disabled>Select State</option>
-                <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
-                <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
-                <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
-                <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-                <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
-                <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
-                <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
-                <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-                <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
-                <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
-              </select>
-            </div>
+          <div class="field">
+            <label for="email" class="block text-sm text-slate-700">Email</label>
+            <input id="email" name="email" type="email" class="force-lower" required />
           </div>
-          <div>
-            <label class="tight-label">Zip</label>
-            <input id="zip" name="zip" class="w-full px-3 py-3" placeholder="Zip" required>
-          </div>
+        </div>
 
-          <!-- Motivation -->
-          <div>
-            <div class="tight-label">Motivation (Select All That Apply)</div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-slate-800">
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Tired Landlord">Tired Landlord</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Financial Reasons">Financial Reasons</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Downsizing">Downsizing</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Relocating">Relocating</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Selling Vacant House">Selling Vacant House</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Retirement Elsewhere">Retirement Elsewhere</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Shopping Offers">Shopping Offers</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="motivation" value="Investment Liquidation">Investment Liquidation</label>
-            </div>
-          </div>
+        <!-- Address -->
+        <div class="field">
+          <label for="street" class="block text-sm text-slate-700">Street</label>
+          <input id="street" name="street" type="text" required />
+        </div>
 
-          <!-- Radios -->
-          <div>
-            <div class="tight-label">Anyone Living In The Property?</div>
-            <div class="flex items-center gap-6">
-              <label class="flex items-center gap-2"><input type="radio" name="anyoneLiving" value="Yes" required>Yes</label>
-              <label class="flex items-center gap-2"><input type="radio" name="anyoneLiving" value="No" required>No</label>
-            </div>
+        <div class="grid md:grid-cols-3 gap-3">
+          <div class="field">
+            <label for="city" class="block text-sm text-slate-700">City</label>
+            <input id="city" name="city" type="text" required />
           </div>
-          <div>
-            <div class="tight-label">Do You Own The Property?</div>
-            <div class="flex items-center gap-6">
-              <label class="flex items-center gap-2"><input type="radio" name="ownProperty" value="Yes" required>Yes</label>
-              <label class="flex items-center gap-2"><input type="radio" name="ownProperty" value="No" required>No</label>
-            </div>
-          </div>
-
-          <!-- Timing -->
-          <div>
-            <label class="tight-label">Best Time To Contact</label>
-            <input id="bestTime" name="bestTime" class="w-full px-3 py-3" placeholder="Best Time" required>
-          </div>
-          <div>
-            <label class="tight-label">How Soon Do You Want To Sell?</label>
-            <select id="sellTimeline" name="sellTimeline" class="w-full px-3 py-3" required>
-              <option value="" selected disabled>Select...</option>
-              <option value="ASAP">ASAP</option>
-              <option value="1-2 Months">1–2 Months</option>
-              <option value="3-5 Months">3–5 Months</option>
-              <option value="6+ Months">6+ Months</option>
+          <div class="field">
+            <label for="state" class="block text-sm text-slate-700">State</label>
+            <select id="state" name="state" required>
+              <option value="" disabled selected>Select State</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+              <option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option>
+              <option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option>
+              <option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option>
+              <option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+              <option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option>
+              <option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option>
+              <option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option>
+              <option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+              <option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option>
+              <option>WY</option>
             </select>
           </div>
-
-          <!-- Notes -->
-          <div>
-            <label class="tight-label">Notes (Optional)</label>
-            <textarea id="notes" name="notes" class="w-full px-3 py-3 min-h-[120px]" placeholder="Notes..."></textarea>
+          <div class="field">
+            <label for="zip" class="block text-sm text-slate-700">Zip</label>
+            <input id="zip" name="zip" type="text" required />
           </div>
+        </div>
 
-          <!-- CTA + Messages -->
-          <div class="pt-2">
-            <button id="submitBtn" type="submit" class="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">
-              Get My Offer.
-            </button>
-            <p id="formSuccess" class="hidden text-green-600 mt-3">Thanks — We Received Your Info And Will Reach Out Within 24 Hours.</p>
-            <p id="formError" class="hidden text-red-600 mt-3">Sorry, Something Went Wrong. Please Call (480) 589-4212.</p>
+        <!-- Motivation -->
+        <div class="mt-4">
+          <div class="text-sm text-slate-700 font-medium">Motivation (Select All That Apply)</div>
+          <div class="grid sm:grid-cols-2 gap-x-6 gap-y-2 mt-2">
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Tired Landlord" />Tired Landlord</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Financial Reasons" />Financial Reasons</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Downsizing" />Downsizing</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Relocating" />Relocating</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Selling Vacant House" />Selling Vacant House</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Retirement Elsewhere" />Retirement Elsewhere</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Shopping Offers" />Shopping Offers</label>
+            <label class="inline-flex items-center gap-2"><input type="checkbox" name="motivation" value="Investment Liquidation" />Investment Liquidation</label>
           </div>
-        </form>
-      </div>
+          <div id="motivationHelp" class="text-xs text-slate-500 mt-1">Please Select At Least One.</div>
+        </div>
+
+        <!-- Radios -->
+        <div class="mt-4">
+          <div class="text-sm text-slate-700 font-medium">Anyone Living In The Property?</div>
+          <div class="mt-1 space-x-4">
+            <label class="inline-flex items-center gap-2"><input type="radio" name="anyoneLiving" value="Yes" required />Yes</label>
+            <label class="inline-flex items-center gap-2"><input type="radio" name="anyoneLiving" value="No" />No</label>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <div class="text-sm text-slate-700 font-medium">Do You Own The Property?</div>
+          <div class="mt-1 space-x-4">
+            <label class="inline-flex items-center gap-2"><input type="radio" name="ownProperty" value="Yes" required />Yes</label>
+            <label class="inline-flex items-center gap-2"><input type="radio" name="ownProperty" value="No" />No</label>
+          </div>
+        </div>
+
+        <!-- Best Time / Timeline -->
+        <div class="field mt-4">
+          <label for="bestTime" class="block text-sm text-slate-700">Best Time To Contact</label>
+          <input id="bestTime" name="bestTime" type="text" placeholder="e.g., Weekdays After 2 PM" required />
+        </div>
+
+        <div class="field">
+          <label for="sellTimeline" class="block text-sm text-slate-700">How Soon Do You Want To Sell?</label>
+          <select id="sellTimeline" name="sellTimeline" required>
+            <option value="" disabled selected>Select...</option>
+            <option>ASAP</option>
+            <option>1–2 Months</option>
+            <option>3–5 Months</option>
+            <option>6+ Months</option>
+          </select>
+        </div>
+
+        <!-- Notes (Optional) -->
+        <div class="field">
+          <label for="notes" class="block text-sm text-slate-700">Notes (Optional)</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Notes..."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button id="submitBtn" type="submit"
+          class="btn-cap w-full mt-3 inline-flex items-center justify-center px-5 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+          Get My Offer.
+        </button>
+      </form>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-2">
+  <footer class="border-t border-slate-200 py-6">
+    <div class="max-w-6xl mx-auto px-4 text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-2">
       <div>© 2025 Zona Desert Property Solutions. All Rights Reserved.</div>
-      <div class="no-capitalize">Phoenix, AZ · (480) 589-4212 · vandekkers@zonadesert.com</div>
+      <div>Phoenix, AZ · (480) 589-4212 · <span class="force-lower">vandekkers@zonadesert.com</span></div>
     </div>
   </footer>
 
-  <!-- ===== FORM → GOOGLE SHEETS WIRING ===== -->
+  <!-- JS: Submit to Apps Script -->
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymLpp2zw6IQ_3DuQ0Ip9A_jo_0ZgCEdvDxLQ1sx8kWxXuG6Ga8W_ryyHA03n3urBqqeg/exec';
 
@@ -216,8 +228,16 @@
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(el => el.value);
     }
 
+    function requireAtLeastOneMotivation() {
+      const any = getChecked('motivation').length > 0;
+      document.getElementById('motivationHelp').classList.toggle('text-rose-600', !any);
+      return any;
+    }
+
     async function submitLead(e) {
       e.preventDefault();
+      if (!requireAtLeastOneMotivation()) return;
+
       const payload = {
         firstName   : document.getElementById('firstName').value.trim(),
         lastName    : document.getElementById('lastName').value.trim(),
@@ -232,7 +252,7 @@
         ownProperty : document.querySelector('input[name="ownProperty"]:checked')?.value || '',
         bestTime    : document.getElementById('bestTime').value.trim(),
         sellTimeline: document.getElementById('sellTimeline').value,
-        notes       : document.getElementById('notes')?.value.trim() || '',
+        notes       : document.getElementById('notes').value.trim(),
         pageUrl     : location.href,
         ua          : navigator.userAgent
       };
@@ -240,25 +260,27 @@
       const btn = document.getElementById('submitBtn');
       const ok  = document.getElementById('formSuccess');
       const err = document.getElementById('formError');
-      btn.disabled = true; ok.classList.add('hidden'); err.classList.add('hidden');
+      btn.disabled = true; ok.classList.remove('show'); err.classList.remove('show');
 
       try {
-        await fetch(https://script.google.com/macros/s/AKfycbyaqrzy-YcqNxoy5L5_78s6EC8zf15Wl9353nsnnLe2BNBjf_ROn7TZns1v_bDqjE2Eog/exec, {
+        await fetch(SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           mode: 'no-cors',
           body: JSON.stringify(payload)
         });
-        ok.classList.remove('hidden');
+        ok.classList.add('show');
         document.getElementById('leadForm').reset();
       } catch (_) {
-        err.classList.remove('hidden');
+        err.classList.add('show');
       } finally {
         btn.disabled = false;
       }
     }
 
     document.getElementById('leadForm').addEventListener('submit', submitLead);
+    // Validate motivation live
+    document.querySelectorAll('input[name="motivation"]').forEach(cb => cb.addEventListener('change', requireAtLeastOneMotivation));
   </script>
 </body>
 </html>
