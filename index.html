@@ -167,9 +167,16 @@
           </fieldset>
 
           <div>
-            <label class="label">Best Time To Contact</label>
-            <input name="bestTime" class="w-full border rounded-xl px-3 py-2 no-capitalize" placeholder="Best Time" />
-          </div>
+  <label class="label">Best Time To Contact</label>
+  <select name="bestTime" required class="w-full border rounded-xl px-3 py-2 bg-white">
+    <option value="">Select...</option>
+    <option>Morning (8–11am)</option>
+    <option>Afternoon (12–3pm)</option>
+    <option>Evening (4–7pm)</option>
+    <option>Anytime</option>
+    <option>Weekends</option>
+  </select>
+</div>
 
           <div>
             <label class="label">How Soon Do You Want To Sell?</label>
