@@ -139,18 +139,20 @@
           </div>
 
           <fieldset class="mt-2">
-            <legend class="label">Motivation (Select All That Apply)</legend>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-slate-700">
-              <label><input type="checkbox" name="motivations[]" value="Tired Landlord" class="mr-2">Tired Landlord</label>
-              <label><input type="checkbox" name="motivations[]" value="Financial Reasons" class="mr-2">Financial Reasons</label>
-              <label><input type="checkbox" name="motivations[]" value="Downsizing" class="mr-2">Downsizing</label>
-              <label><input type="checkbox" name="motivations[]" value="Relocating" class="mr-2">Relocating</label>
-              <label><input type="checkbox" name="motivations[]" value="Selling Vacant House" class="mr-2">Selling Vacant House</label>
-              <label><input type="checkbox" name="motivations[]" value="Retirement Elsewhere" class="mr-2">Retirement Elsewhere</label>
-              <label><input type="checkbox" name="motivations[]" value="Shopping Offers" class="mr-2">Shopping Offers</label>
-              <label><input type="checkbox" name="motivations[]" value="Investment Liquidation" class="mr-2">Investment Liquidation</label>
-            </div>
-          </fieldset>
+  <legend class="label">Motivation (Select All That Apply)</legend>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-slate-700">
+    <!-- Add required to the first checkbox to force at least one selection -->
+    <label><input type="checkbox" name="motivations[]" value="Tired Landlord" required class="mr-2">Tired Landlord</label>
+
+    <label><input type="checkbox" name="motivations[]" value="Financial Reasons" class="mr-2">Financial Reasons</label>
+    <label><input type="checkbox" name="motivations[]" value="Downsizing" class="mr-2">Downsizing</label>
+    <label><input type="checkbox" name="motivations[]" value="Relocating" class="mr-2">Relocating</label>
+    <label><input type="checkbox" name="motivations[]" value="Selling Vacant House" class="mr-2">Selling Vacant House</label>
+    <label><input type="checkbox" name="motivations[]" value="Retirement Elsewhere" class="mr-2">Retirement Elsewhere</label>
+    <label><input type="checkbox" name="motivations[]" value="Shopping Offers" class="mr-2">Shopping Offers</label>
+    <label><input type="checkbox" name="motivations[]" value="Investment Liquidation" class="mr-2">Investment Liquidation</label>
+  </div>
+</fieldset>
 
           <fieldset>
             <legend class="label">Anyone Living In The Property?</legend>
