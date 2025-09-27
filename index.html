@@ -20,10 +20,9 @@
   <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3">
-        <!-- Swap this for your small “Z.” mark if you prefer -->
-        <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">
-  ZD
-</div>
+        <!-- Purple ZD box -->
+        <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
+        <div>
           <h1 class="text-lg font-semibold leading-tight">Zona Desert Property Solutions</h1>
           <p class="text-sm text-slate-500 no-capitalize">Sell Your Home, As-Is. We Pay Closing Costs.</p>
         </div>
@@ -34,36 +33,35 @@
 
   <!-- Main -->
   <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- Two-column layout -->
     <div class="grid md:grid-cols-2 gap-10 items-start">
-      <!-- Left: Logo above the whole message block -->
+      <!-- Left: Logo + message -->
       <section>
-        <!-- *** LOGO ABOVE MESSAGE *** -->
-        <!-- Replace src with your purple/black wordmark (e.g., Zona Desert. / Property Solutions) -->
         <img src="/assets/zona-wordmark.png" 
-     alt="Zona Desert. Property Solutions" 
-     class="w-72 md:w-96 mt-12 mb-24 select-none">
+             alt="Zona Desert. Property Solutions" 
+             class="w-72 md:w-96 mt-10 mb-10 select-none">
+
         <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">
           Fair Cash Offer. <span class="text-indigo-600">No Repairs.</span> Your Timeline.
         </h2>
+
         <p class="mt-4 text-slate-700">
           We Buy Properties Nationwide As-Is. Skip Showings And Fees. Tell Us A Few Details And We’ll Send A No-Obligation Offer.
         </p>
+
         <ul class="mt-6 space-y-2 text-slate-700">
           <li>• No Realtor Commissions Or Hidden Fees</li>
           <li>• Close In As Little As 7–14 Days</li>
           <li>• You Pick The Closing Date</li>
         </ul>
-
-        <!-- Social proof / trust mini-row (optional; keep simple for now) -->
-      
       </section>
 
-      <!-- Right: Form -->
+      <!-- Right: Form card -->
       <section id="offer" class="bg-white rounded-2xl shadow p-6 border border-slate-200">
-        <div class="flex items-center gap-3">
-         <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">
-  ZD
-</div>
+        <div class="flex items-center gap-3 mb-2">
+          <!-- Purple ZD box -->
+          <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
+          <div>
             <h3 class="text-2xl font-bold">Get Your Cash Offer</h3>
             <p class="text-slate-500 mt-1 no-capitalize">Tell Us About The Property. We’ll Reach Out Within 24 Hours.</p>
           </div>
@@ -169,10 +167,6 @@
           </button>
 
           <p id="toast" class="hidden mt-3 text-sm"></p>
-
-          <p class="mt-4 text-xs text-slate-500 no-capitalize">
-            By submitting, you agree we may contact you about your property via phone, email, and text. No obligation. Privacy respected.
-          </p>
         </form>
       </section>
     </div>
@@ -188,7 +182,6 @@
 
   <!-- App Script -->
   <script>
-    // Paste your Google Apps Script Web App URL here
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjant-QyQDxDyQzRcAaEfPhxIlTzewfa3sRRu26LrfPt0ehm9IiMnL24IX4y8KO56-Yg/exec';
 
     const form = document.getElementById('leadForm');
@@ -205,7 +198,6 @@
       submitBtn.disabled = true;
 
       try {
-        // Gather form data as URL-encoded params (simple + reliable)
         const fd = new FormData(form);
         const params = new URLSearchParams();
         for (const [k, v] of fd.entries()) params.append(k, v);
