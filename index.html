@@ -158,19 +158,7 @@
   </div>
 </fieldset>
 
-<script>
-  // Require at least one motivation checkbox
-  const motivationBoxes = document.querySelectorAll('input[name="motivations[]"]');
-  const form = document.querySelector("form");
 
-  form.addEventListener("submit", function (e) {
-    const checked = Array.from(motivationBoxes).some(cb => cb.checked);
-    if (!checked) {
-      e.preventDefault();
-      alert("⚠️ Please select at least one motivation before submitting.");
-    }
-  });
-</script>
           <fieldset>
             <legend class="label">Anyone Living In The Property?</legend>
             <label class="mr-6"><input type="radio" name="occupancy" value="Yes" required class="mr-2">Yes</label>
@@ -244,6 +232,18 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // ✅ Motivation validation here
+  const motivationBoxes = document.querySelectorAll('input[name="motivations[]"]');
+  const checked = Array.from(motivationBoxes).some(cb => cb.checked);
+  if (!checked) {
+    showToast('⚠️ Please select at least one motivation before submitting.', false);
+    return;
+  }
+
+  submitBtn.disabled = true;
       submitBtn.disabled = true;
 
       try {
