@@ -219,66 +219,66 @@
 
   <!-- App Script -->
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjant-QyQDxDyQzRcAaEfPhxIlTzewfa3sRRu26LrfPt0ehm9IiMnL24IX4y8KO56-Yg/exec';
+  // Your Google Apps Script Web App URL
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjant-QyQDxDyQzRcAaEfPhxIlTzewfa3sRRu26LrfPt0ehm9IiMnL24IX4y8KO56-Yg/exec';
 
-    const form = document.getElementById('leadForm');
-    const toast = document.getElementById('toast');
-    const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('leadForm');
+  const toast = document.getElementById('toast');
+  const submitBtn = document.getElementById('submitBtn');
 
-    function showToast(msg, ok=true) {
-      toast.textContent = msg;
-      toast.className = ok ? 'mt-3 text-green-700' : 'mt-3 text-red-600';
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // ✅ Motivation validation here
-  const motivationBoxes = document.querySelectorAll('input[name="motivations[]"]');
-  const checked = Array.from(motivationBoxes).some(cb => cb.checked);
-  if (!checked) {
-    showToast('⚠️ Please select at least one motivation before submitting.', false);
-    return;
+  function showToast(msg, ok = true) {
+    toast.textContent = msg;
+    toast.className = ok ? 'mt-3 text-green-700' : 'mt-3 text-red-600';
   }
 
-  submitBtn.disabled = true;
-      submitBtn.disabled = true;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();  // stop native submit
 
+    // --- Require at least one motivation ---
+    const motivationBoxes = document.querySelectorAll('input[name="motivations[]"]');
+    const anyChecked = Array.from(motivationBoxes).some(cb => cb.checked);
+    if (!anyChecked) {
+      showToast('⚠️ Please select at least one motivation before submitting.', false);
+      return;
+    }
+
+    submitBtn.disabled = true;
+
+    try {
+      // Build x-www-form-urlencoded payload (Apps Script friendly)
+      const fd = new FormData(form);
+      const params = new URLSearchParams();
+      for (const [k, v] of fd.entries()) params.append(k, v);
+
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: params.toString(),
+        mode: 'cors'
+      });
+
+      let ok = res.ok;
+      let msg = 'Submitted.';
       try {
-        const fd = new FormData(form);
-        const params = new URLSearchParams();
-        for (const [k, v] of fd.entries()) params.append(k, v);
+        const data = await res.json();
+        ok = ok && (data.status === 'ok' || data.result === 'success');
+        if (!ok && data.message) msg = data.message;
+      } catch (_) { /* non-JSON response is fine */ }
 
-        const res = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: params.toString(),
-          mode: 'cors'
-        });
-
-        let ok = res.ok;
-        let msg = 'Submitted.';
-        try {
-          const data = await res.json();
-          ok = ok && data.status === 'ok';
-          if (!ok && data.message) msg = data.message;
-        } catch (_) {}
-
-        if (ok) {
-          showToast('Thanks — we received your info. We’ll reach out within 24 hours.', true);
-          form.reset();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          showToast('Sorry — there was an issue submitting the form.', false);
-        }
-      } catch (err) {
-        showToast('Network error submitting the form.', false);
-      } finally {
-        submitBtn.disabled = false;
+      if (ok) {
+        showToast('Thanks — we received your info. We’ll reach out within 24 hours.', true);
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showToast('Sorry — there was an issue submitting the form. ' + (msg || ''), false);
       }
-    });
-  </script>
+    } catch (err) {
+      console.error(err);
+      showToast('Network error submitting the form.', false);
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
