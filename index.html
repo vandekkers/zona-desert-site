@@ -147,16 +147,30 @@
           <fieldset class="mt-2">
   <legend class="label">Motivation (Select All That Apply)</legend>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-slate-700">
-    <label><input type="checkbox" name="motivations[]" value="Tired Landlord" required class="mr-2">Tired Landlord</label>
-    <label><input type="checkbox" name="motivations[]" value="Financial Reasons" required class="mr-2">Financial Reasons</label>
-    <label><input type="checkbox" name="motivations[]" value="Downsizing" required class="mr-2">Downsizing</label>
-    <label><input type="checkbox" name="motivations[]" value="Relocating" required class="mr-2">Relocating</label>
-    <label><input type="checkbox" name="motivations[]" value="Selling Vacant House" required class="mr-2">Selling Vacant House</label>
-    <label><input type="checkbox" name="motivations[]" value="Retirement Elsewhere" required class="mr-2">Retirement Elsewhere</label>
-    <label><input type="checkbox" name="motivations[]" value="Shopping Offers" required class="mr-2">Shopping Offers</label>
-    <label><input type="checkbox" name="motivations[]" value="Investment Liquidation" required class="mr-2">Investment Liquidation</label>
+    <label><input type="checkbox" name="motivations[]" value="Tired Landlord" class="mr-2">Tired Landlord</label>
+    <label><input type="checkbox" name="motivations[]" value="Financial Reasons" class="mr-2">Financial Reasons</label>
+    <label><input type="checkbox" name="motivations[]" value="Downsizing" class="mr-2">Downsizing</label>
+    <label><input type="checkbox" name="motivations[]" value="Relocating" class="mr-2">Relocating</label>
+    <label><input type="checkbox" name="motivations[]" value="Selling Vacant House" class="mr-2">Selling Vacant House</label>
+    <label><input type="checkbox" name="motivations[]" value="Retirement Elsewhere" class="mr-2">Retirement Elsewhere</label>
+    <label><input type="checkbox" name="motivations[]" value="Shopping Offers" class="mr-2">Shopping Offers</label>
+    <label><input type="checkbox" name="motivations[]" value="Investment Liquidation" class="mr-2">Investment Liquidation</label>
   </div>
 </fieldset>
+
+<script>
+  // Require at least one motivation checkbox
+  const motivationBoxes = document.querySelectorAll('input[name="motivations[]"]');
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", function (e) {
+    const checked = Array.from(motivationBoxes).some(cb => cb.checked);
+    if (!checked) {
+      e.preventDefault();
+      alert("⚠️ Please select at least one motivation before submitting.");
+    }
+  });
+</script>
           <fieldset>
             <legend class="label">Anyone Living In The Property?</legend>
             <label class="mr-6"><input type="radio" name="occupancy" value="Yes" required class="mr-2">Yes</label>
