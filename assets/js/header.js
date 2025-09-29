@@ -32,7 +32,14 @@
   white-space:nowrap;   /* 🚀 keeps "Cash Offer" on one line */
 }
       .zd-menu a:hover { color:#4f46e5; }
-      .zd-menu ul { display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; padding-top:.5rem; padding-right:.25rem; }
+      .zd-menu ul { 
+  display:flex; 
+  flex-direction:column; 
+  align-items:flex-end; 
+  gap:.5rem; 
+  padding-top:.5rem; 
+  padding-right:2rem;   /* 🚀 added space between menu items and the X */
+}
       @media (min-width:768px) {
         .zd-menu a { font-size:1.25rem; } /* md:text-xl */
       }
