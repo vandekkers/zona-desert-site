@@ -35,7 +35,7 @@
     header.className = "bg-white border-b border-slate-200 sticky top-0 z-50";
 
     header.innerHTML = `
-     <div class="w-full px-4 py-3 flex items-center justify-between">
+     <div class="w-full px-4 pr-10 py-3 flex items-center justify-between">
         <!-- Left: Logo -->
         <a href="/" class="flex items-center select-none">
           <img src="/assets/z-mark.png" alt="Zona Desert Logo"
