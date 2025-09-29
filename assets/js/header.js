@@ -71,12 +71,12 @@
           <!-- Words-only dropdown aligned to button -->
           <nav id="zd-menu" class="zd-menu">
             <ul class="flex flex-col items-end gap-2 p-2">
-  <li><a href="index.html">Home</a></li>
-  <li><a href="about.html">About</a></li>
-  <li><a href="services.html">Services</a></li>
-  <li><a href="resources.html">Resources</a></li>
-  <li><a href="contact.html">Contact</a></li>
-  <li><a href="cash-offer.html">Cash Offer</a></li>
+  <li><a href="/index.html">Home</a></li>
+  <li><a href="/cash-offer.html">Cash Offer</a></li>
+  <li><a href="/buyer-list.html">Buyer List</a></li>
+  <li><a href="/submit-deal.html">Submit a Deal</a></li>
+  <li><a href="/about.html">About</a></li>
+  <li><a href="/contact.html">Contact</a></li>
 </ul>
           </nav>
         </div>
