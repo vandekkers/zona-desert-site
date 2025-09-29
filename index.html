@@ -55,28 +55,31 @@
 
     /* Floating actions */
     .actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: -3rem;
-      position: relative;
-      z-index: 5;
-    }
+  margin-top: 60px; /* Push buttons further down */
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* space between buttons */
+}
 
-    .actions .action {
-      background: white;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-weight: bold;
-      text-decoration: none;
-      color: black;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-    }
+.action {
+  display: inline-block;
+  background: white;
+  color: black;
+  padding: 1.5rem 2.5rem;  /* Bigger button size */
+  border-radius: 12px;     /* More boxy */
+  font-size: 1.25rem;      /* Larger text */
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    .actions .action:hover {
-      transform: translateY(-3px);
-    }
+.action:hover {
+  background: #4f46e5; /* your Zona purple */
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
 
     /* Trusted section */
     .trusted {
