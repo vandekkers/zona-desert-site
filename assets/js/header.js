@@ -12,7 +12,7 @@
 
     /* inner wrapper */
     .zd-wrap{
-      max-width:1280px;   /* shrink overall header width */
+      max-width:1600px;   /* shrink overall header width */
       margin:0 auto;
       height:64px;
       display:flex; align-items:center; justify-content:space-between;
