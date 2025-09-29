@@ -3,19 +3,29 @@
   const css = `
     :root{ --zd-purple:#5b5ce2; --zd-text:#111; }
 
-    .zd-header{
-      position:sticky; top:0; z-index:1000; background:#fff;
-      height:64px; border-bottom:1px solid rgba(0,0,0,.06);
-    }
-    .zd-wrap{
-  max-width: 100%;        /* full-bleed: no centered gutters */
-  margin: 0;              /* remove auto-centering */
+    /* make the header bar full-bleed and kill any right padding */
+.zd-header{
+  position: sticky; top: 0; z-index: 50;
+  background: #fff;
+  padding-right: 0 !important;   /* ← this is what’s keeping the burger off the edge */
+  padding-left: 0 !important;
+}
+
+/* full-bleed inner wrapper with tiny edge paddings you can tune */
+.zd-wrap{
+  max-width: 100%;
+  margin: 0;
   height: 64px;
   display:flex; align-items:center; justify-content:space-between;
-  padding-left: 8px;      /* 👈 tweak this smaller/larger to move the logo */
-  padding-right: 8px;     /* 👉 tweak this to move the menu button */
+  padding-left: 8px;              /* tweak to move logo */
+  padding-right: 8px;             /* tweak to move burger */
 }
-    }
+
+/* push the icon right up to the edge */
+.zd-right{ margin-right: 0; }
+
+/* keep the dropdown aligned to the icon */
+#zd-menu{ right: 8px; }           /* match .zd-wrap padding-right */
 
     /* brand wordmark */
     .zd-brand{ display:flex; align-items:center; text-decoration:none; }
