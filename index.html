@@ -5,28 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zona Desert – Home</title>
 
-  <!-- Tailwind (CDN) — keep if you’re using it elsewhere -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Base page styles (match your site look) -->
   <style>
-    body { background: #f8fafc; }           /* bg-slate-50 */
-    main { min-height: 60vh; }              /* give page some height so footer isn’t glued */
+    /* Fullscreen video background behind everything */
+    html, body { height: 100%; margin: 0; }
+    .video-bg {
+      position: fixed;      /* stays put, fills the screen */
+      inset: 0;             /* top:0 right:0 bottom:0 left:0 */
+      z-index: -1;          /* behind page content */
+      overflow: hidden;
+      pointer-events: none; /* clicks go through */
+      background: #000;     /* fallback while loading */
+    }
+    .video-bg iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      border: 0;
+    }
+
+    /* Centered logo overlay */
+    .hero-overlay {
+      min-height: 100vh;                /* full screen section */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-  <!-- The header is injected by assets/js/header.js -->
-
-  <main class="max-w-6xl mx-auto px-6 py-12">
-    <!-- Blank homepage content area.
-         Add your hero/sections here later.
-         Keeping this empty on purpose per your request. -->
-  </main>
-
-  <!-- The footer is injected by assets/js/footer.js -->
-
-  <!-- Inject header & footer (leave at very end of body) -->
+  <!-- Header (injected by your existing script) -->
   <script src="/assets/js/header.js"></script>
+
+  <!-- YouTube background (trimmed: start=10s, end=196s) -->
+  <div class="video-bg">
+    <iframe
+      src="https://www.youtube.com/embed/ZqJxv5PiPJo?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playlist=ZqJxv5PiPJo&start=10&end=196"
+      title="Skyview background"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <!-- Centered logo over the video -->
+  <section class="hero-overlay">
+    <img
+      src="/assets/z-mark.png"
+      alt="Zona Desert Logo"
+      class="h-40 w-auto md:h-56 select-none"
+    />
+  </section>
+
+  <!-- Footer (injected by your existing script) -->
   <script src="/assets/js/footer.js"></script>
 </body>
 </html>
