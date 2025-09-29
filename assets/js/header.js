@@ -49,13 +49,16 @@
 
     /* dropdown container (hidden by default) */
     .zd-menu{
-      display:none;
-      position:absolute; top:100%; right:0;
-      padding:20px;
-      gap:12px;
-      z-index:100;
-      flex-direction:column;
-    }
+  display:none;
+  position:absolute; 
+  top:100%; 
+  right:6px;   /* ✅ shifts the menu to align with the X */
+  padding:10px 0;  /* tighter padding */
+  gap:10px;
+  z-index:100;
+  flex-direction:column;
+  align-items:flex-end; /* ✅ ensures items align with button edge */
+}
     /* 🔧 THIS line makes the menu show when open */
     .zd-open .zd-menu{ display:flex; }
 
