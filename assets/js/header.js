@@ -52,17 +52,36 @@
     .zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
 
     /* dropdown (text only, no background) */
-    .zd-menu{
-      position:absolute; top:64px; right:6px; display:none;
-      padding:0; margin:0; list-style:none; text-align:right;
-    }
-    .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.6rem; }
-    .zd-menu a{
-      color:#111; text-decoration:none; font-weight:800;
-      letter-spacing:-.01em; line-height:1.2; font-size:1.0625rem;
-      white-space:nowrap; /* keep on one line */
-    }
-    .zd-menu a:hover{ color:var(--zd-purple); }
+    /* Dropdown menu container */
+.zd-menu {
+  display: none;
+  flex-direction: column;
+  gap: 12px;                /* space between menu items */
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding: 20px;
+  z-index: 100;
+}
+
+/* Each menu option styled as a button */
+.zd-menu a {
+  display: block;
+  background: #fff;         /* white background */
+  color: #111;              /* black text */
+  padding: 10px 16px;
+  border-radius: 6px;       /* rounded corners, like a button */
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect: zona purple background with white text */
+.zd-menu a:hover {
+  background: var(--zd-purple);
+  color: #fff;
+}
 
     .sr-only{
       position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
