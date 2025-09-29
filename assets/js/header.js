@@ -8,10 +8,13 @@
       height:64px; border-bottom:1px solid rgba(0,0,0,.06);
     }
     .zd-wrap{
-      max-width:1400px; margin:0 auto; height:64px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding-left: 24px;   /* logo side */
-padding-right: 12px;  /* menu button side */
+  max-width: 100%;        /* full-bleed: no centered gutters */
+  margin: 0;              /* remove auto-centering */
+  height: 64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding-left: 8px;      /* 👈 tweak this smaller/larger to move the logo */
+  padding-right: 8px;     /* 👉 tweak this to move the menu button */
+}
     }
 
     /* brand wordmark */
