@@ -10,7 +10,7 @@
     .zd-wrap{
       max-width:1400px; margin:0 auto; height:64px;
       display:flex; align-items:center; justify-content:space-between;
-      padding:0 32px; /* more breathing room */
+      padding:0 12px; /* more breathing room */
     }
 
     /* brand wordmark */
