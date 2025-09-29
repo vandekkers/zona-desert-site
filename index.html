@@ -9,23 +9,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Fullscreen video background behind everything */
-    html, body { height: 100%; margin: 0; }
-    .video-bg {
-      position: fixed;      /* stays put, fills the screen */
-      inset: 0;             /* top:0 right:0 bottom:0 left:0 */
-      z-index: -1;          /* behind page content */
-      overflow: hidden;
-      pointer-events: none; /* clicks go through */
-      background: #000;     /* fallback while loading */
-    }
-    .video-bg iframe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0; left: 0;
-      border: 0;
-    }
+   .video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78vh;  /* 16:9 ratio scaling */
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* prevents clicks on video */
+}
 
     /* Centered logo overlay */
     .hero-overlay {
