@@ -1,21 +1,45 @@
 document.write(`
-  <header style="display:flex; justify-content:space-between; align-items:center; padding: 15px 40px; background:#ffffff; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:1000;">
-    <!-- Left: Logo -->
-    <a href="index.html" style="display:flex; align-items:center; text-decoration:none;">
-      <img src="/assets/z-mark.png" alt="Zona Desert Logo" style="height:40px; margin-right:10px;">
-      <span style="font-size:1.25rem; font-weight:bold; color:#000000;">Zona Desert</span>
-    </a>
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <div class="w-full px-4 py-3 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center">
+        <img src="/assets/z-mark.png" alt="Zona Desert Logo" class="h-9 w-auto object-contain">
+      </a>
 
-    <!-- Right: Navigation Menu -->
-    <nav>
-      <ul style="list-style:none; display:flex; gap:20px; margin:0; padding:0;">
-        <li><a href="index.html" style="text-decoration:none; color:#000000;">Home</a></li>
-        <li><a href="about.html" style="text-decoration:none; color:#000000;">About</a></li>
-        <li><a href="services.html" style="text-decoration:none; color:#000000;">Services</a></li>
-        <li><a href="resources.html" style="text-decoration:none; color:#000000;">Resources</a></li>
-        <li><a href="contact.html" style="text-decoration:none; color:#000000;">Contact</a></li>
-        <li><a href="get-offer.html" style="text-decoration:none; color:#4f46e5; font-weight:bold;">Get an Offer</a></li>
-      </ul>
+      <!-- Hamburger Menu -->
+      <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 focus:outline-none">
+        <span class="w-6 h-0.5 bg-gray-800"></span>
+        <span class="w-6 h-0.5 bg-gray-800"></span>
+        <span class="w-6 h-0.5 bg-gray-800"></span>
+      </button>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6 font-medium text-gray-700">
+        <a href="index.html" class="hover:text-indigo-600">Home</a>
+        <a href="about.html" class="hover:text-indigo-600">About</a>
+        <a href="services.html" class="hover:text-indigo-600">Services</a>
+        <a href="resources.html" class="hover:text-indigo-600">Resources</a>
+        <a href="contact.html" class="hover:text-indigo-600">Contact</a>
+        <a href="offer.html" class="hover:text-indigo-600">Get an Offer</a>
+      </nav>
+    </div>
+
+    <!-- Mobile Nav (hidden by default) -->
+    <nav id="mobile-menu" class="hidden flex-col space-y-4 px-4 pb-4 md:hidden font-medium text-gray-700">
+      <a href="index.html" class="hover:text-indigo-600">Home</a>
+      <a href="about.html" class="hover:text-indigo-600">About</a>
+      <a href="services.html" class="hover:text-indigo-600">Services</a>
+      <a href="resources.html" class="hover:text-indigo-600">Resources</a>
+      <a href="contact.html" class="hover:text-indigo-600">Contact</a>
+      <a href="offer.html" class="hover:text-indigo-600">Get an Offer</a>
     </nav>
   </header>
+
+  <script>
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    });
+  </script>
 `);
