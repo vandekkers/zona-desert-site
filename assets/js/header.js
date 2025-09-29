@@ -1,145 +1,149 @@
-(() => {
-  const css = `
-    :root { --zd-purple:#5b5ce2; --zd-text:#111; }
+// header.js
 
-    /* ===== Header bar ===== */
-    .zd-header{
-      position: sticky; top: 0; z-index: 100;
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.createElement("header");
+  header.className = "zd-header";
+
+  header.innerHTML = `
+    <div class="zd-wrap">
+      <!-- Logo -->
+      <a href="/" class="zd-logo">
+        <span class="zd-logo-text"><span class="zd-purple">Zona</span>Desert.</span>
+      </a>
+
+      <!-- Burger button -->
+      <button class="zd-btn" aria-label="Toggle menu">
+        <span></span>
+      </button>
+
+      <!-- Dropdown menu -->
+      <nav class="zd-menu">
+        <a href="/" class="zd-link">Home</a>
+        <a href="/cash-offer.html" class="zd-link">Sell Property</a>
+        <a href="/buyers.html" class="zd-link">Join Buyer List</a>
+        <a href="/submit-deal.html" class="zd-link">Submit Your Deal</a>
+      </nav>
+    </div>
+  `;
+
+  document.body.prepend(header);
+
+  // Toggle dropdown
+  const burger = header.querySelector(".zd-btn");
+  const menu = header.querySelector(".zd-menu");
+  burger.addEventListener("click", () => {
+    burger.classList.toggle("is-open");
+    menu.classList.toggle("is-open");
+  });
+
+  // Inject styles
+  const style = document.createElement("style");
+  style.textContent = `
+    /* header container */
+    .zd-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       background: #fff;
-      padding-right: 0 !important; /* let content hug edges */
-      padding-left:  0 !important;
     }
 
     /* inner wrapper */
-    .zd-wrap{
-      max-width: 1600px;
+    .zd-wrap {
+      max-width: 1200px;
       margin: 0 auto;
       height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 8px; /* overall left/right breathing room */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
     }
 
-    /* brand */
-    .zd-brand{ display:flex; align-items:center; text-decoration:none; }
-    .zd-word { height: 28px !important; width: auto !important; display:block; }
-
-    /* right side cluster (relative so we can place menu + button) */
-    .zd-right{ position: relative; }
-
-    /* ===== Burger / X button ===== */
-    .zd-btn{
-      -webkit-appearance:none; appearance:none;
-      background: transparent; border: 0; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
-      position: absolute; top: 18px; right: 20px; /* <-- keep this in sync with .zd-menu */
-      z-index: 60;
+    /* logo */
+    .zd-logo-text {
+      font-size: 1.4rem;
+      font-weight: 700;
+      font-family: inherit;
+      color: #111;
+      text-decoration: none;
+    }
+    .zd-purple {
+      color: #4f46e5;
     }
 
-    /* burger graphic */
-    .zd-burger{ position: relative; width: 28px; height: 22px; }
-    .zd-burger span{
-      position: absolute; left: 0;
-      width: 28px; height: 2px;
-      background: var(--zd-text);
+    /* burger button */
+    .zd-btn {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      border: 0;
+      height: 64px;
+      width: 52px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .zd-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #111;
       border-radius: 2px;
-      transition: transform .25s ease, opacity .2s ease, background .2s ease;
+      position: relative;
     }
-    .zd-burger span:nth-child(1){ top: 0;  }
-    .zd-burger span:nth-child(2){ top: 10px; }
-    .zd-burger span:nth-child(3){ top: 20px; }
-
-    /* morph to X when open */
-    .zd-open .zd-burger span:nth-child(1){ transform: translateY(10px) rotate(45deg); }
-    .zd-open .zd-burger span:nth-child(2){ opacity: 0; }
-    .zd-open .zd-burger span:nth-child(3){ transform: translateY(-10px) rotate(-45deg); }
-
-    /* ===== Dropdown menu ===== */
-    .zd-menu{
+    .zd-btn span::before,
+    .zd-btn span::after {
+      content: "";
       position: absolute;
-      top: 64px;           /* below header */
-      right: 20px;         /* align with button */
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: inherit;
+      border-radius: 2px;
+      transition: transform 0.22s ease, opacity 0.22s ease, top 0.22s ease;
+    }
+    .zd-btn span::before { top: -7px; }
+    .zd-btn span::after { top: 7px; }
+
+    /* open state -> X */
+    .zd-btn.is-open span { background: transparent; }
+    .zd-btn.is-open span::before {
+      top: 0; transform: rotate(45deg);
+    }
+    .zd-btn.is-open span::after {
+      top: 0; transform: rotate(-45deg);
+    }
+
+    /* dropdown menu */
+    .zd-menu {
+      position: absolute;
+      top: 64px;
+      right: 16px;
       display: none;
       flex-direction: column;
       gap: 10px;
     }
-    .zd-open .zd-menu{ display: flex; }
+    .zd-menu.is-open {
+      display: flex;
+    }
 
-    /* pill links */
-    .zd-menu a{
-      display: block;
+    /* menu links styled as minimal buttons */
+    .zd-link {
       background: #fff;
-      color: var(--zd-text);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      color: #111;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
       text-decoration: none;
-      white-space: nowrap;               /* no line breaks */
-      box-shadow: 0 6px 18px rgba(0,0,0,.10);
-      transition: background .2s ease, color .2s ease, transform .05s ease;
+      padding: 8px 14px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: background 0.2s ease, color 0.2s ease;
     }
-    .zd-menu a:hover{ background: var(--zd-purple); color: #fff; }
-    .zd-menu a:active{ transform: translateY(1px); }
-
-    /* a11y helper */
-    .sr-only{
-      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-      clip:rect(0,0,1px,1px);white-space:nowrap;border:0;
-    }
-
-    @media (max-width:768px){
-      .zd-wrap{ padding: 0 6px; }
-      .zd-word{ height: 24px !important; }
+    .zd-link:hover {
+      background: #4f46e5;
+      color: #fff;
     }
   `;
-
-  const style = document.createElement('style');
-  style.textContent = css;
   document.head.appendChild(style);
-
-  // ===== Build header =====
-  const header = document.createElement('header');
-  header.className = 'zd-header';
-  header.innerHTML = `
-    <div class="zd-wrap">
-      <a href="index.html" class="zd-brand" aria-label="Zona Desert">
-        <img src="assets/zona_desert_wordmark_only.png" alt="Zona Desert" class="zd-word">
-      </a>
-
-      <div class="zd-right">
-        <button id="zd-menu-btn" class="zd-btn" aria-expanded="false" aria-controls="zd-menu" title="Menu">
-          <span class="sr-only">Menu</span>
-          <div class="zd-burger" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-        </button>
-
-        <nav id="zd-menu" class="zd-menu" aria-label="Primary">
-          <a href="index.html">Home</a>
-          <a href="cash-offer.html">Sell Property</a>
-          <a href="buyers.html">Join Buyer List</a>
-          <a href="submit-deal.html">Submit Your Deal</a>
-        </nav>
-      </div>
-    </div>
-  `;
-  document.body.insertBefore(header, document.body.firstChild);
-
-  // ===== Interactions =====
-  const btn   = header.querySelector('#zd-menu-btn');
-  const shell = header.querySelector('.zd-right');
-
-  btn.addEventListener('click', () => {
-    const open = shell.classList.toggle('zd-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  // click-away to close
-  document.addEventListener('click', (e) => {
-    if (!shell.contains(e.target)) {
-      shell.classList.remove('zd-open');
-      btn.setAttribute('aria-expanded','false');
-    }
-  });
-})();
+});
