@@ -58,7 +58,7 @@
     }
     .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.6rem; }
     .zd-menu a{
-      color:#fff; text-decoration:none; font-weight:800;
+      color:#111; text-decoration:none; font-weight:800;
       letter-spacing:-.01em; line-height:1.2; font-size:1.0625rem;
       white-space:nowrap; /* keep on one line */
     }
