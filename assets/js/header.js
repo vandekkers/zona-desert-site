@@ -1,66 +1,117 @@
-// Injects a clean white header with your wordmark + hamburger menu.
-// Menu opens into a simple right-aligned list (same wording as the hero tiles).
+// ===== Inject header styles =====
+const style = document.createElement("style");
+style.innerHTML = `
+  .zd-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Slimmer header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 0 1.5rem;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
 
-(function () {
-  const css = `
-    .zd-header{position:fixed; top:0; inset-inline:0; z-index:50; background:#fff;}
-    .zd-nav{max-width:1200px; margin:0 auto; padding:16px 20px; display:flex; align-items:center; justify-content:space-between;}
-    .zd-brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
-    .zd-brand img{height:26px; width:auto; display:block}
-    .zd-burger{background:transparent; border:0; cursor:pointer; padding:10px; display:grid; place-items:center;}
-    .zd-burger .line{display:block; width:24px; height:2px; background:#111; margin:4px 0; transition:.2s ease;}
-    .zd-burger[aria-expanded="true"] .line:nth-child(1){transform:translateY(6px) rotate(45deg)}
-    .zd-burger[aria-expanded="true"] .line:nth-child(2){opacity:0}
-    .zd-burger[aria-expanded="true"] .line:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  .zd-logo img {
+    height: 30px; /* shrink logo size */
+  }
 
-    .zd-menu{position:absolute; right:20px; top:58px; background:#fff; border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,.14); padding:12px; width:210px; display:none}
-    .zd-menu.show{display:block}
-    .zd-menu a{display:block; padding:10px 12px; color:#111; text-decoration:none; font-weight:600; border-radius:10px}
-    .zd-menu a:hover{background:#f3f4f6}
-  `;
-  const style = document.createElement('style');
-  style.textContent = css;
-  document.head.appendChild(style);
+  #zd-menu-btn {
+    cursor: pointer;
+    width: 24px;
+    height: 18px;
+    position: relative;
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1100;
+  }
 
-  const header = document.createElement('header');
-  header.className = 'zd-header';
-  header.innerHTML = `
-    <nav class="zd-nav" aria-label="Main">
-      <a href="/index.html" class="zd-brand" aria-label="Zona Desert Home">
-        <img src="/assets/zona_desert_wordmark_only.png" alt="Zona Desert">
-      </a>
+  #zd-menu-btn span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: black;
+    border-radius: 2px;
+    transition: 0.3s ease;
+  }
 
-      <div style="position:relative">
-        <button class="zd-burger" id="zd-menu-btn" aria-expanded="false" aria-controls="zd-menu">
-          <span class="line"></span><span class="line"></span><span class="line"></span>
-          <span class="sr-only">Menu</span>
-        </button>
+  /* Transform hamburger into X */
+  #zd-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #zd-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+  }
+  #zd-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
 
-        <div id="zd-menu" class="zd-menu" role="menu">
-          <a role="menuitem" href="/cash-offer.html">Get a Cash Offer</a>
-          <a role="menuitem" href="/buyers.html">Join Buyer List</a>
-          <a role="menuitem" href="/submit-deal.html">Submit a Deal</a>
-          <a role="menuitem" href="/about.html">About</a>
-          <a role="menuitem" href="/contact.html">Contact</a>
-        </div>
-      </div>
-    </nav>
-  `;
-  document.body.prepend(header);
+  /* Dropdown menu */
+  #zd-menu {
+    position: absolute;
+    top: 60px;
+    right: 1.5rem;
+    background: transparent; /* no background */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
 
-  const btn = header.querySelector('#zd-menu-btn');
-  const menu = header.querySelector('#zd-menu');
+  #zd-menu.show {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 
-  btn.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('show');
-  });
+  #zd-menu a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
 
-  document.addEventListener('click', (e) => {
-    if (!header.contains(e.target)) {
-      btn.setAttribute('aria-expanded', 'false');
-      menu.classList.remove('show');
-    }
-  });
-})();
+  #zd-menu a:hover {
+    color: #4f46e5; /* Zona purple */
+  }
+`;
+document.head.appendChild(style);
+
+// ===== Build header =====
+const header = document.createElement("header");
+header.className = "zd-header";
+header.innerHTML = `
+  <div class="zd-logo">
+    <a href="/index.html"><img src="/assets/zona_desert_wordmark_only.png" alt="Zona Desert Logo"></a>
+  </div>
+  <button id="zd-menu-btn" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <nav id="zd-menu">
+    <a href="/cash-offer.html">Sell Property</a>
+    <a href="/buyers.html">Join Buyer List</a>
+    <a href="/submit-deal.html">Submit Your Deal</a>
+  </nav>
+`;
+document.body.insertBefore(header, document.body.firstChild);
+
+// ===== Interactions =====
+const btn = header.querySelector("#zd-menu-btn");
+const menu = header.querySelector("#zd-menu");
+
+btn.addEventListener("click", () => {
+  btn.classList.toggle("open");
+  menu.classList.toggle("show");
+});
