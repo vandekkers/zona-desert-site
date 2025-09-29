@@ -45,7 +45,7 @@
         <!-- Right: Burger + dropdown -->
         <div class="relative">
           <button id="zd-menu-btn" aria-expanded="false" aria-controls="zd-menu"
-  class="flex flex-col items-center justify-center gap-1.5 p-2 focus:outline-none mr-4"
+  class="flex flex-col items-center justify-center gap-1.5 p-2 focus:outline-none mr-6"
   title="Menu">
             <span class="zd-burger-line line-1"></span>
             <span class="zd-burger-line line-2"></span>
