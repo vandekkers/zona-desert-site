@@ -51,7 +51,7 @@
     .zd-menu{
   display:none;
   position:absolute; 
-  top:100%; 
+  top: calc(100% + 20px);
   right:6px;   /* ✅ shifts the menu to align with the X */
   padding:10px 0;  /* tighter padding */
   gap:12px;
