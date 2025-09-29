@@ -17,19 +17,21 @@ style.innerHTML = `
   }
 
   .zd-logo img {
-    height: 30px; /* shrink logo size */
+    height: 30px;
   }
 
+  /* Hamburger button */
   #zd-menu-btn {
     cursor: pointer;
-    width: 24px;
-    height: 18px;
+    width: 30px;
+    height: 22px;
     position: relative;
     border: none;
     background: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 0;
     z-index: 1100;
   }
 
@@ -44,13 +46,13 @@ style.innerHTML = `
 
   /* Transform hamburger into X */
   #zd-menu-btn.open span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: rotate(45deg) translate(5px, 6px);
   }
   #zd-menu-btn.open span:nth-child(2) {
     opacity: 0;
   }
   #zd-menu-btn.open span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: rotate(-45deg) translate(5px, -6px);
   }
 
   /* Dropdown menu */
