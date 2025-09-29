@@ -1,41 +1,45 @@
 // assets/js/header.js
 (function () {
   function mountHeader() {
-    // --- minimal CSS for animation + hamburger -> X ---
+    // ---- Inline CSS for the header + hamburger → X animation ----
     const style = document.createElement("style");
     style.textContent = `
-      /* Slide dropdown */
-      .zd-menu {
-        position: absolute;
-        right: 0;
-        top: 100%;
-        transform-origin: top right;
-        transform: scaleY(0);
-        opacity: 0;
-        transition: transform 200ms ease, opacity 200ms ease;
-      }
-      .zd-menu.show {
-        transform: scaleY(1);
-        opacity: 1;
-      }
+      /* Header frame */
+      .zd-header { position: sticky; top: 0; z-index: 50; background:#fff; border-bottom:1px solid #e5e7eb; }
+      .zd-wrap { width:100%; padding:0.75rem 2.5rem 0.75rem 1rem; display:flex; align-items:center; justify-content:space-between; }
 
-      /* Hamburger -> X */
-      .zd-burger-line {
-        width: 24px; height: 2px; background: #111;
-        transition: transform 200ms ease, opacity 150ms ease;
-      }
-      #zd-menu-btn.open .line-1 { transform: translateY(6px) rotate(45deg); }
+      /* Burger button + lines */
+      .zd-burger { display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center; flex-direction:column; gap:6px; padding:0.25rem; border:0; background:transparent; cursor:pointer; }
+      .zd-burger:focus { outline:none; }
+      .zd-burger-line { display:block; width:24px; height:2px; background:#111; border-radius:1px; transition: transform 200ms ease, opacity 150ms ease; transform-origin:center; }
+
+      /* Turn into a proper X (full, not half) */
+      #zd-menu-btn.open .line-1 { transform: translateY(8px) rotate(45deg); }
       #zd-menu-btn.open .line-2 { opacity: 0; }
-      #zd-menu-btn.open .line-3 { transform: translateY(-6px) rotate(-45deg); }
+      #zd-menu-btn.open .line-3 { transform: translateY(-8px) rotate(-45deg); }
+
+      /* Dropdown (words only, no panel) */
+      .zd-menu { position:absolute; right:0; top:100%; transform-origin: top right; transform: scaleY(0); opacity:0; transition: transform 200ms ease, opacity 200ms ease; }
+      .zd-menu.show { transform: scaleY(1); opacity:1; }
+
+      /* Text look for items (match your big headline weight/spacing) */
+      .zd-menu a { color:#111827; text-decoration:none; font-weight:800; letter-spacing:-0.01em; line-height:1.1; }
+      .zd-menu a:hover { color:#4f46e5; }
+      .zd-menu ul { display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; padding-top:.5rem; padding-right:.25rem; }
+      @media (min-width:768px) {
+        .zd-menu a { font-size:1.25rem; } /* md:text-xl */
+      }
+      @media (max-width:767.98px) {
+        .zd-menu a { font-size:1.125rem; } /* text-lg */
+      }
     `;
     document.head.appendChild(style);
 
-    // --- build header ---
+    // ---- Build header ----
     const header = document.createElement("header");
-    header.className = "bg-white border-b border-slate-200 sticky top-0 z-50";
-
+    header.className = "zd-header";
     header.innerHTML = `
-     <div class="w-full px-4 pr-10 py-3 flex items-center justify-between">
+      <div class="zd-wrap">
         <!-- Left: Logo -->
         <a href="/" class="flex items-center select-none">
           <img src="/assets/z-mark.png" alt="Zona Desert Logo"
@@ -44,32 +48,31 @@
 
         <!-- Right: Burger + dropdown -->
         <div class="relative">
-          <button id="zd-menu-btn" aria-expanded="false" aria-controls="zd-menu"
-  class="zd-burger p-2 focus:outline-none" title="Menu">
-  <span class="zd-burger-line"></span>
-  <span class="zd-burger-line"></span>
-  <span class="zd-burger-line"></span>
-</button>
+          <button id="zd-menu-btn" aria-expanded="false" aria-controls="zd-menu" class="zd-burger" title="Menu">
+            <span class="zd-burger-line line-1"></span>
+            <span class="zd-burger-line line-2"></span>
+            <span class="zd-burger-line line-3"></span>
+          </button>
 
-          <!-- Text-only dropdown, aligned to button, no background -->
+          <!-- Words-only dropdown aligned to button -->
           <nav id="zd-menu" class="zd-menu">
-            <ul class="flex flex-col items-start gap-2 pt-2">
-              <li><a href="/"               class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Home</a></li>
-              <li><a href="/about.html"     class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">About</a></li>
-              <li><a href="/services.html"  class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Services</a></li>
-              <li><a href="/resources.html" class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Resources</a></li>
-              <li><a href="/contact.html"   class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Contact</a></li>
-              <li><a href="/offer.html"     class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Cash Offer</a></li>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about.html">About</a></li>
+              <li><a href="/services.html">Services</a></li>
+              <li><a href="/resources.html">Resources</a></li>
+              <li><a href="/contact.html">Contact</a></li>
+              <li><a href="/offer.html">Cash Offer</a></li>
             </ul>
           </nav>
         </div>
       </div>
     `;
 
-    // insert at the very top of <body>
+    // Insert at top of body
     document.body.insertBefore(header, document.body.firstChild);
 
-    // interactions
+    // ---- Interactions ----
     const btn  = header.querySelector("#zd-menu-btn");
     const menu = header.querySelector("#zd-menu");
 
@@ -86,7 +89,7 @@
       menu.classList.toggle("show", open);
     });
 
-    // close when clicking outside or pressing Esc
+    // Close on outside click / Esc
     document.addEventListener("click", (e) => {
       if (!header.contains(e.target)) closeMenu();
     });
@@ -95,7 +98,7 @@
     });
   }
 
-  // Run now if DOM is ready; otherwise wait.
+  // Mount when DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", mountHeader);
   } else {
