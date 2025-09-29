@@ -54,7 +54,7 @@
   top:100%; 
   right:6px;   /* ✅ shifts the menu to align with the X */
   padding:10px 0;  /* tighter padding */
-  gap:10px;
+  gap:12px;
   z-index:100;
   flex-direction:column;
   align-items:flex-end; /* ✅ ensures items align with button edge */
