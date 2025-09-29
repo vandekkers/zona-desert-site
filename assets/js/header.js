@@ -70,14 +70,14 @@
 
           <!-- Words-only dropdown aligned to button -->
           <nav id="zd-menu" class="zd-menu">
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/about.html">About</a></li>
-              <li><a href="/services.html">Services</a></li>
-              <li><a href="/resources.html">Resources</a></li>
-              <li><a href="/contact.html">Contact</a></li>
-              <li><a href="/offer.html">Cash Offer</a></li>
-            </ul>
+            <ul class="flex flex-col items-end gap-2 p-2">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="services.html">Services</a></li>
+  <li><a href="resources.html">Resources</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <li><a href="cash-offer.html">Cash Offer</a></li>
+</ul>
           </nav>
         </div>
       </div>
