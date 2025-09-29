@@ -1,4 +1,3 @@
-<script>
 (() => {
   /* ----------------- Inline styles ----------------- */
   const css = `
@@ -50,13 +49,11 @@
     }
     .zd-menu a:hover{ color:var(--zd-purple); }
 
-    /* small accessibility helper */
     .sr-only{
       position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
       clip:rect(0,0,1px,1px); white-space:nowrap; border:0;
     }
 
-    /* slightly tighter header on very wide screens */
     @media (min-width:1280px){ .zd-wrap{ max-width:1080px; } }
   `;
   const style = document.createElement('style');
@@ -69,7 +66,7 @@
   header.innerHTML = `
     <div class="zd-wrap">
       <a href="index.html" class="zd-brand" aria-label="Zona Desert">
-        <img src="/assets/zona_desert_wordmark_only.png" alt="Zona Desert" class="zd-word">
+        <img src="assets/zona_desert_wordmark_only.png" alt="Zona Desert" class="zd-word">
       </a>
 
       <div class="zd-right">
@@ -108,4 +105,3 @@
     }
   });
 })();
-</script>
