@@ -26,18 +26,22 @@
     /* right side (burger + menu) */
     .zd-right{ position:relative; }
 
-    .zd-btn{
-      -webkit-appearance:none; appearance:none;
-      background:transparent; border:0;
-      padding:6px;
-      cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-    }
+    /* burger button (hamburger / X toggle) */
+.zd-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-    .zd-burger{ position:relative; width:28px; height:22px; }
-    .zd-burger span{
-      position:absolute; left:0; right:0; height:2px; background:var(--zd-text);
-      border-radius:2px; transition:transform .25s ease, opacity .2s ease, top .25s ease;
-    }
+  position: absolute;
+  top: 18px;   /* adjust vertical alignment */
+  right: 20px; /* <-- shift this inward to align with dropdown edges */
+  z-index: 60;
+}
     .zd-burger span:nth-child(1){ top:0; }
     .zd-burger span:nth-child(2){ top:10px; }
     .zd-burger span:nth-child(3){ top:20px; }
@@ -47,15 +51,15 @@
     .zd-open .zd-burger span:nth-child(2){ opacity:0; }
     .zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
 
-    /* dropdown container (hidden by default) */
-    .zd-menu{
-      display:none;
-      position:absolute; top:100%; right:0;
-      padding:20px;
-      gap:12px;
-      z-index:100;
-      flex-direction:column;
-    }
+    /* dropdown menu */
+.zd-menu {
+  position: absolute;
+  top: 64px;      /* header height */
+  right: 20px;    /* <-- match this to .zd-btn right */
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
     /* 🔧 THIS line makes the menu show when open */
     .zd-open .zd-menu{ display:flex; }
 
