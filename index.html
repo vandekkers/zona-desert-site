@@ -44,6 +44,38 @@
 .zd-menu-open .zd-burger-line:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
+   /* --- Burger/X fix --- */
+.zd-burger {
+  position: relative;
+  width: 24px;      /* icon width */
+  height: 18px;     /* three lines spaced 8px apart: 0, 8, 16 */
+}
+
+.zd-burger-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+/* place the three lines */
+.zd-burger-line:nth-child(1) { top: 0;    }
+.zd-burger-line:nth-child(2) { top: 8px;  }
+.zd-burger-line:nth-child(3) { top: 16px; }
+
+/* when menu is open, rotate into a perfect X */
+.zd-menu-open .zd-burger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.zd-menu-open .zd-burger-line:nth-child(2) {
+  opacity: 0;
+}
+.zd-menu-open .zd-burger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
 </style>
 </head>
 <body class="bg-slate-50">
