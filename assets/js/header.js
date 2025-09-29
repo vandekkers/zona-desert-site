@@ -3,29 +3,33 @@
   const css = `
     :root{ --zd-purple:#5b5ce2; --zd-text:#111; }
 
-    /* make the header bar full-bleed and kill any right padding */
+  /* header bar */
 .zd-header{
   position: sticky; top: 0; z-index: 50;
   background: #fff;
-  padding-right: 0 !important;   /* ← this is what’s keeping the burger off the edge */
-  padding-left: 0 !important;
+  padding-right: 0 !important;   /* keep! */
+  padding-left: 0 !important;    /* keep! */
 }
 
-/* full-bleed inner wrapper with tiny edge paddings you can tune */
+/* inner wrapper */
 .zd-wrap{
   max-width: 100%;
   margin: 0;
   height: 64px;
   display:flex; align-items:center; justify-content:space-between;
-  padding-left: 8px;              /* tweak to move logo */
-  padding-right: 8px;             /* tweak to move burger */
+  padding-left: 8px;              /* logo offset */
+  padding-right: 0;               /* ← was 8px; set to 0 so burger can hug the edge */
 }
 
-/* push the icon right up to the edge */
-.zd-right{ margin-right: 0; }
+/* burger button */
+.zd-btn{
+  -webkit-appearance:none; appearance:none; background:transparent; border:0;
+  padding:6px;                    /* ← was 10px; trims the visual gap on the right */
+  cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+}
 
-/* keep the dropdown aligned to the icon */
-#zd-menu{ right: 8px; }           /* match .zd-wrap padding-right */
+/* keep dropdown aligned with new padding */
+#zd-menu{ right: 6px; }           /* ← was 8–10px; match .zd-btn padding */
 
     /* brand wordmark */
     .zd-brand{ display:flex; align-items:center; text-decoration:none; }
