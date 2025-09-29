@@ -12,7 +12,7 @@
 
     /* inner wrapper */
     .zd-wrap{
-      max-width:1600px;   /* shrink overall header width */
+      max-width:1600px;
       margin:0 auto;
       height:64px;
       display:flex; align-items:center; justify-content:space-between;
@@ -21,11 +21,7 @@
 
     /* brand wordmark */
     .zd-brand{ display:flex; align-items:center; text-decoration:none; }
-    .zd-word{
-      height:28px !important;     /* clamp logo size */
-      width:auto !important;
-      display:block;
-    }
+    .zd-word{ height:28px !important; width:auto !important; display:block; }
 
     /* right side (burger + menu) */
     .zd-right{ position:relative; }
@@ -33,7 +29,7 @@
     .zd-btn{
       -webkit-appearance:none; appearance:none;
       background:transparent; border:0;
-      padding:6px;                /* keeps it near the edge */
+      padding:6px;
       cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
     }
 
@@ -51,37 +47,32 @@
     .zd-open .zd-burger span:nth-child(2){ opacity:0; }
     .zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
 
-    /* dropdown (text only, no background) */
-    /* Dropdown menu container */
-.zd-menu {
-  display: none;
-  flex-direction: column;
-  gap: 12px;                /* space between menu items */
-  position: absolute;
-  top: 100%;
-  right: 0;
-  padding: 20px;
-  z-index: 100;
-}
+    /* dropdown container (hidden by default) */
+    .zd-menu{
+      display:none;
+      position:absolute; top:100%; right:0;
+      padding:20px;
+      gap:12px;
+      z-index:100;
+      flex-direction:column;
+    }
+    /* 🔧 THIS line makes the menu show when open */
+    .zd-open .zd-menu{ display:flex; }
 
-/* Each menu option styled as a button */
-.zd-menu a {
-  display: block;
-  background: #fff;         /* white background */
-  color: #111;              /* black text */
-  padding: 10px 16px;
-  border-radius: 6px;       /* rounded corners, like a button */
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-/* Hover effect: zona purple background with white text */
-.zd-menu a:hover {
-  background: var(--zd-purple);
-  color: #fff;
-}
+    /* menu items as minimal white buttons */
+    .zd-menu a{
+      display:block;
+      background:#fff;
+      color:#111;
+      padding:10px 16px;
+      border-radius:6px;
+      font-weight:600; font-size:1rem;
+      text-decoration:none;
+      box-shadow:0 4px 14px rgba(0,0,0,.12);
+      transition:background .2s ease, color .2s ease, transform .05s ease;
+    }
+    .zd-menu a:hover{ background:var(--zd-purple); color:#fff; }
+    .zd-menu a:active{ transform:translateY(1px); }
 
     .sr-only{
       position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
