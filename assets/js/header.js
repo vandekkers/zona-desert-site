@@ -23,7 +23,14 @@
       .zd-menu.show { transform: scaleY(1); opacity:1; }
 
       /* Text look for items (match your big headline weight/spacing) */
-      .zd-menu a { color:#111827; text-decoration:none; font-weight:800; letter-spacing:-0.01em; line-height:1.1; }
+      .zd-menu a { 
+  color:#111827; 
+  text-decoration:none; 
+  font-weight:800; 
+  letter-spacing:-0.01em; 
+  line-height:1.1; 
+  white-space:nowrap;   /* 🚀 keeps "Cash Offer" on one line */
+}
       .zd-menu a:hover { color:#4f46e5; }
       .zd-menu ul { display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; padding-top:.5rem; padding-right:.25rem; }
       @media (min-width:768px) {
