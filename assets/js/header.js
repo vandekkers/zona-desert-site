@@ -36,9 +36,9 @@
   display:flex; 
   flex-direction:column; 
   align-items:flex-end; 
-  gap:.5rem; 
-  padding-top:.5rem; 
-  padding-right:2rem;   /* 🚀 added space between menu items and the X */
+  gap:1rem;          /* 🚀 more space between each option */
+  padding-top:1.5rem; /* 🚀 pushes the whole list down away from the X */
+  padding-right:.25rem; 
 }
       @media (min-width:768px) {
         .zd-menu a { font-size:1.25rem; } /* md:text-xl */
