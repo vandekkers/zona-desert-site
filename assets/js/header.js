@@ -43,11 +43,18 @@
       padding:0; margin:0; list-style:none; text-align:right;
     }
     .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.5rem; }
-    .zd-menu a{
-      color:var(--zd-text); text-decoration:none; font-weight:800;
-      letter-spacing:-0.01em; line-height:1.1; font-size:1.125rem;
-    }
-    .zd-menu a:hover{ color:var(--zd-purple); }
+   .zd-menu a{
+  color:#fff; /* white text */
+  text-decoration:none;
+  font-weight:800;
+  letter-spacing:-0.01em;
+  line-height:1.1;
+  font-size:1.125rem;
+  white-space:nowrap; /* keeps text on one line */
+}
+.zd-menu a:hover{
+  color:var(--zd-purple); /* Zona purple on hover */
+}
 
     .sr-only{
       position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
