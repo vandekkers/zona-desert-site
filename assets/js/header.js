@@ -64,12 +64,13 @@
   display:block;
   background:#fff;
   color:#111;
-  padding:8px 14px;            /* slightly smaller buttons */
+  padding:8px 14px;
   border-radius:4px;
-  font-weight:400;             /* ✅ lighter weight */
-  font-size:0.95rem;           /* a little smaller text */
+  font-weight:400;
+  font-size:0.95rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;  /* ✅ match site-wide font */
   text-decoration:none;
-  white-space:nowrap;          /* ✅ keep on one line */
+  white-space:nowrap;
   box-shadow:0 2px 8px rgba(0,0,0,.08);
   transition:background .2s ease, color .2s ease, transform .05s ease;
 }
