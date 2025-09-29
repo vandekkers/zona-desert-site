@@ -59,19 +59,24 @@
     /* 🔧 THIS line makes the menu show when open */
     .zd-open .zd-menu{ display:flex; }
 
-    /* menu items as minimal white buttons */
-    .zd-menu a{
-      display:block;
-      background:#fff;
-      color:#111;
-      padding:10px 16px;
-      border-radius:6px;
-      font-weight:600; font-size:1rem;
-      text-decoration:none;
-      box-shadow:0 4px 14px rgba(0,0,0,.12);
-      transition:background .2s ease, color .2s ease, transform .05s ease;
-    }
-    .zd-menu a:hover{ background:var(--zd-purple); color:#fff; }
+    /* menu items as light white buttons */
+.zd-menu a{
+  display:block;
+  background:#fff;
+  color:#111;
+  padding:8px 14px;            /* slightly smaller buttons */
+  border-radius:4px;
+  font-weight:400;             /* ✅ lighter weight */
+  font-size:0.95rem;           /* a little smaller text */
+  text-decoration:none;
+  white-space:nowrap;          /* ✅ keep on one line */
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:background .2s ease, color .2s ease, transform .05s ease;
+}
+.zd-menu a:hover{
+  background:var(--zd-purple);
+  color:#fff;
+}
     .zd-menu a:active{ transform:translateY(1px); }
 
     .sr-only{
