@@ -3,12 +3,12 @@
   const css = `
     :root{ --zd-purple:#5b5ce2; --zd-text:#111; }
 
-  /* header bar */
+/* header bar */
 .zd-header{
   position: sticky; top: 0; z-index: 50;
   background: #fff;
-  padding-right: 0 !important;   /* keep! */
-  padding-left: 0 !important;    /* keep! */
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }
 
 /* inner wrapper */
@@ -17,69 +17,55 @@
   margin: 0;
   height: 64px;
   display:flex; align-items:center; justify-content:space-between;
-  padding-left: 8px;              /* logo offset */
-  padding-right: 0;               /* ← was 8px; set to 0 so burger can hug the edge */
+  padding-left: 8px;  /* logo offset */
+  padding-right: 0;  /* burger hugs edge */
 }
 
 /* burger button */
 .zd-btn{
   -webkit-appearance:none; appearance:none; background:transparent; border:0;
-  padding:6px;                    /* ← was 10px; trims the visual gap on the right */
+  padding:0;   /* ✅ remove gap */
+  margin-right: 0;
   cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
 }
+.zd-burger{ position:relative; width:28px; height:22px; }
+.zd-burger span{
+  position:absolute; left:0; right:0; height:2px; background:var(--zd-text);
+  border-radius:2px; transition:transform .25s ease, opacity .2s ease, top .25s ease;
+}
+.zd-burger span:nth-child(1){ top:0; }
+.zd-burger span:nth-child(2){ top:10px; }
+.zd-burger span:nth-child(3){ top:20px; }
 
-/* keep dropdown aligned with new padding */
-#zd-menu{ right: 6px; }           /* ← was 8–10px; match .zd-btn padding */
+/* morph to X */
+.zd-open .zd-burger span:nth-child(1){ transform:translateY(10px) rotate(45deg); }
+.zd-open .zd-burger span:nth-child(2){ opacity:0; }
+.zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
 
-    /* brand wordmark */
-    .zd-brand{ display:flex; align-items:center; text-decoration:none; }
-    .zd-word{ height:24px; width:auto; display:block; }
+/* dropdown */
+.zd-menu{
+  position:absolute; top:64px; right:0;  /* ✅ align to very edge */
+  display:none;
+  padding:0; margin:0; list-style:none; text-align:right;
+}
+.zd-open .zd-menu{ display:flex; flex-direction:column; gap:.75rem; }
+.zd-menu a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  line-height:1.3;
+  font-size:1.125rem;
+  white-space:nowrap;
+}
+.zd-menu a:hover{ color:var(--zd-purple); }
 
-    /* hamburger button */
-    .zd-right{ position:relative; }
-    .zd-btn{
-      -webkit-appearance:none; appearance:none; background:transparent; border:0;
-      padding:10px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-    }
-    .zd-burger{ position:relative; width:28px; height:22px; }
-    .zd-burger span{
-      position:absolute; left:0; right:0; height:2px; background:var(--zd-text);
-      border-radius:2px; transition:transform .25s ease, opacity .2s ease, top .25s ease;
-    }
-    .zd-burger span:nth-child(1){ top:0; }
-    .zd-burger span:nth-child(2){ top:10px; }
-    .zd-burger span:nth-child(3){ top:20px; }
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,1px,1px); white-space:nowrap; border:0;
+}
 
-    /* morph to X when open */
-    .zd-open .zd-burger span:nth-child(1){ transform:translateY(10px) rotate(45deg); }
-    .zd-open .zd-burger span:nth-child(2){ opacity:0; }
-    .zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
-
-    /* dropdown (text only, no background) */
-    .zd-menu{
-      position:absolute; top:64px; right:0; display:none;
-      padding:0; margin:0; list-style:none; text-align:right;
-    }
-    .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.75rem; }
-    .zd-menu a{
-      color:#fff; /* white text */
-      text-decoration:none;
-      font-weight:700;
-      letter-spacing:-0.01em;
-      line-height:1.3;
-      font-size:1.125rem;
-      white-space:nowrap; /* keeps text on one line */
-    }
-    .zd-menu a:hover{
-      color:var(--zd-purple); /* Zona purple on hover */
-    }
-
-    .sr-only{
-      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-      clip:rect(0,0,1px,1px); white-space:nowrap; border:0;
-    }
-
-    @media (min-width:1280px){ .zd-wrap{ max-width:1280px; } }
+@media (min-width:1280px){ .zd-wrap{ max-width:1280px; } }
   `;
   const style = document.createElement('style');
   style.textContent = css;
