@@ -56,19 +56,20 @@ style.innerHTML = `
   }
 
   /* Dropdown menu */
-  #zd-menu {
-    position: absolute;
-    top: 60px;
-    right: 1.5rem;
-    background: transparent; /* no background */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-  }
+#zd-menu {
+  position: absolute;
+  top: 60px;          /* directly under the header */
+  right: 0;           /* align with button */
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  padding-right: 1.5rem; /* <-- keeps it inside the page */
+}
 
   #zd-menu.show {
     opacity: 1;
