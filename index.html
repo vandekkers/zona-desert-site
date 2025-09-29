@@ -1,24 +1,171 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zona Desert – Home</title>
-
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Zona Desert • Home</title>
 
   <style>
-  body { background:#ffffff; }
+    :root{
+      --brand:#4F46E5;     /* indigo accent you’ve been using */
+      --ink:#111827;       /* near-black for headings */
+      --muted:#6B7280;     /* slate/gray for body */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;
+      min-height: calc(100vh - 72px); /* leave space visually for your header height */
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background:url("/assets/phoenix_background_optimized.jpg") center/cover no-repeat;
+      transform:scale(1.02); /* tiny upscale to avoid edge gaps on some screens */
+      z-index:-2;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      /* top-to-bottom darkening gradient so white text pops like the mock */
+      background:linear-gradient(180deg, rgba(17,24,39,.35) 0%, rgba(17,24,39,.55) 45%, rgba(17,24,39,.70) 100%);
+      z-index:-1;
+    }
+
+    .container{
+      width:min(1100px, 92vw);
+      margin-inline:auto;
+      padding: clamp(18px, 2vw, 28px);
+    }
+
+    .hero-inner{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:clamp(16px, 2.5vw, 28px);
+      align-items:center;
+      text-align:left;
+    }
+    @media (min-width: 980px){
+      .hero-inner{
+        grid-template-columns: 1.25fr .9fr; /* text left, cards right (like the mock) */
+        align-items:end;
+      }
+    }
+
+    .eyebrow{
+      color:#E5E7EB;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:600;
+      font-size:.9rem;
+    }
+    .title{
+      margin:.25rem 0 0 0;
+      line-height:1.05;
+      font-weight:900;
+      color:#fff;
+      font-size: clamp(38px, 6vw, 72px);
+    }
+    .title span{ color: var(--brand); }
+    .sub{
+      margin:.85rem 0 0 0;
+      color:#E5E7EB;
+      font-size: clamp(15px, 2.2vw, 18px);
+      max-width: 42ch;
+    }
+
+    .cta-row{
+      margin-top:clamp(18px, 3vw, 28px);
+      display:flex; gap:12px; flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:12px 18px; border-radius:12px;
+      font-weight:700; font-size:15px;
+      transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+      text-decoration:none; display:inline-flex; align-items:center; gap:.6rem;
+    }
+    .btn:active{ transform:translateY(1px) }
+    .btn-primary{ background:var(--brand); color:#fff; box-shadow:0 6px 18px rgba(79,70,229,.35) }
+    .btn-primary:hover{ background:#4338CA }
+    .btn-ghost{ background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25) }
+    .btn-ghost:hover{ background:rgba(255,255,255,.18) }
+
+    /* Right-side “cards” like the mock (simple link blocks for now) */
+    .feature-stack{
+      display:grid; gap:12px;
+      margin-bottom: clamp(14px, 2vw, 24px);
+    }
+    .feature{
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:16px;
+      padding:14px 16px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+      transition: transform .12s ease, box-shadow .12s ease;
+      color:#111827; text-decoration:none;
+    }
+    .feature:hover{ transform:translateY(-2px); box-shadow:0 14px 32px rgba(0,0,0,.10) }
+    .feature h4{ margin:0 0 6px 0; font-size:18px }
+    .feature p{ margin:0; color:#4B5563; font-size:14px }
+
+    /* Footer spacer so the header footer you inject don’t collide */
+    .spacer{ height:18vh }
   </style>
 </head>
 <body>
-  <!-- Header (injected by your existing script) -->
+  <!-- Header (your hamburger/links get injected here) -->
   <script src="/assets/js/header.js"></script>
 
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <!-- Left: headline + CTAs -->
+      <div>
+        <div class="eyebrow">Zona Desert Property Solutions</div>
+        <h1 class="title">Connecting <span>Arizona’s Properties</span> to the buyers who want them.</h1>
+        <p class="sub">Sell directly for a fair cash offer, submit a wholesale deal for dispo, or join our buyers list to get notified first.</p>
 
+        <div class="cta-row">
+          <a href="/cash-offer.html" class="btn btn-primary">Get a Cash Offer</a>
+          <a href="/submit-deal.html" class="btn btn-ghost">Submit a Deal</a>
+        </div>
+      </div>
 
-  <!-- Footer (injected by your existing script) -->
+      <!-- Right: simple feature “cards” like the mock -->
+      <div class="feature-stack">
+        <a class="feature" href="/buyer-list.html">
+          <h4>Join the Buyers List</h4>
+          <p>Tell us your buy box and get instant alerts when a match hits our desk.</p>
+        </a>
+        <a class="feature" href="/cash-offer.html">
+          <h4>Sell Your Home As-Is</h4>
+          <p>No repairs, no showings. We cover closing costs and work on your timeline.</p>
+        </a>
+        <a class="feature" href="/submit-deal.html">
+          <h4>Submit a Wholesale Deal</h4>
+          <p>Leverage our dispo reach to move your property quickly and cleanly.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (your injected footer stays as-is if you’re using one) -->
+  <div class="spacer"></div>
+
+  <!-- Footer JS (if you have it) -->
   <script src="/assets/js/footer.js"></script>
 </body>
 </html>
