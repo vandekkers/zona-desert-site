@@ -8,14 +8,14 @@
       height:64px; border-bottom:1px solid rgba(0,0,0,.06);
     }
     .zd-wrap{
-      max-width:1160px; margin:0 auto; height:64px;
+      max-width:1400px; margin:0 auto; height:64px;
       display:flex; align-items:center; justify-content:space-between;
-      padding:0 16px;
+      padding:0 32px; /* more breathing room */
     }
 
     /* brand wordmark */
     .zd-brand{ display:flex; align-items:center; text-decoration:none; }
-    .zd-word{ height:22px; width:auto; display:block; }
+    .zd-word{ height:24px; width:auto; display:block; }
 
     /* hamburger button */
     .zd-right{ position:relative; }
@@ -39,29 +39,29 @@
 
     /* dropdown (text only, no background) */
     .zd-menu{
-      position:absolute; top:64px; right:4px; display:none;
+      position:absolute; top:64px; right:0; display:none;
       padding:0; margin:0; list-style:none; text-align:right;
     }
-    .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.5rem; }
-   .zd-menu a{
-  color:#fff; /* white text */
-  text-decoration:none;
-  font-weight:800;
-  letter-spacing:-0.01em;
-  line-height:1.1;
-  font-size:1.125rem;
-  white-space:nowrap; /* keeps text on one line */
-}
-.zd-menu a:hover{
-  color:var(--zd-purple); /* Zona purple on hover */
-}
+    .zd-open .zd-menu{ display:flex; flex-direction:column; gap:.75rem; }
+    .zd-menu a{
+      color:#fff; /* white text */
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:-0.01em;
+      line-height:1.3;
+      font-size:1.125rem;
+      white-space:nowrap; /* keeps text on one line */
+    }
+    .zd-menu a:hover{
+      color:var(--zd-purple); /* Zona purple on hover */
+    }
 
     .sr-only{
       position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
       clip:rect(0,0,1px,1px); white-space:nowrap; border:0;
     }
 
-    @media (min-width:1280px){ .zd-wrap{ max-width:1080px; } }
+    @media (min-width:1280px){ .zd-wrap{ max-width:1280px; } }
   `;
   const style = document.createElement('style');
   style.textContent = css;
