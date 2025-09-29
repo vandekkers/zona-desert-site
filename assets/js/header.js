@@ -1,113 +1,58 @@
-// assets/js/header.js
+<script>
 (() => {
   // ---------- Styles ----------
-  const style = document.createElement('style');
-  style.innerHTML = `
-    :root { --zd-purple: #6366F1; } /* Zona purple */
+  const css = `
+  :root { --zd-purple:#5b5ce2; --zd-text:#111; }
+  .zd-header{
+    position:sticky; top:0; z-index:50; background:#fff;
+    height:64px; border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  .zd-wrap{
+    max-width:1200px; margin:0 auto; height:64px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 16px;
+  }
+  .zd-brand{ display:flex; align-items:center; gap:.5rem; text-decoration:none; }
+  .zd-word{ height:22px; display:block; }
 
-    /* Header shell */
-    .zd-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: #fff;
-      border-bottom: 1px solid rgba(17, 24, 39, 0.06);
-    }
-    .zd-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px 20px; /* slim header */
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+  /* --- Burger --- */
+  .zd-burger-btn{
+    appearance:none; background:transparent; border:0; padding:10px;
+    cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  }
+  .zd-burger{
+    position:relative; width:28px; height:22px;
+  }
+  .zd-burger span{
+    position:absolute; left:0; right:0; height:2px; background:var(--zd-text);
+    border-radius:2px; transition:transform .25s ease, opacity .2s ease, top .25s ease;
+  }
+  .zd-burger span:nth-child(1){ top:0;   transform-origin:center; }
+  .zd-burger span:nth-child(2){ top:10px; transform-origin:center; }
+  .zd-burger span:nth-child(3){ top:20px; transform-origin:center; }
 
-    /* Logo */
-    .zd-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      user-select: none;
-    }
-    .zd-logo img {
-      height: 26px; /* compact */
-      width: auto;
-      display: block;
-    }
+  /* morph to X */
+  .zd-open .zd-burger span:nth-child(1){ transform:translateY(10px) rotate(45deg); }
+  .zd-open .zd-burger span:nth-child(2){ opacity:0; }
+  .zd-open .zd-burger span:nth-child(3){ transform:translateY(-10px) rotate(-45deg); }
 
-    /* Right cluster: burger + dropdown aligned together */
-    .menu-wrap { position: relative; display: flex; align-items: center; }
-
-    /* Burger button */
-    #zd-menu-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      border: none;
-      background: transparent;         /* no background */
-      cursor: pointer;
-      padding: 0;
-    }
-    #zd-menu-btn:focus-visible { outline: 2px solid var(--zd-purple); outline-offset: 2px; }
-
-    /* Burger lines */
-    #zd-menu-btn span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #0b0b0f;            /* black lines */
-      border-radius: 2px;
-      transition: transform .25s ease, opacity .2s ease, background .2s ease;
-    }
-    #zd-menu-btn span + span { margin-top: 5px; }
-
-    /* X animation */
-    #zd-menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    #zd-menu-btn.open span:nth-child(2) { opacity: 0; }
-    #zd-menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Dropdown (text-only, no background) */
-    #zd-menu {
-      position: absolute;
-      top: calc(100% + 8px);  /* directly under button */
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transform-origin: top;
-      transform: scaleY(0);
-      opacity: 0;
-      transition: transform .25s ease, opacity .25s ease;
-      padding: 0;
-    }
-    #zd-menu.show {
-      transform: scaleY(1);
-      opacity: 1;
-    }
-    #zd-menu a {
-      font-size: 16px;
-      line-height: 1;
-      text-decoration: none;
-      color: #0b0b0f;
-      font-weight: 700;         /* bold, like the mock */
-      letter-spacing: -0.01em;
-      text-align: right;
-      padding: 2px 0;
-    }
-    #zd-menu a:hover { color: var(--zd-purple); }
-
-    /* Slightly larger on md+ */
-    @media (min-width: 768px) {
-      .zd-wrap { padding: 12px 28px; }
-      .zd-logo img { height: 28px; }
-      #zd-menu a { font-size: 17px; }
-    }
+  /* --- Menu --- */
+  .zd-menu{
+    position:absolute; top:64px; right:16px;
+    display:none; flex-direction:column; align-items:flex-end; gap:.5rem;
+  }
+  .zd-open .zd-menu{ display:flex; }
+  .zd-menu a{
+    color:var(--zd-text); text-decoration:none; font-weight:700;
+    line-height:1.1; letter-spacing:-0.01em; font-size:1.125rem;
+  }
+  .zd-menu a:hover{ color:var(--zd-purple); }
+  @media (min-width:768px){
+    .zd-menu a{ font-size:1.25rem; }
+  }
   `;
+  const style = document.createElement('style');
+  style.textContent = css;
   document.head.appendChild(style);
 
   // ---------- Markup ----------
@@ -115,57 +60,39 @@
   header.className = 'zd-header';
   header.innerHTML = `
     <div class="zd-wrap">
-      <!-- Left: logo -->
-      <a class="zd-logo" href="/index.html" aria-label="Zona Desert Home">
-        <img src="/assets/zona_desert_wordmark_only.png" alt="Zona Desert" />
+      <a href="index.html" class="zd-brand" aria-label="Zona Desert">
+        <img src="/assets/zona_desert_wordmark_only.png" alt="Zona Desert" class="zd-word">
       </a>
-
-      <!-- Right: hamburger + dropdown -->
-      <div class="menu-wrap">
-        <button id="zd-menu-btn" aria-expanded="false" aria-controls="zd-menu" aria-label="Menu">
-          <span></span><span></span><span></span>
+      <div class="zd-right" style="position:relative">
+        <button id="zd-menu-btn" class="zd-burger-btn" aria-expanded="false" aria-controls="zd-menu" title="Menu">
+          <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">Menu</span>
+          <div class="zd-burger" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
         </button>
-        <nav id="zd-menu" aria-label="Site">
-          <a href="/index.html">Home</a>
-          <a href="/cash-offer.html">Sell Property</a>
-          <a href="/buyers.html">Join Buyer List</a>
-          <a href="/submit-deal.html">Submit Your Deal</a>
+        <nav id="zd-menu" class="zd-menu">
+          <a href="index.html">Home</a>
+          <a href="cash-offer.html">Sell Property</a>
+          <a href="buyers.html">Join Buyer List</a>
+          <a href="submit-deal.html">Submit Your Deal</a>
         </nav>
       </div>
     </div>
   `;
   document.body.insertBefore(header, document.body.firstChild);
 
-  // ---------- Interactions ----------
-  const btn  = header.querySelector('#zd-menu-btn');
-  const menu = header.querySelector('#zd-menu');
-
-  function closeMenu() {
-    btn.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-    menu.classList.remove('show');
-  }
-  function toggleMenu() {
-    const willOpen = !btn.classList.contains('open');
-    btn.classList.toggle('open', willOpen);
-    btn.setAttribute('aria-expanded', String(willOpen));
-    menu.classList.toggle('show', willOpen);
-  }
-
-  btn.addEventListener('click', toggleMenu);
-
-  // Close on outside click
+  // ---------- Behavior ----------
+  const btn = header.querySelector('#zd-menu-btn');
+  const wrap = header.querySelector('.zd-right');
+  btn.addEventListener('click', () => {
+    const open = wrap.classList.toggle('zd-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
   document.addEventListener('click', (e) => {
-    if (!header.contains(e.target)) closeMenu();
+    if (!wrap.contains(e.target)) {
+      wrap.classList.remove('zd-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
   });
-
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-
-  // Close when navigating via a menu link
-  menu.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => closeMenu())
-  );
 })();
+</script>
