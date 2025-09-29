@@ -54,13 +54,13 @@
 
           <!-- Text-only dropdown, aligned to button, no background -->
           <nav id="zd-menu" class="zd-menu">
-            <ul class="flex flex-col items-end gap-2 pt-2">
+            <ul class="flex flex-col items-start gap-2 pt-2">
               <li><a href="/"               class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Home</a></li>
               <li><a href="/about.html"     class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">About</a></li>
               <li><a href="/services.html"  class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Services</a></li>
               <li><a href="/resources.html" class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Resources</a></li>
               <li><a href="/contact.html"   class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Contact</a></li>
-              <li><a href="/offer.html"     class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Get an Offer</a></li>
+              <li><a href="/offer.html"     class="text-gray-900 hover:text-indigo-600 text-lg md:text-xl font-extrabold tracking-tight">Cash Offer</a></li>
             </ul>
           </nav>
         </div>
