@@ -5,13 +5,13 @@
     const style = document.createElement("style");
     style.textContent = `
       /* Header frame */
-      .zd-header { position: sticky; top: 0; z-index: 50; background:#666A6D; border-bottom:1px solid #e5e7eb; }
+      .zd-header { position: sticky; top: 0; z-index: 50; background:#ffffff; border-bottom:1px solid #e5e7eb; }
       .zd-wrap { width:100%; padding:0.75rem 2.5rem 0.75rem 1rem; display:flex; align-items:center; justify-content:space-between; }
 
       /* Burger button + lines */
       .zd-burger { display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center; flex-direction:column; gap:6px; padding:0.25rem; border:0; background:transparent; cursor:pointer; }
       .zd-burger:focus { outline:none; }
-      .zd-burger-line { display:block; width:24px; height:2px; background:#ffffff; border-radius:1px; transition: transform 200ms ease, opacity 150ms ease; transform-origin:center; }
+      .zd-burger-line { display:block; width:24px; height:2px; background:#000000; border-radius:1px; transition: transform 200ms ease, opacity 150ms ease; transform-origin:center; }
 
       /* Turn into a proper X (full, not half) */
       #zd-menu-btn.open .line-1 { transform: translateY(8px) rotate(45deg); }
