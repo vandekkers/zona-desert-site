@@ -10,7 +10,8 @@
     .zd-wrap{
       max-width:1400px; margin:0 auto; height:64px;
       display:flex; align-items:center; justify-content:space-between;
-      padding:0 12px; /* more breathing room */
+      padding-left: 24px;   /* logo side */
+padding-right: 12px;  /* menu button side */
     }
 
     /* brand wordmark */
