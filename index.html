@@ -23,6 +23,27 @@
     .header-adjust .logo { margin-left: var(--logo-ml-desktop); margin-top: var(--logo-mt-desktop); }
     .header-adjust .cta  { margin-right: var(--cta-mr-desktop); margin-top: var(--cta-mt-desktop); }
   }
+   /* Burger button animation */
+.zd-burger-line {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background-color: #000;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.zd-menu-open .zd-burger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.zd-menu-open .zd-burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.zd-menu-open .zd-burger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
 </style>
 </head>
 <body class="bg-slate-50">
