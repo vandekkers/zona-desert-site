@@ -66,7 +66,7 @@
   color:#111;
   padding:8px 14px;
   border-radius:4px;
-  font-weight:400;
+  font-weight:600;
   font-size:0.95rem;
   font-family: 'Helvetica Neue', Arial, sans-serif;  /* ✅ match site-wide font */
   text-decoration:none;
