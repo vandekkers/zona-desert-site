@@ -97,93 +97,86 @@
       box-shadow: 0 6px 15px rgba(0,0,0,.25);
     }
 
-    /* ===== MOBILE-ONLY OVERRIDES ===== */
+/* ===== MOBILE-ONLY OVERRIDES (≤768px) — matches your screenshot ===== */
 @media (max-width:768px){
 
-  /* Full-bleed hero (touches header + screen edges) */
-  body { margin: 0; }
+  /* make the hero photo full-bleed under the header */
+  body{ margin:0; }
   .hero{
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;           /* fill the viewport */
-    position: relative;
-    z-index: 1;                  /* sit behind floating tiles */
+    position:relative;
+    margin:0;
+    padding:0;
+    min-height:75vh;
+    z-index:1;
   }
   .hero img{
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;           /* cover without distortion */
-    object-position: center;     /* center crop */
-    display:block;               /* remove any inline gap */
-    border-radius: 0;            /* no rounded corners on mobile */
+    width:100vw;
+    height:75vh;
+    display:block;
+    object-fit:cover;
+    object-position:center;
+    border-radius:0;              /* no rounded corners on mobile */
   }
 
-  /* Headline stays as-is (don’t stack differently) */
+  /* headline centered, same two-line layout */
   .hero-text{
     position:absolute;
-    left: 50%;
-    top: 18vh;                   /* adjust if you want it higher/lower */
-    transform: translateX(-50%);
-    width: 88vw;                 /* keep readable on small screens */
-    text-align: left;
+    left:50%;
+    top:22vh;                     /* nudge up/down as you like */
+    transform:translateX(-50%);
+    width:min(92vw, 680px);
+    text-align:center;
   }
   .hero-text h1{
-    font-size: clamp(2.0rem, 6.6vw, 3.2rem);
-    line-height: 1.1;
-    margin: 0;
-    text-shadow: 3px 3px 12px rgba(0,0,0,.85); /* mobile pop */
+    margin:0;
+    line-height:1.08;
+    font-size:clamp(2rem, 8vw, 3.2rem);
+    text-shadow:2px 2px 10px rgba(0,0,0,.70);
   }
-  .hero-text h1 span{            /* “Possibilities.” */
-    text-shadow: 3px 3px 12px rgba(0,0,0,.85);
+  .hero-text h1 span{
+    /* your Zona purple should already be set globally */
+    text-shadow:2px 2px 10px rgba(0,0,0,.70);
   }
 
-  /* Show stacked tagline on mobile, hide desktop line */
-  .desktop-only{ display: none !important; }
-  .mobile-only{ display: block !important; }
+  /* use stacked tagline on mobile; hide desktop line */
+  .desktop-only{ display:none !important; }
+  .mobile-only{ display:block !important; margin-top:12px; }
 
-  /* Stacked tagline (no dark box), centered with thin dividers */
+  /* stacked items, centered, with short divider lines (not full width) */
   .hero-subtext.mobile-only{
-    position:absolute;
-    left: 50%;
-    top: calc(18vh + 6.5rem);    /* below the headline; tweak as needed */
-    transform: translateX(-50%);
-    width: 86vw;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: .02em;
+    text-align:center;
+    font-weight:700;
+    letter-spacing:.02em;
   }
   .hero-subtext.mobile-only span{
     display:block;
-    padding: 10px 0 12px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,.7);   /* subtle pop over image */
+    padding:8px 0;
+    text-shadow:2px 2px 8px rgba(0,0,0,.60);
   }
   .hero-subtext.mobile-only span + span{
-    border-top: 1px solid rgba(255,255,255,.85); /* short divider */
-    margin-top: 8px;
+    margin-top:8px;
+    border-top:1px solid rgba(255,255,255,.85);
+    width:66%;                    /* short divider like your shot */
+    margin-left:auto;
+    margin-right:auto;
   }
 
-  /* Action tiles: a bit smaller and lifted up */
+  /* action tiles a touch smaller and pulled up into the image */
   .actions{
-    position: relative;
-    z-index: 2;                  /* above the photo */
-    margin-top: -56px;           /* pull upward into the image */
-    gap: 10px;
+    position:relative;
+    z-index:2;
+    margin-top:-44px;             /* overlap into photo */
+    gap:8px;
   }
   .actions .action{
-    width: 30.5%;
-    min-width: 0;
-    padding: 16px 10px;
-    border-radius: 18px;
+    width:31%;
+    padding:14px 8px;
+    border-radius:18px;
   }
   .actions .action h4{
-    font-size: 1.05rem;          /* slightly smaller label */
-    line-height: 1.15;
-    margin: 0;
-  }
-
-  /* Keep the next section snug to the hero */
-  .trust{
-    margin-top: 22px;
+    margin:0;
+    font-size:1rem;
+    line-height:1.15;
   }
 }
   </style>
