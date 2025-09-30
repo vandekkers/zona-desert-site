@@ -5,292 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zona Desert Property Solutions</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+ <style>
+  :root{
+    --zona-purple:#6366F1;
+  }
+
+  body{margin:0;font-family:Arial,Helvetica,sans-serif}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;text-align:center;color:#fff}
+  .hero img{width:100%;height:80vh;object-fit:cover}
+  .hero-text{position:absolute;top:25%;left:50%;transform:translateX(-50%);text-align:center}
+
+  .hero-text h1{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:4.5rem;             /* desktop size */
+    font-weight:800;
+    line-height:1.1;
+    color:#fff;
+    text-shadow:2px 2px 8px rgba(0,0,0,.7);
+    white-space:normal;           /* allow Turning/Into split from HTML <br> */
+  }
+  .hero-text h1 span{
+    color:var(--zona-purple);
+    text-shadow:2px 2px 8px rgba(0,0,0,.7);
+  }
+
+  /* “Cash Offers • Buyer Connections • Wholesale Dispo” (desktop inline) */
+  .hero-subtext{
+    display:flex;justify-content:center;align-items:center;
+    gap:2rem;
+    font-size:1.15rem;font-weight:600;color:#fff;
+    text-transform:uppercase;
+    text-shadow:1px 1px 6px rgba(0,0,0,.7);
+  }
+  .hero-subtext span+span::before{
+    content:"•";margin:0 1.2rem;opacity:.85;
+  }
+
+  /* ===== Floating CTAs ===== */
+  .actions{display:flex;justify-content:center;gap:2rem;margin-top:-3rem;position:relative;z-index:5}
+  .action{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    width:150px;height:100px;line-height:1.3;text-align:center;
+    font-size:1.2rem;font-weight:700;text-decoration:none;
+    background:#fff;color:#000;border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  }
+  .action:hover{background:var(--zona-purple);color:#fff;transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,.25)}
+
+  /* ===== Trusted section & footer (unchanged) ===== */
+  .trusted{padding:3rem 1rem;text-align:center}
+  .trusted h2{font-size:2rem;font-weight:700;margin-bottom:1rem}
+  .trusted .stats{display:flex;justify-content:center;gap:2rem;font-size:1.2rem;margin-top:1rem}
+
+  footer{background:#111;color:#fff;padding:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+  footer .logo{font-size:1.2rem;font-weight:700}
+  footer nav a{margin-left:1.5rem;color:#fff;text-decoration:none}
+  footer nav a:hover{text-decoration:underline}
+
+  /* =========================
+     MOBILE ≤ 768px (desktop untouched)
+     ========================= */
+  @media (max-width:768px){
+    .hero{padding:56px 16px 0;min-height:72vh}
+    .hero-text h1{font-size:clamp(2.2rem,11vw,3.2rem);line-height:1.08;text-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .hero-text h1 span{text-shadow:0 10px 30px rgba(0,0,0,.45)}
+
+    /* Stack the three phrases with thin dividers—no background boxes */
+    .hero-subtext{
+      flex-direction:column;align-items:center;gap:1rem;
+      font-size:1rem;background:none !important;box-shadow:none !important;
     }
-
-    /* Hero section */
-    .hero {
-      position: relative;
-      text-align: center;
-      color: white;
+    .hero-subtext span{
+      position:relative;display:block;padding:0;background:none !important;box-shadow:none !important;
     }
-
-    .hero img {
-      width: 100%;
-      height: 80vh;
-      object-fit: cover;
+    .hero-subtext span:not(:last-child)::after{
+      content:"";display:block;width:60%;margin:.5rem auto 0;border-bottom:1px solid rgba(255,255,255,.6);
     }
+    .hero-subtext span+span::before{content:none}
 
-    .hero-text {
-      position: absolute;
-      top: 25%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
+    /* 3 CTA cards – full width, still half-overlapping the photo */
+    .actions{margin-top:-18px;gap:14px}
+    .actions .action{
+      width:calc(100% - 32px);max-width:480px;margin:0 auto;
+      font-size:1.05rem;padding:18px 22px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.12)
     }
-
-    .hero-text h1 {
-  font-size: 4.5rem;           /* bigger font */
-  font-weight: 800;            /* bold and heavy */
-  line-height: 1.1;            /* tighter line spacing */
-  font-family: 'Helvetica Neue', Arial, sans-serif; /* cleaner font */
-  color: white;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);  /* ✅ shadow */
-}
-
-.hero-text h1 span {
-  color: #6366F1;  /* Zona purple */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);  /* ✅ shadow on purple too */
-}
-
-.hero-text p {
-  font-size: 1.6rem; 
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  word-spacing: 0.5em;
-  margin-top: 1rem;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: white;
-  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);  /* ✅ softer shadow */
-}
-
-    /* Floating actions */
-    
-    .actions {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: -3rem; /* pulls the buttons upward to overlap */
-  position: relative;
-  z-index: 5;
-}
-
-.action {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 100px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-decoration: none; /* remove underline */
-  background: white;
-  color: black;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-align: center;
-  line-height: 1.3; /* tighten stacked lines */
-}
-
-.action:hover {
-  background: #4f46e5; /* zona purple */
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-}
-
-    /* Trusted section */
-    .trusted {
-      padding: 3rem 1rem;
-      text-align: center;
-    }
-
-    .trusted h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .trusted .stats {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      font-size: 1.2rem;
-      margin-top: 1rem;
-    }
-
-    /* Footer */
-    footer {
-      background: #111;
-      color: white;
-      padding: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    footer .logo {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    footer nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: white;
-    }
-
-    footer nav a:hover {
-      text-decoration: underline;
-    }
-    /* =========================
-   MOBILE ONLY (≤768px)
-   Keeps desktop unchanged
-   ========================= */
-@media (max-width: 768px) {
-  /* Make the hero section breathe on phones */
-  .hero {
-    padding: 56px 16px 0;
-    min-height: 72vh;
   }
-
-  /* Big headline—fluid sizing & tight line-height */
-  .hero-text h1 {
-    font-size: clamp(2.2rem, 11vw, 3.2rem);
-    line-height: 1.05;
-    text-shadow: 0 10px 30px rgba(0,0,0,.45);
-  }
-
-  /* Purple word still pops */
-  .hero-text h1 span {
-    color: #6366F1;
-    text-shadow: 0 10px 30px rgba(0,0,0,.45);
-  }
-
-  /* “Cash Offers • Buyer Connections • Wholesale Dispo” */
-  .hero-text p {
-    font-size: 0.95rem;
-    letter-spacing: .04em;
-    word-spacing: .25em;
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 10px;
-    background: rgba(0,0,0,.28);      /* subtle chip so it reads on photo */
-    backdrop-filter: saturate(120%) blur(2px);
-    text-shadow: 0 3px 12px rgba(0,0,0,.45);
-  }
-
-  /* 3 CTA cards – stack, keep half-on photo look */
-  .actions {
-    margin-top: -18px;                 /* nudge up to overlap the photo */
-    gap: 14px;
-  }
-  .actions .action {
-    width: calc(100% - 32px);
-    max-width: 480px;
-    margin: 0 auto;
-    font-size: 1.05rem;
-    padding: 18px 22px;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.12);
-  }
-
-  /* Ensure background image centers nicely on phones */
-  .hero-bg {
-    background-position: center top;
-    background-size: cover;
-    background-attachment: scroll;
-  }
-}
-    /* Mobile-specific styles */
-@media (max-width: 768px) {
-  .hero-text h1 {
-    font-size: 2.2rem;   /* smaller headline */
-    line-height: 1.2;    /* tighten spacing */
-  }
-
-  .hero-text p {
-    font-size: 1rem;     /* smaller tagline */
-    letter-spacing: 0.05em;
-  }
-}
-    /* Mobile-specific styles */
-@media (max-width: 768px) {
-  .hero-text h1 {
-    font-size: 2.2rem;   /* smaller headline */
-    line-height: 1.2;    /* tighter spacing */
-  }
-
-  .hero-text p {
-    font-size: 1rem;     /* smaller tagline */
-    letter-spacing: 0.05em;
-  }
-
-  .hero-subtext {
-    font-size: 0.9rem;   /* shrink "Cash Offers • Buyer Connections • Wholesale Dispo" */
-    letter-spacing: 0.05em;
-  }
-}
-    /* Desktop: still inline with dots */
-.hero-subtext {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;                  /* more space between phrases */
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #fff;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.7); /* subtle shadow for readability */
-}
-.hero-subtext span + span::before {
-  content: "•";
-  margin: 0 1.2rem;
-  opacity: .85;
-}
-
-/* Mobile: stack with dividers, no background */
-@media (max-width: 768px) {
-  .hero-subtext {
-    display: flex;
-    flex-direction: column;   /* stack vertically */
-    align-items: center;
-    font-size: 1rem;
-    gap: 1rem;                /* space between lines */
-  }
-  .hero-subtext span {
-    display: block;
-    position: relative;
-    padding-bottom: 0.5rem;   /* space below each item */
-  }
-  .hero-subtext span:not(:last-child)::after {
-    content: "";
-    display: block;
-    width: 60%;              /* length of divider line */
-    margin: 0.5rem auto 0;
-    border-bottom: 1px solid rgba(255,255,255,0.6); /* subtle white line */
-  }
-  .hero-subtext span + span::before {
-    content: none;           /* remove dots */
-  }
-}
-    /* Remove dark background from mobile stacked version */
-@media (max-width: 768px) {
-  .hero-subtext {
-    background: none !important;   /* kill any parent background */
-  }
-  .hero-subtext span {
-    background: none !important;   /* kill dark box behind each word */
-    padding: 0;                    /* reset padding if it was creating the box */
-    box-shadow: none !important;   /* just in case a shadow was used */
-  }
-}
-    @media (max-width: 768px) {
-  .hero-text h1 {
-    font-size: 2.5rem;         /* shrink for mobile */
-    line-height: 1.2;          /* give breathing room */
-    white-space: normal !important; /* allow wrapping naturally */
-    text-align: center;        /* center for balance */
-  }
-}
-  </style>
+</style>
 </head>
 <body>
 
