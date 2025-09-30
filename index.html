@@ -95,12 +95,21 @@
     }
     .hero-subtext span+span::before{content:none}
 
-    /* 3 CTA cards – full width, still half-overlapping the photo */
-    .actions{margin-top:-18px;gap:14px}
-    .actions .action{
-      width:calc(100% - 32px);max-width:480px;margin:0 auto;
-      font-size:1.05rem;padding:18px 22px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.12)
-    }
+      /* 3 CTA cards – smaller and raised higher */
+  .actions {
+    margin-top: -40px;      /* raises buttons higher over the image */
+    gap: 10px;              /* tighter vertical spacing */
+  }
+
+  .actions .action {
+    width: 85%;             /* narrower than full width */
+    max-width: 360px;       /* smaller max width */
+    margin: 0 auto;
+    font-size: 0.95rem;     /* slightly smaller text */
+    padding: 14px 18px;     /* less padding = shorter tiles */
+    border-radius: 14px;    /* tighter corners */
+    box-shadow: 0 6px 18px rgba(0,0,0,.15); /* softer shadow */
+  }
   }
 </style>
 </head>
