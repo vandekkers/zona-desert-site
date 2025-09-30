@@ -92,6 +92,45 @@
       .zd-wrap{ padding:0 6px; }
       .zd-word{ height:24px !important; }
     }
+    /* =========================
+   MOBILE HEADER (≤768px)
+   ========================= */
+@media (max-width: 768px) {
+  .zd-wrap{
+    height: 56px;
+    padding-left: 10px;              /* logo a touch in from edge */
+    padding-right: 10px;             /* burger a touch in from edge */
+  }
+
+  /* Burger size/target */
+  #zd-menu-btn{
+    padding: 10px;
+    width: 44px; height: 44px;       /* comfy tap area */
+  }
+
+  /* Dropdown: move just below bar, align to right, nicer spacing */
+  #zd-menu{
+    top: 56px;                        /* sits under the smaller header */
+    right: 10px;                      /* aligns with burger */
+    gap: 8px;
+  }
+
+  /* Dropdown “chip buttons” */
+  #zd-menu a{
+    font-size: 15px;                  /* use site base font size */
+    font-weight: 600;                 /* match site tone */
+    color: #111;
+    background: rgba(255,255,255,.92);
+    border: 1px solid rgba(0,0,0,.06);
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  }
+  #zd-menu a:hover{
+    background: #fff;
+    border-color: rgba(99,102,241,.25); /* subtle Zona purple hint */
+  }
+}
   `;
 
   const style = document.createElement('style');
