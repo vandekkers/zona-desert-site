@@ -12,276 +12,101 @@
   <style>
     :root{ --zona-purple:#6366F1; }
 
-    /* ===== Base ===== */
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
-      color:#111;
-      background:#fff;
-    }
-    a{ color:inherit; }
+/* ===== Base ===== */
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+  color:#111; background:#fff;
+}
+a{ color:inherit; text-decoration:none; }
 
-    /* ===== Hero ===== */
-    .hero{
-      position:relative;
-      text-align:center;
-      color:#fff;
-    }
-    .hero img{
-      width:100%;
-      height:80vh;
-      object-fit:cover;
-      display:block;
-    }
-    .hero-text{
-      position:absolute;
-      top:25%;
-      left:50%;
-      transform:translateX(-50%);
-      text-align:center;
-      width:min(1100px, 92vw);
-    }
+/* ===== HERO ===== */
+.hero{ position:relative; text-align:center; color:#fff; }
+.hero img{ width:100%; height:80vh; object-fit:cover; display:block; }
 
-    .hero-text h1{
-      font-size:4.5rem;          /* desktop size */
-      font-weight:800;
-      line-height:1.1;
-      margin:0;
-      color:#fff;
-      text-shadow:2px 2px 8px rgba(0,0,0,.7);
-    }
-    .hero-text h1 span{
-      color:var(--zona-purple);
-      text-shadow:2px 2px 8px rgba(0,0,0,.7);
-    }
-
-    /* Desktop tagline (inline with bullets) */
-    .hero-subtext.desktop-only{
-      display:block;
-      margin:.9rem 0 0;
-      font-size:1.15rem;
-      font-weight:600;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      text-shadow:1px 1px 6px rgba(0,0,0,.7);
-      white-space:nowrap; /* keep one line on desktop */
-    }
-
-    /* Mobile tagline (stacked) – hidden on desktop by default */
-    .hero-subtext.mobile-only{
-      display:none;
-      margin:.8rem 0 0;
-      color:#fff;
-      text-shadow:2px 2px 8px rgba(0,0,0,.75);
-    }
-    .hero-subtext.mobile-only span{
-      display:block;
-      margin:.45rem 0;
-      position:relative;
-      padding:0;
-      background:none !important;
-      box-shadow:none !important;
-    }
-    .hero-subtext.mobile-only span:not(:last-child)::after{
-      content:"";
-      display:block;
-      width:60%;
-      margin:.5rem auto 0;
-      border-bottom:1px solid rgba(255,255,255,.6); /* thin divider */
-    }
-
-    /* ===== Action tiles (desktop) ===== */
-    .actions{
-      display:flex;
-      justify-content:center;
-      gap:2rem;
-      margin-top:-3rem;              /* overlap the image edge */
-      position:relative;
-      z-index:5;
-    }
-    .action{
-      display:flex; flex-direction:column; justify-content:center; align-items:center;
-      width:150px; height:100px;
-      line-height:1.25; text-align:center;
-      font-size:1.4rem;              /* desktop tile text size */
-      font-weight:700; text-decoration:none;
-      background:#fff; color:#000;
-      border-radius:12px;
-      box-shadow:0 4px 10px rgba(0,0,0,.15);
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
-    }
-    .action:hover{
-      background:var(--zona-purple); color:#fff;
-      transform:translateY(-3px);
-      box-shadow:0 6px 15px rgba(0,0,0,.25);
-    }
-
-    /* ===== Trusted & Footer (kept simple/neutral) ===== */
-    .trusted{ padding:3rem 1rem; text-align:center; }
-    .trusted h2{ font-size:2rem; font-weight:700; margin:0 0 1rem; }
-    .trusted .stats{ display:flex; justify-content:center; gap:2rem; font-size:1.2rem; margin-top:1rem; }
-
-    footer{
-      background:#111; color:#fff;
-      padding:2rem;
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
-    }
-    footer .logo{ font-size:1.2rem; font-weight:700; }
-    footer nav a{ margin-left:1.5rem; color:#fff; text-decoration:none; }
-    footer nav a:hover{ text-decoration:underline; }
-
-    /* ===== Show/hide helpers for desktop vs mobile markup ===== */
-    .desktop-only{ display:block; }
-    .mobile-only{ display:none; }
-
-    /* =========================
-       MOBILE ≤ 768px (desktop unchanged)
-       ========================= */
-    @media (max-width:768px){
-      .hero{ padding:56px 16px 0; min-height:72vh; }
-      .hero img{ height:68vh; }
-
-      .hero-text h1{
-        font-size:2.2rem;          /* smaller headline on phones */
-        line-height:1.2;
-        text-shadow:3px 3px 12px rgba(0,0,0,.85); /* stronger shadow so it pops */
-      }
-      .hero-text h1 span{
-        color:var(--zona-purple);
-        text-shadow:3px 3px 12px rgba(0,0,0,.85);
-      }
+.hero-text{
+  position:absolute; top:25%; left:50%; transform:translateX(-50%);
+  width:min(1100px,92vw); text-align:center;
 }
 
-      /* Swap taglines: hide desktop, show mobile */
-      .desktop-only{ display:none; }
-      .mobile-only{ display:block; }
-
-      /* Action tiles – smaller & raised higher */
-      .actions{
-        margin-top:-40px;
-        gap:10px;
-      }
-      .actions .action{
-        width:85%;
-        max-width:360px;
-        margin:0 auto;
-        font-size:1.2rem;          /* bigger than before, but mobile-friendly */
-        padding:14px 18px;
-        height:auto;
-        border-radius:14px;
-        box-shadow:0 6px 18px rgba(0,0,0,.15);
-      }
-    }
-    /* --- HERO: default (desktop) --------------------------------------------- */
-.hero-text h1 {
-  /* keep your desktop headline as-is; adjust only if you lost the size */
-  font-size: clamp(3.2rem, 6vw, 6rem); /* desktop sizing */
-  line-height: 1.05;
-  font-weight: 800;
-  text-shadow: 3px 3px 12px rgba(0,0,0,0.85);
+/* Desktop headline (unchanged look) */
+.hero-text h1{
+  font-size:clamp(3.5rem,6vw,6rem);
+  line-height:1.08; font-weight:800; margin:0; color:#fff;
+  text-shadow:3px 3px 12px rgba(0,0,0,.85);
 }
-.hero-text h1 span {
-  color: var(--zona-purple);
-  text-shadow: 3px 3px 12px rgba(0,0,0,0.85);
+.hero-text h1 span{
+  color:var(--zona-purple);
+  text-shadow:3px 3px 12px rgba(0,0,0,.85);
 }
 
-/* show desktop tagline, hide mobile by default */
-.hero-subtext.desktop-only { display: block; }
-.hero-subtext.mobile-only  { display: none; }
-
-/* typography for the one-line desktop tagline */
-.hero-subtext.desktop-only {
-  margin-top: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-}
-
-/* --- HERO: mobile overrides ------------------------------------------------ */
-@media (max-width: 768px) {
-  /* keep headline format (2 lines), just scale down a bit on phones */
-  .hero-text h1 { font-size: clamp(2.1rem, 8vw, 3.4rem); }
-  .hero-text h1 span { color: var(--zona-purple); }
-
-  /* hide desktop tagline, show stacked mobile tagline */
-  .hero-subtext.desktop-only { display: none; }
-  .hero-subtext.mobile-only  { 
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-  }
-
-  /* make each line centered, with a short divider under each except the last */
-  .hero-subtext.mobile-only span {
-    display: block;
-    margin: 8px auto;
-    padding: 2px 8px;
-    width: max-content;           /* keeps it tight under the text */
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.85);
-  }
-  .hero-subtext.mobile-only span::after {
-    content: "";
-    display: block;
-    width: 56%;                   /* short divider, not full width */
-    height: 2px;
-    margin: 6px auto 0;
-    background: rgba(255,255,255,0.9);
-    border-radius: 2px;
-  }
-  .hero-subtext.mobile-only span:last-child::after {
-    display: none;                /* no divider after the last line */
-  }
-  /* --- HERO tagline: desktop one-line (matches your HTML: class="hero-p desktop-only") */
+/* Desktop tagline (single line with bullets) */
 .hero-p.desktop-only{
   display:block;
   margin:.9rem 0 0;
-  font-size:1.15rem;
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:.08em;
+  font-size:1.15rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:.08em; white-space:nowrap;
   text-shadow:1px 1px 6px rgba(0,0,0,.7);
-  white-space:nowrap; /* keep one line on desktop */
 }
 
-/* hide the stacked version by default */
+/* Hide stacked version by default (desktop) */
 .hero-p.mobile-only{ display:none; }
 
-/* --- HERO tagline: mobile stacked (only on phones) --------------------------- */
-@media (max-width:768px){
-  /* swap: hide desktop, show stacked */
-  .hero-p.desktop-only{ display:none; }
-  .hero-p.mobile-only{
-    display:block;
-    margin:.8rem 0 0;
-    color:#fff;
-    text-align:center;
-    text-shadow:2px 2px 8px rgba(0,0,0,.85);
-    font-weight:700;
-    letter-spacing:.06em;
-  }
-  .hero-p.mobile-only span{
-    display:block;
-    margin:10px auto;
-    padding:2px 8px;
-    width:max-content;               /* keeps width tight to the text */
-  }
-  .hero-p.mobile-only span::after{
-    content:"";
-    display:block;
-    width:56%;                        /* short divider (not full width) */
-    height:2px;
-    margin:6px auto 0;
-    background:rgba(255,255,255,.9);
-    border-radius:2px;
-  }
-  .hero-p.mobile-only span:last-child::after{ display:none; }
+/* ===== Action tiles (desktop) ===== */
+.actions{
+  display:flex; justify-content:center; gap:2rem;
+  margin-top:-3rem; position:relative; z-index:5;
+}
+.action{
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  width:150px; height:100px; line-height:1.25; text-align:center;
+  font-size:1.4rem; font-weight:700; color:#000;
+  background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.15);
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.action:hover{
+  background:var(--zona-purple); color:#fff;
+  transform:translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,.25);
 }
 
+/* =========================
+   MOBILE ≤ 768px (desktop unchanged)
+   ========================= */
+@media (max-width:768px){
+  .hero{ padding:56px 16px 0; min-height:72vh; }
+  .hero img{ height:68vh; }
+
+  /* keep desktop 2-line format, just scale */
+  .hero-text h1{ font-size:clamp(2.1rem,8vw,3.4rem); }
+  .hero-text h1 span{ color:var(--zona-purple); }
+
+  /* swap taglines: hide desktop, show stacked mobile */
+  .hero-p.desktop-only{ display:none; }
+  .hero-p.mobile-only{
+    display:block; margin:.8rem 0 0; color:#fff; text-align:center;
+    font-weight:700; letter-spacing:.06em;
+    text-shadow:2px 2px 10px rgba(0,0,0,.85);
+  }
+
+  /* stacked lines with a short divider centered under each (except last) */
+  .hero-p.mobile-only span{
+    display:block; margin:10px auto; padding:2px 8px; width:max-content;
+  }
+  .hero-p.mobile-only span::after{
+    content:""; display:block; width:56%; height:2px;
+    margin:6px auto 0; background:rgba(255,255,255,.9); border-radius:2px;
+  }
+  .hero-p.mobile-only span:last-child::after{ display:none; }
+
+  /* action tiles slightly smaller and closer to the image edge */
+  .actions{ margin-top:-40px; gap:10px; }
+  .actions .action{
+    width:85%; max-width:360px; margin:0 auto;
+    font-size:1.2rem; padding:14px 18px; height:auto; border-radius:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+  }
 }
-    
   </style>
 </head>
 
