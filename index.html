@@ -228,40 +228,47 @@
     letter-spacing: 0.05em;
   }
 }
-    /* Desktop/tablet: one line with • separators */
+    /* Desktop: still inline with dots */
 .hero-subtext {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
+  gap: 2rem;                  /* more space between phrases */
   font-size: 1.15rem;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: #fff;
   text-transform: uppercase;
-}
-.hero-subtext span {
-  position: relative;
-  white-space: nowrap;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.7); /* subtle shadow for readability */
 }
 .hero-subtext span + span::before {
   content: "•";
-  margin: 0 .8rem;
-  opacity: .8;
+  margin: 0 1.2rem;
+  opacity: .85;
 }
 
-/* Mobile only: stack, remove dots, shrink text */
+/* Mobile: stack with dividers, no background */
 @media (max-width: 768px) {
   .hero-subtext {
-    display: block;
-    text-align: center;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;   /* stack vertically */
+    align-items: center;
+    font-size: 1rem;
+    gap: 1rem;                /* space between lines */
   }
   .hero-subtext span {
     display: block;
-    margin: .25rem 0;
+    position: relative;
+    padding-bottom: 0.5rem;   /* space below each item */
+  }
+  .hero-subtext span:not(:last-child)::after {
+    content: "";
+    display: block;
+    width: 60%;              /* length of divider line */
+    margin: 0.5rem auto 0;
+    border-bottom: 1px solid rgba(255,255,255,0.6); /* subtle white line */
   }
   .hero-subtext span + span::before {
-    content: none;
+    content: none;           /* remove dots */
   }
 }
   </style>
