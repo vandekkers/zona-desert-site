@@ -271,6 +271,17 @@
     content: none;           /* remove dots */
   }
 }
+    /* Remove dark background from mobile stacked version */
+@media (max-width: 768px) {
+  .hero-subtext {
+    background: none !important;   /* kill any parent background */
+  }
+  .hero-subtext span {
+    background: none !important;   /* kill dark box behind each word */
+    padding: 0;                    /* reset padding if it was creating the box */
+    box-shadow: none !important;   /* just in case a shadow was used */
+  }
+}
   </style>
 </head>
 <body>
