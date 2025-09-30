@@ -114,6 +114,61 @@ a{ color:inherit; text-decoration:none; }
   border-radius: 12px;  /* slightly tighter corners */
   box-shadow: 0 5px 14px rgba(0,0,0,.15);
 }
+  /* =========================
+   MOBILE: full-bleed hero + slow pan
+   ========================= */
+@media (max-width: 768px) {
+
+  /* Make the hero section edge-to-edge and remove any padding/margins */
+  .hero{
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;          /* hide the parts as the image slides */
+    min-height: 68vh;          /* keep a nice mobile height */
+  }
+
+  /* The actual image: fill, no rounding, and animate horizontally */
+  .hero img{
+    display: block;
+    width: 120vw;              /* wider than the screen so there’s room to pan */
+    height: 100%;
+    min-height: 68vh;
+    object-fit: cover;         /* keep the crop clean */
+    border-radius: 0;          /* kill any rounding that kept it from the edges */
+    transform: translateX(0);
+    animation: heroPan 18s ease-in-out infinite alternate;
+  }
+
+  /* If a parent wrapper adds page padding, neutralize it just for the hero */
+  .hero + * { /* next section after hero keeps its normal spacing */
+    /* no change */
+  }
+  .zd-wrap, .container, .page, .site { /* whichever wrapper you use */
+    /* Only remove padding on the hero itself, but just in case: */
+  }
+
+  /* Keep the headline/labels positioned as-is and readable */
+  .hero-text{
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: clamp(14vh, 20vh, 24vh);
+    z-index: 2;
+  }
+
+  /* Accessibility: users who prefer reduced motion get a static photo */
+  @media (prefers-reduced-motion: reduce){
+    .hero img{ animation: none; transform: translateX(0); }
+  }
+}
+
+/* Keyframes for the left↔right pan */
+@keyframes heroPan{
+  0%   { transform: translateX(0); }          /* start left */
+  50%  { transform: translateX(-20vw); }      /* slide right by ~20vw */
+  100% { transform: translateX(0); }          /* bounce back left */
+}
 }
   </style>
 </head>
