@@ -151,26 +151,6 @@
         color:var(--zona-purple);
         text-shadow:3px 3px 12px rgba(0,0,0,.85);
       }
-      .hero-text p {
-    display: flex;
-    flex-direction: column; /* stack vertically */
-    align-items: center;   /* center horizontally */
-    text-align: center;
-    font-size: 1.2rem;
-    gap: 0.8rem;
-    margin-top: 1rem;
-  }
-
-  .hero-text p span {
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 0.4rem;
-  }
-
-  .hero-text p span:last-child {
-    border-bottom: none;
-  }
 }
 
       /* Swap taglines: hide desktop, show mobile */
@@ -254,7 +234,54 @@
   .hero-subtext.mobile-only span:last-child::after {
     display: none;                /* no divider after the last line */
   }
+  /* --- HERO tagline: desktop one-line (matches your HTML: class="hero-p desktop-only") */
+.hero-p.desktop-only{
+  display:block;
+  margin:.9rem 0 0;
+  font-size:1.15rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  text-shadow:1px 1px 6px rgba(0,0,0,.7);
+  white-space:nowrap; /* keep one line on desktop */
 }
+
+/* hide the stacked version by default */
+.hero-p.mobile-only{ display:none; }
+
+/* --- HERO tagline: mobile stacked (only on phones) --------------------------- */
+@media (max-width:768px){
+  /* swap: hide desktop, show stacked */
+  .hero-p.desktop-only{ display:none; }
+  .hero-p.mobile-only{
+    display:block;
+    margin:.8rem 0 0;
+    color:#fff;
+    text-align:center;
+    text-shadow:2px 2px 8px rgba(0,0,0,.85);
+    font-weight:700;
+    letter-spacing:.06em;
+  }
+  .hero-p.mobile-only span{
+    display:block;
+    margin:10px auto;
+    padding:2px 8px;
+    width:max-content;               /* keeps width tight to the text */
+  }
+  .hero-p.mobile-only span::after{
+    content:"";
+    display:block;
+    width:56%;                        /* short divider (not full width) */
+    height:2px;
+    margin:6px auto 0;
+    background:rgba(255,255,255,.9);
+    border-radius:2px;
+  }
+  .hero-p.mobile-only span:last-child::after{ display:none; }
+}
+
+}
+    
   </style>
 </head>
 
