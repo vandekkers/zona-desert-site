@@ -193,6 +193,68 @@
         box-shadow:0 6px 18px rgba(0,0,0,.15);
       }
     }
+    /* --- HERO: default (desktop) --------------------------------------------- */
+.hero-text h1 {
+  /* keep your desktop headline as-is; adjust only if you lost the size */
+  font-size: clamp(3.2rem, 6vw, 6rem); /* desktop sizing */
+  line-height: 1.05;
+  font-weight: 800;
+  text-shadow: 3px 3px 12px rgba(0,0,0,0.85);
+}
+.hero-text h1 span {
+  color: var(--zona-purple);
+  text-shadow: 3px 3px 12px rgba(0,0,0,0.85);
+}
+
+/* show desktop tagline, hide mobile by default */
+.hero-subtext.desktop-only { display: block; }
+.hero-subtext.mobile-only  { display: none; }
+
+/* typography for the one-line desktop tagline */
+.hero-subtext.desktop-only {
+  margin-top: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+}
+
+/* --- HERO: mobile overrides ------------------------------------------------ */
+@media (max-width: 768px) {
+  /* keep headline format (2 lines), just scale down a bit on phones */
+  .hero-text h1 { font-size: clamp(2.1rem, 8vw, 3.4rem); }
+  .hero-text h1 span { color: var(--zona-purple); }
+
+  /* hide desktop tagline, show stacked mobile tagline */
+  .hero-subtext.desktop-only { display: none; }
+  .hero-subtext.mobile-only  { 
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  /* make each line centered, with a short divider under each except the last */
+  .hero-subtext.mobile-only span {
+    display: block;
+    margin: 8px auto;
+    padding: 2px 8px;
+    width: max-content;           /* keeps it tight under the text */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.85);
+  }
+  .hero-subtext.mobile-only span::after {
+    content: "";
+    display: block;
+    width: 56%;                   /* short divider, not full width */
+    height: 2px;
+    margin: 6px auto 0;
+    background: rgba(255,255,255,0.9);
+    border-radius: 2px;
+  }
+  .hero-subtext.mobile-only span:last-child::after {
+    display: none;                /* no divider after the last line */
+  }
+}
   </style>
 </head>
 
