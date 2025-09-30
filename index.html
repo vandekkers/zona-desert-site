@@ -169,6 +169,50 @@ a{ color:inherit; text-decoration:none; }
   50%  { transform: translateX(-20vw); }      /* slide right by ~20vw */
   100% { transform: translateX(0); }          /* bounce back left */
 }
+  /* --- fix mobile hero alignment (mobile only) --- */
+@media (max-width: 768px) {
+  /* keep image behavior you added, unchanged */
+
+  /* center the overlay text container */
+  .hero-text{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;           /* center the block */
+    padding: 56px 16px 20px;  /* breathing room */
+    text-align: center;       /* center all text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* center child spans */
+  }
+
+  .hero-text h1{
+    margin: 0;                /* kill any left offset */
+    line-height: 1.1;
+  }
+
+  /* desktop tagline stays hidden on mobile */
+  .hero-subtext.desktop-only{ display: none; }
+
+  /* mobile stacked tagline: centered & neat */
+  .hero-subtext.mobile-only{
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    text-align: center;
+  }
+  .hero-subtext.mobile-only span{
+    display: block;
+    width: min(560px, 86vw);
+    margin: 10px auto;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.5);
+  }
+  .hero-subtext.mobile-only span:last-child{
+    border-bottom: 0;         /* no divider after last line */
+  }
+}
 }
   </style>
 </head>
