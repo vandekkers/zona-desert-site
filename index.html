@@ -68,16 +68,25 @@
   /* =========================
      MOBILE ≤ 768px (desktop untouched)
      ========================= */
-  @media (max-width:768px){
-    .hero{padding:56px 16px 0;min-height:72vh}
-    .hero-text h1{font-size:clamp(2.2rem,11vw,3.2rem);line-height:1.08;text-shadow:0 10px 30px rgba(0,0,0,.45)}
-    .hero-text h1 span{text-shadow:0 10px 30px rgba(0,0,0,.45)}
+  @media (max-width: 768px) {
+  /* Stronger shadow for headline on mobile */
+  .hero-text h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.85);  /* heavier shadow */
+  }
 
-    /* Stack the three phrases with thin dividers—no background boxes */
-    .hero-subtext{
-      flex-direction:column;align-items:center;gap:1rem;
-      font-size:1rem;background:none !important;box-shadow:none !important;
-    }
+  .hero-text h1 span {
+    color: #6366F1;
+    text-shadow: 3px 3px 12px rgba(0,0,0,0.85);  /* also shadowed */
+  }
+
+  /* Stronger shadow for subtext phrases */
+  .hero-subtext {
+    font-size: 0.9rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.75);
+  }
+}
     .hero-subtext span{
       position:relative;display:block;padding:0;background:none !important;box-shadow:none !important;
     }
