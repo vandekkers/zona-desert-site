@@ -23,6 +23,48 @@
     .header-adjust .logo { margin-left: var(--logo-ml-desktop); margin-top: var(--logo-mt-desktop); }
     .header-adjust .cta  { margin-right: var(--cta-mr-desktop); margin-top: var(--cta-mt-desktop); }
   }
+   .steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 450px; /* keeps it neat in the left column */
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.step-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #6366F1; /* Zona purple */
+  min-width: 30px;
+}
+
+.step-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #111;
+}
+
+.step-content h3 .dot {
+  color: #000; /* black dot after title */
+}
+
+.step-content p {
+  margin: 0.25rem 0 0;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
 </style>
 </head>
 <body class="bg-slate-50">
@@ -49,6 +91,32 @@
     <li>• Close In As Little As 7–14 Days</li>
     <li>• You Pick The Closing Date</li>
   </ul>
+  <!-- Steps Section -->
+<div class="steps">
+  <div class="step">
+    <div class="step-number">1.</div>
+    <div class="step-content">
+      <h3>Submit Your Property<span class="dot">.</span></h3>
+      <p>Fill out our quick form with basic details about your property.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2.</div>
+    <div class="step-content">
+      <h3>We Review<span class="dot">.</span></h3>
+      <p>Our team analyzes your property and market conditions.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3.</div>
+    <div class="step-content">
+      <h3>Get Your Offer<span class="dot">.</span></h3>
+      <p>Receive a no-obligation fair cash offer within 24 hours.</p>
+    </div>
+  </div>
+</div>
 </section>
 
 
