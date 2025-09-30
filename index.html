@@ -83,18 +83,19 @@
   }
 
   /* Stronger shadow for subtext phrases */
-  .hero-subtext {
-    font-size: 0.9rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.75);
-  }
+  .hero-subtext span{
+  position: relative;
+  display: inline-block;   /* ✅ keep them inline so they don’t stack */
+  padding: 0;
+  background: none !important;
+  box-shadow: none !important;
 }
-    .hero-subtext span{
-      position:relative;display:block;padding:0;background:none !important;box-shadow:none !important;
-    }
-    .hero-subtext span:not(:last-child)::after{
-      content:"";display:block;width:60%;margin:.5rem auto 0;border-bottom:1px solid rgba(255,255,255,.6);
-    }
-    .hero-subtext span+span::before{content:none}
+.hero-subtext span:not(:last-child)::after{
+  content: "•";            /* ✅ use a bullet divider */
+  margin: 0 1rem;
+  opacity: .85;
+}
+.hero-subtext span+span::before{content: none;}
 
       /* 3 CTA cards – smaller and raised higher */
   .actions {
