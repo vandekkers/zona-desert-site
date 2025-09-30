@@ -127,14 +127,16 @@
     text-align: center;
   }
   .hero-text h1 {
-    font-size: clamp(2.1rem,8vw,3.4rem);
-    line-height: 1.2;
-    text-shadow: 3px 3px 10px rgba(0,0,0,.85);
-  }
-  /* increase space between the headline and the stacked tagline (mobile only) */
-.hero-p.mobile-only{
-  margin-top: 2.5rem;   /* try 2rem if you want it a bit farther */
+  font-size: clamp(2.1rem, 8vw, 3.4rem);
+  line-height: 1.2;
+  text-shadow: 3px 3px 10px rgba(0,0,0,.85);
+  margin-bottom: 1rem;   /* add spacing below headline */
 }
+  /* extra space between the headline and the stacked tagline (mobile only) */
+.hero-subtext.mobile-only {
+  margin-top: 2rem;    /* bump this up/down to taste */
+}
+
   /* swap taglines */
   .hero-p.desktop-only { display: none; }
   .hero-p.mobile-only {
