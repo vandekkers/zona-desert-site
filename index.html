@@ -97,88 +97,95 @@
       box-shadow: 0 6px 15px rgba(0,0,0,.25);
     }
 
-    /* =========================
-       MOBILE ≤ 768px
-       ========================= */
-    @media (max-width:768px) {
-      .hero {
-        margin: 0;
-        padding: 0;
-        position: relative;
-        overflow: hidden;
-        min-height: 68vh;
-      }
-      .hero img {
-        display: block;
-        width: 120vw;
-        height: 100%;
-        min-height: 68vh;
-        object-fit: cover;
-        border-radius: 0;
-        transform: translateX(0);
-        animation: heroPan 18s ease-in-out infinite alternate;
-      }
-      .hero-text {
-        position: absolute;
-        top: clamp(14vh,20vh,24vh);
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        text-align: center;
-      }
-      .hero-text h1 {
-        font-size: clamp(2.1rem,8vw,3.4rem);
-        line-height: 1.2;
-        text-shadow: 3px 3px 10px rgba(0,0,0,.85);
-      }
-      /* swap taglines */
-      .hero-p.desktop-only { display: none; }
-      .hero-p.mobile-only {
-        display: block;
-        margin: .8rem 0 0;
-        color: #fff;
-        text-align: center;
-        font-weight: 700;
-        letter-spacing: .06em;
-        text-shadow: 2px 2px 10px rgba(0,0,0,.85);
-      }
-      .hero-p.mobile-only span {
-        display: block;
-        margin: 10px auto;
-        padding: 2px 8px;
-        width: max-content;
-      }
-      .hero-p.mobile-only span::after {
-        content: "";
-        display: block;
-        width: 56%;
-        height: 2px;
-        margin: 6px auto 0;
-        background: rgba(255,255,255,.9);
-        border-radius: 2px;
-      }
-      .hero-p.mobile-only span:last-child::after { display: none; }
+    /* ===== MOBILE-ONLY OVERRIDES ===== */
+@media (max-width:768px){
 
-      /* smaller action tiles */
-      .actions { margin-top: -40px; gap: 10px; }
-      .actions .action {
-        width: 75%;
-        max-width: 300px;
-        margin: 0 auto;
-        font-size: 1.05rem;
-        padding: 12px 16px;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 5px 14px rgba(0,0,0,.15);
-      }
-    }
+  /* Full-bleed hero (touches header + screen edges) */
+  body { margin: 0; }
+  .hero{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;           /* fill the viewport */
+    position: relative;
+    z-index: 1;                  /* sit behind floating tiles */
+  }
+  .hero img{
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;           /* cover without distortion */
+    object-position: center;     /* center crop */
+    display:block;               /* remove any inline gap */
+    border-radius: 0;            /* no rounded corners on mobile */
+  }
 
-    /* Hero image pan animation (mobile only) */
-    @keyframes heroPan {
-      0%   { transform: translateX(0); }
-      50%  { transform: translateX(-20vw); }
-      100% { transform: translateX(0); }
-    }
+  /* Headline stays as-is (don’t stack differently) */
+  .hero-text{
+    position:absolute;
+    left: 50%;
+    top: 18vh;                   /* adjust if you want it higher/lower */
+    transform: translateX(-50%);
+    width: 88vw;                 /* keep readable on small screens */
+    text-align: left;
+  }
+  .hero-text h1{
+    font-size: clamp(2.0rem, 6.6vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 3px 3px 12px rgba(0,0,0,.85); /* mobile pop */
+  }
+  .hero-text h1 span{            /* “Possibilities.” */
+    text-shadow: 3px 3px 12px rgba(0,0,0,.85);
+  }
+
+  /* Show stacked tagline on mobile, hide desktop line */
+  .desktop-only{ display: none !important; }
+  .mobile-only{ display: block !important; }
+
+  /* Stacked tagline (no dark box), centered with thin dividers */
+  .hero-subtext.mobile-only{
+    position:absolute;
+    left: 50%;
+    top: calc(18vh + 6.5rem);    /* below the headline; tweak as needed */
+    transform: translateX(-50%);
+    width: 86vw;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: .02em;
+  }
+  .hero-subtext.mobile-only span{
+    display:block;
+    padding: 10px 0 12px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,.7);   /* subtle pop over image */
+  }
+  .hero-subtext.mobile-only span + span{
+    border-top: 1px solid rgba(255,255,255,.85); /* short divider */
+    margin-top: 8px;
+  }
+
+  /* Action tiles: a bit smaller and lifted up */
+  .actions{
+    position: relative;
+    z-index: 2;                  /* above the photo */
+    margin-top: -56px;           /* pull upward into the image */
+    gap: 10px;
+  }
+  .actions .action{
+    width: 30.5%;
+    min-width: 0;
+    padding: 16px 10px;
+    border-radius: 18px;
+  }
+  .actions .action h4{
+    font-size: 1.05rem;          /* slightly smaller label */
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  /* Keep the next section snug to the hero */
+  .trust{
+    margin-top: 22px;
+  }
+}
   </style>
 </head>
 
