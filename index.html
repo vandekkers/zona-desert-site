@@ -228,6 +228,42 @@
     letter-spacing: 0.05em;
   }
 }
+    /* Desktop/tablet: one line with • separators */
+.hero-subtext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hero-subtext span {
+  position: relative;
+  white-space: nowrap;
+}
+.hero-subtext span + span::before {
+  content: "•";
+  margin: 0 .8rem;
+  opacity: .8;
+}
+
+/* Mobile only: stack, remove dots, shrink text */
+@media (max-width: 768px) {
+  .hero-subtext {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
+  .hero-subtext span {
+    display: block;
+    margin: .25rem 0;
+  }
+  .hero-subtext span + span::before {
+    content: none;
+  }
+}
   </style>
 </head>
 <body>
@@ -240,7 +276,11 @@
     <img src="assets/modern_house_background_landscape.png" alt="Modern House Background">
     <div class="hero-text">
       <h1>Turning Properties<br>Into <span>Possibilities.</span></h1>
-      <p>Cash Offers • Buyer Connections • Wholesale Dispo</p>
+     <p class="hero-subtext">
+  <span>Cash Offers</span>
+  <span>Buyer Connections</span>
+  <span>Wholesale Dispo</span>
+</p>
     </div>
   </section>
 
