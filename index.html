@@ -10,211 +10,150 @@
   <link rel="preload" as="image" href="assets/modern_house_background_landscape.png" />
 
   <style>
-    :root{ --zona-purple:#6366F1; }
+/* ============================= */
+/* BASE STYLES (Desktop default) */
+/* ============================= */
 
-/* ===== Base ===== */
-*{ box-sizing:border-box; }
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
-  color:#111; background:#fff;
-}
-a{ color:inherit; text-decoration:none; }
-
-/* ===== HERO ===== */
-.hero{ position:relative; text-align:center; color:#fff; }
-.hero img{ width:100%; height:80vh; object-fit:cover; display:block; }
-
-.hero-text{
-  position:absolute; top:25%; left:50%; transform:translateX(-50%);
-  width:min(1100px,92vw); text-align:center;
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
 }
 
-/* Desktop headline (unchanged look) */
-.hero-text h1{
-  font-size:clamp(3.5rem,6vw,6rem);
-  line-height:1.08; font-weight:800; margin:0; color:#fff;
-  text-shadow:3px 3px 12px rgba(0,0,0,.85);
-}
-.hero-text h1 span{
-  color:var(--zona-purple);
-  text-shadow:3px 3px 12px rgba(0,0,0,.85);
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Desktop tagline (single line with bullets) */
-.hero-p.desktop-only{
-  display:block;
-  margin:.9rem 0 0;
-  font-size:1.15rem; font-weight:600; text-transform:uppercase;
-  letter-spacing:.08em; white-space:nowrap;
-  text-shadow:1px 1px 6px rgba(0,0,0,.7);
+.hero-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
 }
 
-/* Hide stacked version by default (desktop) */
-.hero-p.mobile-only{ display:none; }
-
-/* ===== Action tiles (desktop) ===== */
-.actions{
-  display:flex; justify-content:center; gap:2rem;
-  margin-top:-3rem; position:relative; z-index:5;
-}
-.action{
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  width:150px; height:100px; line-height:1.25; text-align:center;
-  font-size:1.4rem; font-weight:700; color:#000;
-  background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.15);
-  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
-}
-.action:hover{
-  background:var(--zona-purple); color:#fff;
-  transform:translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,.25);
+.hero-text h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* =========================
-   MOBILE ≤ 768px (desktop unchanged)
-   ========================= */
-@media (max-width:768px){
-  .hero{ padding:56px 16px 0; min-height:72vh; }
-  .hero img{ height:68vh; }
+.hero-text h1 span {
+  color: #6366F1; /* Zona purple */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
 
-  /* keep desktop 2-line format, just scale */
-  .hero-text h1{ font-size:clamp(2.1rem,8vw,3.4rem); }
-  .hero-text h1 span{ color:var(--zona-purple); }
+.hero-subtext {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-top: 1rem;
+  white-space: nowrap;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
 
-  /* swap taglines: hide desktop, show stacked mobile */
-  .hero-p.desktop-only{ display:none; }
-  .hero-p.mobile-only{
-    display:block; margin:.8rem 0 0; color:#fff; text-align:center;
-    font-weight:700; letter-spacing:.06em;
-    text-shadow:2px 2px 10px rgba(0,0,0,.85);
-  }
+.desktop-only { display: block; }
+.mobile-only { display: none; }
 
-  /* stacked lines with a short divider centered under each (except last) */
-  .hero-p.mobile-only span{
-    display:block; margin:10px auto; padding:2px 8px; width:max-content;
-  }
-  .hero-p.mobile-only span::after{
-    content:""; display:block; width:56%; height:2px;
-    margin:6px auto 0; background:rgba(255,255,255,.9); border-radius:2px;
-  }
-  .hero-p.mobile-only span:last-child::after{ display:none; }
-
-  /* action tiles slightly smaller and closer to the image edge */
+/* Action tiles (desktop defaults) */
 .actions {
-  margin-top: -40px;
-  gap: 10px;
+  margin-top: -60px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
+
 .actions .action {
-  width: 75%;           /* narrower than before (was 85%) */
-  max-width: 300px;     /* smaller cap (was 360px) */
-  margin: 0 auto;
-  font-size: 1.05rem;   /* shrink text a little (was 1.2rem) */
-  padding: 12px 16px;   /* less padding = smaller height */
-  height: auto;
-  border-radius: 12px;  /* slightly tighter corners */
-  box-shadow: 0 5px 14px rgba(0,0,0,.15);
+  display: block;
+  width: 280px;
+  padding: 18px 12px;
+  background: #fff;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: black;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-decoration: none;
+  transition: transform 0.2s ease;
 }
-  /* =========================
-   MOBILE: full-bleed hero + slow pan
-   ========================= */
+
+.actions .action:hover {
+  transform: translateY(-4px);
+}
+
+/* ============================= */
+/* MOBILE ONLY OVERRIDES         */
+/* ============================= */
 @media (max-width: 768px) {
 
-  /* Make the hero section edge-to-edge and remove any padding/margins */
-  .hero{
-    margin: 0;
-    padding: 0;
-    position: relative;
-    overflow: hidden;          /* hide the parts as the image slides */
-    min-height: 68vh;          /* keep a nice mobile height */
+  .hero {
+    min-height: 72vh;
+    background: url('assets/modern_house_background_landscape.png') no-repeat center;
+    background-size: 150% auto;
+    animation: panBackground 12s ease-in-out infinite alternate;
   }
 
-  /* The actual image: fill, no rounding, and animate horizontally */
-  .hero img{
-    display: block;
-    width: 120vw;              /* wider than the screen so there’s room to pan */
-    height: 100%;
-    min-height: 68vh;
-    object-fit: cover;         /* keep the crop clean */
-    border-radius: 0;          /* kill any rounding that kept it from the edges */
-    transform: translateX(0);
-    animation: heroPan 18s ease-in-out infinite alternate;
-  }
+  .hero img { display: none; } /* Hide the <img> on mobile, use background instead */
 
-  /* If a parent wrapper adds page padding, neutralize it just for the hero */
-  .hero + * { /* next section after hero keeps its normal spacing */
-    /* no change */
-  }
-  .zd-wrap, .container, .page, .site { /* whichever wrapper you use */
-    /* Only remove padding on the hero itself, but just in case: */
-  }
-
-  /* Keep the headline/labels positioned as-is and readable */
-  .hero-text{
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    top: clamp(14vh, 20vh, 24vh);
-    z-index: 2;
-  }
-
-  /* Accessibility: users who prefer reduced motion get a static photo */
-  @media (prefers-reduced-motion: reduce){
-    .hero img{ animation: none; transform: translateX(0); }
-  }
-}
-
-/* Keyframes for the left↔right pan */
-@keyframes heroPan{
-  0%   { transform: translateX(0); }          /* start left */
-  50%  { transform: translateX(-20vw); }      /* slide right by ~20vw */
-  100% { transform: translateX(0); }          /* bounce back left */
-}
-  /* --- fix mobile hero alignment (mobile only) --- */
-@media (max-width: 768px) {
-  /* keep image behavior you added, unchanged */
-
-  /* center the overlay text container */
-  .hero-text{
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;           /* center the block */
-    padding: 56px 16px 20px;  /* breathing room */
-    text-align: center;       /* center all text */
-    display: flex;
-    flex-direction: column;
-    align-items: center;      /* center child spans */
-  }
-
-  .hero-text h1{
-    margin: 0;                /* kill any left offset */
-    line-height: 1.1;
-  }
-
-  /* desktop tagline stays hidden on mobile */
-  .hero-subtext.desktop-only{ display: none; }
-
-  /* mobile stacked tagline: centered & neat */
-  .hero-subtext.mobile-only{
-    display: block;
-    width: 100%;
-    margin-top: 8px;
+  .hero-text {
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     text-align: center;
   }
-  .hero-subtext.mobile-only span{
+
+  .hero-text h1 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.85);
+  }
+
+  .hero-subtext.desktop-only { display: none; }
+  .hero-subtext.mobile-only {
     display: block;
-    width: min(560px, 86vw);
-    margin: 10px auto;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,.5);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    text-align: center;
   }
-  .hero-subtext.mobile-only span:last-child{
-    border-bottom: 0;         /* no divider after last line */
+
+  .hero-subtext.mobile-only span {
+    display: block;
+    margin: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    padding-bottom: 4px;
+  }
+
+  .actions {
+    margin-top: -30px;
+    gap: 12px;
+  }
+
+  .actions .action {
+    width: 100px;
+    font-size: 1rem;
+    padding: 12px 8px;
   }
 }
+
+/* Keyframes for pan effect */
+@keyframes panBackground {
+  0%   { background-position: left center; }
+  100% { background-position: right center; }
 }
-  </style>
+</style>
 </head>
 
 <body>
