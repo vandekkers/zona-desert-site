@@ -97,87 +97,87 @@
       box-shadow: 0 6px 15px rgba(0,0,0,.25);
     }
 
-/* ===== MOBILE-ONLY OVERRIDES (≤768px) — matches your screenshot ===== */
-@media (max-width:768px){
+/* =========================
+   MOBILE ≤ 768px
+   ========================= */
+@media (max-width:768px) {
+  .hero {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 68vh;
+  }
+  .hero img {
+    display: block;
+    width: 120vw;
+    height: 100%;
+    min-height: 68vh;
+    object-fit: cover;
+    border-radius: 0;
+    transform: translateX(0);
+    animation: heroPan 18s ease-in-out infinite alternate;
+  }
+  .hero-text {
+    position: absolute;
+    top: clamp(14vh,20vh,24vh);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+  }
+  .hero-text h1 {
+    font-size: clamp(2.1rem,8vw,3.4rem);
+    line-height: 1.2;
+    text-shadow: 3px 3px 10px rgba(0,0,0,.85);
+  }
+  /* swap taglines */
+  .hero-p.desktop-only { display: none; }
+  .hero-p.mobile-only {
+    display: block;
+    margin: .8rem 0 0;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-shadow: 2px 2px 10px rgba(0,0,0,.85);
+  }
+  .hero-p.mobile-only span {
+    display: block;
+    margin: 10px auto;
+    padding: 2px 8px;
+    width: max-content;
+  }
+  .hero-p.mobile-only span::after {
+    content: "";
+    display: block;
+    width: 56%;
+    height: 2px;
+    margin: 6px auto 0;
+    background: rgba(255,255,255,.9);
+    border-radius: 2px;
+  }
+  .hero-p.mobile-only span:last-child::after { display: none; }
 
-  /* make the hero photo full-bleed under the header */
-  body{ margin:0; }
-  .hero{
-    position:relative;
-    margin:0;
-    padding:0;
-    min-height:75vh;
-    z-index:1;
+  /* smaller action tiles */
+  .actions { margin-top: -40px; gap: 10px; }
+  .actions .action {
+    width: 75%;
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    padding: 12px 16px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 14px rgba(0,0,0,.15);
   }
-  .hero img{
-    width:100vw;
-    height:75vh;
-    display:block;
-    object-fit:cover;
-    object-position:center;
-    border-radius:0;              /* no rounded corners on mobile */
-  }
+}
 
-  /* headline centered, same two-line layout */
-  .hero-text{
-    position:absolute;
-    left:50%;
-    top:22vh;                     /* nudge up/down as you like */
-    transform:translateX(-50%);
-    width:min(92vw, 680px);
-    text-align:center;
-  }
-  .hero-text h1{
-    margin:0;
-    line-height:1.08;
-    font-size:clamp(2rem, 8vw, 3.2rem);
-    text-shadow:2px 2px 10px rgba(0,0,0,.70);
-  }
-  .hero-text h1 span{
-    /* your Zona purple should already be set globally */
-    text-shadow:2px 2px 10px rgba(0,0,0,.70);
-  }
-
-  /* use stacked tagline on mobile; hide desktop line */
-  .desktop-only{ display:none !important; }
-  .mobile-only{ display:block !important; margin-top:12px; }
-
-  /* stacked items, centered, with short divider lines (not full width) */
-  .hero-subtext.mobile-only{
-    text-align:center;
-    font-weight:700;
-    letter-spacing:.02em;
-  }
-  .hero-subtext.mobile-only span{
-    display:block;
-    padding:8px 0;
-    text-shadow:2px 2px 8px rgba(0,0,0,.60);
-  }
-  .hero-subtext.mobile-only span + span{
-    margin-top:8px;
-    border-top:1px solid rgba(255,255,255,.85);
-    width:66%;                    /* short divider like your shot */
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  /* action tiles a touch smaller and pulled up into the image */
-  .actions{
-    position:relative;
-    z-index:2;
-    margin-top:-44px;             /* overlap into photo */
-    gap:8px;
-  }
-  .actions .action{
-    width:31%;
-    padding:14px 8px;
-    border-radius:18px;
-  }
-  .actions .action h4{
-    margin:0;
-    font-size:1rem;
-    line-height:1.15;
-  }
+/* Hero image pan animation (mobile only) */
+@keyframes heroPan {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-20vw); }
+  100% { transform: translateX(0); }
 }
   </style>
 </head>
