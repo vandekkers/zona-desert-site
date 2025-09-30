@@ -140,6 +140,65 @@
     footer nav a:hover {
       text-decoration: underline;
     }
+    /* =========================
+   MOBILE ONLY (≤768px)
+   Keeps desktop unchanged
+   ========================= */
+@media (max-width: 768px) {
+  /* Make the hero section breathe on phones */
+  .hero {
+    padding: 56px 16px 0;
+    min-height: 72vh;
+  }
+
+  /* Big headline—fluid sizing & tight line-height */
+  .hero-text h1 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    line-height: 1.05;
+    text-shadow: 0 10px 30px rgba(0,0,0,.45);
+  }
+
+  /* Purple word still pops */
+  .hero-text h1 span {
+    color: #6366F1;
+    text-shadow: 0 10px 30px rgba(0,0,0,.45);
+  }
+
+  /* “Cash Offers • Buyer Connections • Wholesale Dispo” */
+  .hero-text p {
+    font-size: 0.95rem;
+    letter-spacing: .04em;
+    word-spacing: .25em;
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,.28);      /* subtle chip so it reads on photo */
+    backdrop-filter: saturate(120%) blur(2px);
+    text-shadow: 0 3px 12px rgba(0,0,0,.45);
+  }
+
+  /* 3 CTA cards – stack, keep half-on photo look */
+  .actions {
+    margin-top: -18px;                 /* nudge up to overlap the photo */
+    gap: 14px;
+  }
+  .actions .action {
+    width: calc(100% - 32px);
+    max-width: 480px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    padding: 18px 22px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  }
+
+  /* Ensure background image centers nicely on phones */
+  .hero-bg {
+    background-position: center top;
+    background-size: cover;
+    background-attachment: scroll;
+  }
+}
   </style>
 </head>
 <body>
