@@ -1,156 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zona Desert Property Solutions</title>
-  <link rel="stylesheet" href="assets/css/style.css">
- <style>
-  :root{
-    --zona-purple:#6366F1;
-  }
+  <meta name="description" content="Turning Properties Into Possibilities." />
 
-  body{margin:0;font-family:Arial,Helvetica,sans-serif}
+  <!-- (Optional) Speed up future loads of the hero image -->
+  <link rel="preload" as="image" href="assets/modern_house_background_landscape.png" />
 
-  /* ===== Hero ===== */
-  .hero{position:relative;text-align:center;color:#fff}
-  .hero img{width:100%;height:80vh;object-fit:cover}
-  .hero-text{position:absolute;top:25%;left:50%;transform:translateX(-50%);text-align:center}
+  <style>
+    :root{ --zona-purple:#6366F1; }
 
-  .hero-text h1{
-    font-family:'Helvetica Neue',Arial,sans-serif;
-    font-size:4.5rem;             /* desktop size */
-    font-weight:800;
-    line-height:1.1;
-    color:#fff;
-    text-shadow:2px 2px 8px rgba(0,0,0,.7);
-    white-space:normal;           /* allow Turning/Into split from HTML <br> */
-  }
-  .hero-text h1 span{
-    color:var(--zona-purple);
-    text-shadow:2px 2px 8px rgba(0,0,0,.7);
-  }
+    /* ===== Base ===== */
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      color:#111;
+      background:#fff;
+    }
+    a{ color:inherit; }
 
-  /* “Cash Offers • Buyer Connections • Wholesale Dispo” (desktop inline) */
-  .hero-subtext{
-    display:flex;justify-content:center;align-items:center;
-    gap:2rem;
-    font-size:1.15rem;font-weight:600;color:#fff;
-    text-transform:uppercase;
-    white-space: nowrap;
-    text-shadow:1px 1px 6px rgba(0,0,0,.7);
-  }
-  .hero-subtext span+span::before{
-    content:"•";margin:0 1.2rem;opacity:.85;
-  }
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;
+      text-align:center;
+      color:#fff;
+    }
+    .hero img{
+      width:100%;
+      height:80vh;
+      object-fit:cover;
+      display:block;
+    }
+    .hero-text{
+      position:absolute;
+      top:25%;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      width:min(1100px, 92vw);
+    }
 
-  /* ===== Floating CTAs ===== */
-  .actions{display:flex;justify-content:center;gap:2rem;margin-top:-3rem;position:relative;z-index:5}
-  .action{
-    display:flex;flex-direction:column;justify-content:center;align-items:center;
-    width:300px;height:200px;line-height:1.3;text-align:center;
-    font-size:2.5rem;font-weight:700;text-decoration:none;
-    background:#fff;color:#000;border-radius:12px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
-  }
-  .action:hover{background:var(--zona-purple);color:#fff;transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,.25)}
+    .hero-text h1{
+      font-size:4.5rem;          /* desktop size */
+      font-weight:800;
+      line-height:1.1;
+      margin:0;
+      color:#fff;
+      text-shadow:2px 2px 8px rgba(0,0,0,.7);
+    }
+    .hero-text h1 span{
+      color:var(--zona-purple);
+      text-shadow:2px 2px 8px rgba(0,0,0,.7);
+    }
 
-  /* ===== Trusted section & footer (unchanged) ===== */
-  .trusted{padding:3rem 1rem;text-align:center}
-  .trusted h2{font-size:2rem;font-weight:700;margin-bottom:1rem}
-  .trusted .stats{display:flex;justify-content:center;gap:2rem;font-size:1.2rem;margin-top:1rem}
+    /* Desktop tagline (inline with bullets) */
+    .hero-subtext.desktop-only{
+      display:block;
+      margin:.9rem 0 0;
+      font-size:1.15rem;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      text-shadow:1px 1px 6px rgba(0,0,0,.7);
+      white-space:nowrap; /* keep one line on desktop */
+    }
 
-  footer{background:#111;color:#fff;padding:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-  footer .logo{font-size:1.2rem;font-weight:700}
-  footer nav a{margin-left:1.5rem;color:#fff;text-decoration:none}
-  footer nav a:hover{text-decoration:underline}
+    /* Mobile tagline (stacked) – hidden on desktop by default */
+    .hero-subtext.mobile-only{
+      display:none;
+      margin:.8rem 0 0;
+      color:#fff;
+      text-shadow:2px 2px 8px rgba(0,0,0,.75);
+    }
+    .hero-subtext.mobile-only span{
+      display:block;
+      margin:.45rem 0;
+      position:relative;
+      padding:0;
+      background:none !important;
+      box-shadow:none !important;
+    }
+    .hero-subtext.mobile-only span:not(:last-child)::after{
+      content:"";
+      display:block;
+      width:60%;
+      margin:.5rem auto 0;
+      border-bottom:1px solid rgba(255,255,255,.6); /* thin divider */
+    }
 
-  /* =========================
-     MOBILE ≤ 768px (desktop untouched)
-     ========================= */
-  @media (max-width: 768px) {
-  /* Stronger shadow for headline on mobile */
-  .hero-text h1 {
-    font-size: 2.2rem;
-    line-height: 1.2;
-    text-shadow: 3px 3px 12px rgba(0,0,0,0.85);  /* heavier shadow */
-  }
+    /* ===== Action tiles (desktop) ===== */
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap:2rem;
+      margin-top:-3rem;              /* overlap the image edge */
+      position:relative;
+      z-index:5;
+    }
+    .action{
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      width:150px; height:100px;
+      line-height:1.25; text-align:center;
+      font-size:1.4rem;              /* desktop tile text size */
+      font-weight:700; text-decoration:none;
+      background:#fff; color:#000;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,.15);
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    }
+    .action:hover{
+      background:var(--zona-purple); color:#fff;
+      transform:translateY(-3px);
+      box-shadow:0 6px 15px rgba(0,0,0,.25);
+    }
 
-  .hero-text h1 span {
-    color: #6366F1;
-    text-shadow: 3px 3px 12px rgba(0,0,0,0.85);  /* also shadowed */
-  }
+    /* ===== Trusted & Footer (kept simple/neutral) ===== */
+    .trusted{ padding:3rem 1rem; text-align:center; }
+    .trusted h2{ font-size:2rem; font-weight:700; margin:0 0 1rem; }
+    .trusted .stats{ display:flex; justify-content:center; gap:2rem; font-size:1.2rem; margin-top:1rem; }
 
-  /* Stronger shadow for subtext phrases */
-  .hero-subtext span{
-  position: relative;
-  display: inline-block;   /* ✅ keep them inline so they don’t stack */
-  padding: 0;
-  background: none !important;
-  box-shadow: none !important;
-}
-.hero-subtext span:not(:last-child)::after{
-  content: "•";            /* ✅ use a bullet divider */
-  margin: 0 1rem;
-  opacity: .85;
-}
-.hero-subtext span+span::before{content: none;}
+    footer{
+      background:#111; color:#fff;
+      padding:2rem;
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    }
+    footer .logo{ font-size:1.2rem; font-weight:700; }
+    footer nav a{ margin-left:1.5rem; color:#fff; text-decoration:none; }
+    footer nav a:hover{ text-decoration:underline; }
 
-      /* 3 CTA cards – smaller and raised higher */
-  .actions {
-    margin-top: -40px;      /* raises buttons higher over the image */
-    gap: 10px;              /* tighter vertical spacing */
-  }
+    /* ===== Show/hide helpers for desktop vs mobile markup ===== */
+    .desktop-only{ display:block; }
+    .mobile-only{ display:none; }
 
-  .actions .action {
-    width: 85%;             /* narrower than full width */
-    max-width: 360px;       /* smaller max width */
-    margin: 0 auto;
-    font-size: 1.2rem;     /* slightly smaller text */
-    padding: 14px 18px;     /* less padding = shorter tiles */
-    border-radius: 14px;    /* tighter corners */
-    box-shadow: 0 6px 18px rgba(0,0,0,.15); /* softer shadow */
-  }
-  }
-</style>
+    /* =========================
+       MOBILE ≤ 768px (desktop unchanged)
+       ========================= */
+    @media (max-width:768px){
+      .hero{ padding:56px 16px 0; min-height:72vh; }
+      .hero img{ height:68vh; }
+
+      .hero-text h1{
+        font-size:2.2rem;          /* smaller headline on phones */
+        line-height:1.2;
+        text-shadow:3px 3px 12px rgba(0,0,0,.85); /* stronger shadow so it pops */
+      }
+      .hero-text h1 span{
+        color:var(--zona-purple);
+        text-shadow:3px 3px 12px rgba(0,0,0,.85);
+      }
+
+      /* Swap taglines: hide desktop, show mobile */
+      .desktop-only{ display:none; }
+      .mobile-only{ display:block; }
+
+      /* Action tiles – smaller & raised higher */
+      .actions{
+        margin-top:-40px;
+        gap:10px;
+      }
+      .actions .action{
+        width:85%;
+        max-width:360px;
+        margin:0 auto;
+        font-size:1.2rem;          /* bigger than before, but mobile-friendly */
+        padding:14px 18px;
+        height:auto;
+        border-radius:14px;
+        box-shadow:0 6px 18px rgba(0,0,0,.15);
+      }
+    }
+  </style>
 </head>
-<body>
 
-  <!-- Header -->
+<body>
+  <!-- Header (JS inject) -->
   <script src="assets/js/header.js"></script>
 
-  <!-- Hero section -->
+  <!-- ===== HERO ===== -->
   <section class="hero">
-    <img src="assets/modern_house_background_landscape.png" alt="Modern House Background">
+    <img src="assets/modern_house_background_landscape.png" alt="Modern home background">
+
     <div class="hero-text">
       <h1>Turning Properties<br>Into <span>Possibilities.</span></h1>
-     <p class="hero-subtext">
-  <span>Cash Offers</span>
-  <span>Buyer Connections</span>
-  <span>Wholesale Dispo</span>
-</p>
+
+      <!-- Desktop tagline -->
+      <p class="hero-subtext desktop-only">
+        Cash Offers • Buyer Connections • Wholesale Dispo
+      </p>
+
+      <!-- Mobile tagline (stacked) -->
+      <p class="hero-subtext mobile-only">
+        <span>Cash Offers</span>
+        <span>Buyer Connections</span>
+        <span>Wholesale Dispo</span>
+      </p>
     </div>
   </section>
 
-  <!-- Floating action tiles -->
- <section class="actions">
-  <a class="action" href="/cash-offer.html">Sell<br>Property</a>
-  <a class="action" href="/buyers.html">Join<br>Buyers List</a>
-  <a class="action" href="/submit-deal.html">Submit<br>Your Deal</a>
-</section>
+  <!-- ===== ACTION TILES ===== -->
+  <section class="actions">
+    <a class="action" href="cash-offer.html">Sell<br>Property</a>
+    <a class="action" href="buyers.html">Join<br>Buyers List</a>
+    <a class="action" href="submit-deal.html">Submit<br>Your Deal</a>
+  </section>
 
-  <!-- Trusted section -->
+  <!-- ===== Trusted / Social Proof (optional placeholder) ===== -->
   <section class="trusted">
-    <h2>Trusted by Investors, Buyers & Sellers Across Arizona.</h2>
+    <h2>Trusted by Sellers & Investors Across Arizona</h2>
     <div class="stats">
-      <div>100+ Deals Processed</div>
-      <div>Nationwide Buyers</div>
+      <div>✔ 24hr Cash Offers</div>
+      <div>✔ As-Is, No Repairs</div>
+      <div>✔ Close on Your Timeline</div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer (JS inject or static) -->
   <script src="assets/js/footer.js"></script>
-
+  <noscript>
+    <footer>
+      <div class="logo">Zona Desert.</div>
+      <nav>
+        <a href="cash-offer.html">Sell Property</a>
+        <a href="buyers.html">Join Buyer List</a>
+        <a href="submit-deal.html">Submit Your Deal</a>
+      </nav>
+    </footer>
+  </noscript>
 </body>
 </html>
