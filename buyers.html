@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join Buyers List | Zona Desert</title>
+  <meta name="description" content="Register to receive off-market real estate deals from Zona Desert." />
+
+  <style>
+    :root{
+      --zona-purple:#6366F1;
+      --ink:#0B0B0C;
+      --slate:#6b7280;
+      --bg:#f5f7fb;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font:16px/1.4 "Helvetica Neue", Arial, sans-serif; color:var(--ink); background:#fff;
+    }
+    /* Header spacer (your header.js is sticky) */
+    .spacer{height:72px}
+
+    .wrap{
+      max-width:1100px; margin:0 auto; padding:24px 24px 64px;
+    }
+
+    .hero{
+      background:var(--bg);
+      border-radius:20px;
+      padding:42px 32px;
+      margin-bottom:28px;
+      box-shadow:0 1px 0 rgba(0,0,0,.03) inset;
+    }
+    .eyebrow{
+      display:inline-block;
+      font-size:.85rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--slate);
+      margin-bottom:8px;
+    }
+    h1{
+      margin:0 0 8px 0;
+      font-size:clamp(28px, 4.5vw, 44px);
+      line-height:1.12;
+      font-weight:800;
+    }
+    h1 span{ color:var(--zona-purple); }
+
+    .sub{
+      margin:0; color:var(--slate); font-size:1.05rem;
+    }
+
+    .card{
+      margin:28px 0 0;
+      border-radius:18px;
+      border:1px solid #e7e7ee;
+      box-shadow:0 8px 30px rgba(0,0,0,.06);
+      padding:28px;
+    }
+    .card h2{
+      margin:0 0 6px; font-size:1.35rem; font-weight:800;
+    }
+    .list{
+      margin:14px 0 0 0; padding:0 0 0 18px; color:var(--slate);
+    }
+    .cta-row{
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      background:var(--zona-purple); color:#fff; font-weight:700;
+      padding:12px 18px; border-radius:12px; font-size:1rem;
+      box-shadow:0 6px 16px rgba(99,102,241,.25);
+      text-decoration:none; display:inline-flex; align-items:center; justify-content:center;
+    }
+    .btn.alt{ background:#111; box-shadow:0 6px 16px rgba(0,0,0,.15); }
+
+    .muted{ color:var(--slate); font-size:.95rem; }
+
+    @media (max-width:768px){
+      .wrap{ padding:16px 16px 56px; }
+      .hero{ padding:28px 22px; border-radius:16px; }
+      .card{ padding:22px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky header from your existing script -->
+  <script src="assets/js/header.js"></script>
+  <div class="spacer"></div>
+
+  <main class="wrap" role="main">
+    <section class="hero" aria-labelledby="buyers-title">
+      <span class="eyebrow">Buyer Portal</span>
+      <h1 id="buyers-title">Join <span>Buyers List</span></h1>
+      <p class="sub">Get vetted off-market deals delivered to your inbox. Local and nationwide opportunities.</p>
+    </section>
+
+    <section class="card" aria-labelledby="reg-coming-soon">
+      <h2 id="reg-coming-soon">Registration form coming soon</h2>
+      <p class="muted">
+        We’re finishing the new buyer onboarding form. In the meantime, you can still get on the list:
+      </p>
+
+      <div class="cta-row">
+        <a class="btn" href="mailto:hello@zonadesert.com?subject=Join Buyers List&body=Name:%0ACompany:%0AMarkets:%0ABuy Box:%0AFunding:%0A">
+          Email us to be added
+        </a>
+        <a class="btn alt" href="/">Back to Home</a>
+      </div>
+
+      <ul class="list">
+        <li>Tell us your markets (e.g., Phoenix, Tucson, statewide AZ).</li>
+        <li>Share your buy box (beds/baths, price range, rehab level, criteria).</li>
+        <li>Cash or hard money, proof-of-funds preferred.</li>
+        <li>We’ll confirm and start sending opportunities.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Optional: your site footer (if/when you add footer.js) -->
+  <!-- <script src="assets/js/footer.js"></script> -->
+</body>
+</html>
