@@ -476,6 +476,24 @@ textarea.input{
   </div>
 
   <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
+        <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
+
+<script src="assets/stateCounties.js"></script>
+<script>
+  // Clear the form after submission
+  document.getElementById("buyersForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Show the toast (if you already have a function for this, you can keep using that)
+    document.getElementById("toast").classList.add("show");
+
+    // Clear the form after a short delay so the user sees the toast
+    setTimeout(() => {
+      this.reset();
+      document.getElementById("toast").classList.remove("show");
+    }, 1500); // 1.5s delay
+  });
+</script>
 <script src="assets/stateCounties.js"></script>
   <script>
     /* =========================
