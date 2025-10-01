@@ -278,15 +278,18 @@
 
           <div class="row two">
             <div>
-              <label>Max Purchase % of ARV (optional)</label>
-              <div class="chips" id="maxArv">
-                <label class="chip" data-single="1"><input type="radio" name="arv" value="60%"><span class="dot"></span>60%</label>
-                <label class="chip" data-single="1"><input type="radio" name="arv" value="65%"><span class="dot"></span>65%</label>
-                <label class="chip" data-single="1"><input type="radio" name="arv" value="70%"><span class="dot"></span>70%</label>
-                <label class="chip" data-single="1"><input type="radio" name="arv" value="75%"><span class="dot"></span>75%</label>
-                <label class="chip" data-single="1"><input type="radio" name="arv" value="80%"><span class="dot"></span>80%</label>
-              </div>
-            </div>
+  <label for="maxArv" class="label">Max Purchase % of ARV (optional)</label>
+  <div class="select">
+    <select id="maxArv" name="maxArv">
+      <option value="">Any</option>
+      <option value="60">60%</option>
+      <option value="65">65%</option>
+      <option value="70">70%</option>
+      <option value="75">75%</option>
+      <option value="80">80%</option>
+    </select>
+  </div>
+</div>
             <div>
               <label>Deals per Month</label>
               <div class="chips" id="dealsPerMonth">
