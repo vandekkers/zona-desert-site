@@ -164,6 +164,43 @@ textarea.input{
   }
   .actions .btn{ width:100%; }    /* full-width buttons on mobile */
 }
+    /* Two-column row that sits under Rehab Scope */
+.row-two{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+/* Make selects larger and more tappable */
+.select-lg select{
+  width: 100%;
+  height: 52px;          /* bigger box height */
+  padding: 10px 14px;
+  font-size: 16px;       /* bigger text */
+  border-radius: 10px;
+}
+
+/* Notes + Actions span both columns */
+.span-2{ grid-column: 1 / -1; }
+
+/* Button row */
+.actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.btn{ border-radius: 10px; padding: 10px 16px; font-weight: 700; }
+.btn-light{ background: #fff; border: 1px solid rgba(0,0,0,.12); }
+.btn-primary{ background: var(--zona-purple, #6366F1); color: #fff; border: none; }
+
+/* Mobile: stack the two selects, keep buttons full-width if desired */
+@media (max-width: 768px){
+  .row-two{ grid-template-columns: 1fr; }
+  .actions .btn{ width: 100%; }
+}
   </style>
 </head>
 <body>
@@ -336,11 +373,25 @@ textarea.input{
 
           <!-- keep everything ABOVE this unchanged ... -->
 
-<div class="grid-two">
+<!-- Row: Deals per Month + Max % ARV (sit directly after Rehab Scope) -->
+<div class="row-two">
+  <!-- Deals / Month -->
+  <div class="field">
+    <label for="dealsPerMonth" class="label">Deals per Month</label>
+    <div class="select select-lg">
+      <select id="dealsPerMonth" name="dealsPerMonth">
+        <option value="">Any</option>
+        <option value="1">1</option>
+        <option value="2-3">2–3</option>
+        <option value="4+">4+</option>
+      </select>
+    </div>
+  </div>
+
   <!-- Max % ARV -->
   <div class="field">
     <label for="maxArv" class="label">Max Purchase % of ARV (optional)</label>
-    <div class="select">
+    <div class="select select-lg">
       <select id="maxArv" name="maxArv">
         <option value="">Any</option>
         <option value="60%">60%</option>
@@ -351,31 +402,18 @@ textarea.input{
       </select>
     </div>
   </div>
+</div>
 
-  <!-- Deals / Month -->
-  <div class="field">
-    <label for="dealsPerMonth" class="label">Deals per Month</label>
-    <div class="select">
-      <select id="dealsPerMonth" name="dealsPerMonth">
-        <option value="">Any</option>
-        <option value="1">1</option>
-        <option value="2-3">2–3</option>
-        <option value="4+">4+</option>
-      </select>
-    </div>
-  </div>
+<!-- Notes (span full width) -->
+<div class="field span-2">
+  <label for="buyerNotes" class="label">Notes (optional)</label>
+  <textarea id="buyerNotes" name="buyerNotes" class="input" rows="5" placeholder="Anything else we should know?"></textarea>
+</div>
 
-  <!-- Notes (span full width) -->
-  <div class="field span-2">
-    <label for="buyerNotes" class="label">Notes (optional)</label>
-    <textarea id="buyerNotes" name="buyerNotes" class="input" rows="4" placeholder="Anything else we should know?"></textarea>
-  </div>
-
-  <!-- Actions (right aligned) -->
-  <div class="actions span-2">
-    <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
-    <button type="submit" class="btn btn-primary">Join Buyers List</button>
-  </div>
+<!-- Actions -->
+<div class="actions span-2">
+  <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
+  <button type="submit" class="btn btn-primary">Join Buyers List</button>
 </div>
     </form>
   </div>
