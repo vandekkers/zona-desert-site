@@ -248,7 +248,7 @@ textarea.input{
 
           <!-- Counties -->
           <div style="height:12px"></div>
-          <label>Counties (optional)</label>
+          <label>Counties</label>
           <div class="ms" id="msCounties">
             <button type="button" class="ms-toggle"><span>Select counties…</span>▾</button>
             <div class="ms-menu">
@@ -337,20 +337,19 @@ textarea.input{
             </div>
           </div>
 
-          <div class="row two">
-            <div>
-              <label>Price Range</label>
-              <div class="row two">
-                <input id="priceMin" class="input" inputmode="numeric" placeholder="Min $" />
-                <input id="priceMax" class="input" inputmode="numeric" placeholder="Max $" />
-              </div>
-            </div>
-            
-            <!-- Rehab Scope (dropdown) -->
-<div class="field">
-  <label for="rehab" class="label">Rehab Scope</label>
-  <div class="select">
-    <select id="rehab" name="rehab">
+          <!-- Price/rehab + deals/% in one tidy two-by-two grid -->
+<div class="row two">
+  <div>
+    <label>Price Range</label>
+    <div class="row two">
+      <input id="priceMin" class="input" inputmode="numeric" placeholder="Min $" />
+      <input id="priceMax" class="input" inputmode="numeric" placeholder="Max $" />
+    </div>
+  </div>
+
+  <div>
+    <label for="rehab">Rehab Scope</label>
+    <select id="rehab" name="rehab" class="input">
       <option value="">Any</option>
       <option value="cosmetic">Cosmetic</option>
       <option value="light">Light</option>
@@ -358,12 +357,7 @@ textarea.input{
       <option value="teardown">Tear-down</option>
     </select>
   </div>
-</div>
 
-          <!-- keep everything ABOVE this unchanged ... -->
-
-<!-- Row: Deals per Month + % of ARV -->
-<div class="row two">
   <div>
     <label for="dealsPerMonth">Deals per Month</label>
     <select id="dealsPerMonth" name="dealsPerMonth" class="input">
