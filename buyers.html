@@ -282,9 +282,7 @@ textarea.input{
   <p class="subtle">Get vetted off-market deals delivered to your inbox. Local and nationwide opportunities.</p>
 </div>
 
-    <form id="buyersForm" class="grid" novalidate>
-      <!-- everything that was already inside your form stays here unchanged -->
-
+    
     <form id="buyersForm" class="grid" novalidate>
       <!-- ================= LEFT: Profile + Markets ================= -->
       <div class="card">
@@ -486,8 +484,7 @@ textarea.input{
        (Add more below — format is
         "STATE CODE": { name, counties: [...] })
        ========================= */
-    const STATE_DATA = {// Use the full dataset from stateCounties.js
-const STATE_DATA = window.STATE_COUNTIES;};
+    const STATE_DATA = window.STATE_COUNTIES;
     // To add more: STATE_DATA.NY = { name:"New York", counties:["Albany","Bronx", ...] };
 
     /* ========= helpers ========= */
@@ -511,9 +508,8 @@ const STATE_DATA = window.STATE_COUNTIES;};
         else { label.classList.remove('is-on'); }
       });
     }
-    ["exitStrategies","tenant","types","maxArv","dealsPerMonth"]
-      .forEach(id => wireChips(document.getElementById(id)));
-
+   ["exitStrategies","tenant","types"]
+  .forEach(id => wireChips(document.getElementById(id)));
     /* ========= Multiselect component ========= */
     function MultiSelect(root, { placeholder, items = [], onChange }){
       const toggle = root.querySelector('.ms-toggle');
