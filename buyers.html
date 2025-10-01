@@ -250,6 +250,15 @@ textarea.input{
 .card .section label.label-title {
   color: var(--brand, #6366F1);  /* fallback to Zona purple */
 }
+    /* Make States and Counties selects match the width of Beds/Baths */
+#states, #counties {
+  width: 100%;
+  min-height: 42px;   /* same as Beds dropdown */
+  font-size: 1rem;
+  border-radius: 6px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+}
   </style>
 </head>
 <body>
@@ -301,7 +310,7 @@ textarea.input{
           <!-- States -->
           <label>States<span class="err" id="e_states"></span></label>
           <div class="ms" id="msStates">
-            <button type="button" class="ms-toggle"><span>Select states…</span>▾</button>
+            <button type="button" class="ms-toggle"><span>Select states</span>▾</button>
             <div class="ms-menu">
               <div class="ms-search"><input type="search" placeholder="Search states…" /></div>
               <div class="ms-actions">
@@ -316,7 +325,7 @@ textarea.input{
           <div style="height:12px"></div>
           <label>Counties</label>
           <div class="ms" id="msCounties">
-            <button type="button" class="ms-toggle"><span>Select counties…</span>▾</button>
+            <button type="button" class="ms-toggle"><span>Select counties</span>▾</button>
             <div class="ms-menu">
               <div class="ms-search"><input type="search" placeholder="Search counties…" /></div>
               <div class="ms-actions">
