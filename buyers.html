@@ -267,11 +267,11 @@ textarea.input{
 #buyersForm .row.two:last-of-type {
   margin-bottom: 1rem; /* adjust size as needed */
 }
-    /* ===== Success Modal ===== */
+/* ===== Success Modal (centered, square-ish) ===== */
 .modal {
   position: fixed;
   inset: 0;
-  display: none;            /* toggled via .show */
+  display: none;             /* toggled via .show */
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,.45);
@@ -281,53 +281,43 @@ textarea.input{
 .modal.show { display: flex; }
 
 .modal-card {
-  width: min(560px, 92vw);
+  width: min(640px, 92vw);
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-  padding: 24px 22px;
+  border-radius: 20px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.28);
+  padding: 28px 28px;
+  text-align: center;        /* center everything */
 }
 
-.modal-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.modal-head .dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #000;           /* black dot per brand motif */
-  flex: 0 0 auto;
-}
-
+.modal-head { margin: 0 0 8px; }
 .modal-head h3 {
   margin: 0;
-  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+  font-size: clamp(1.35rem, 1.05rem + 1vw, 1.75rem);
   line-height: 1.2;
 }
 
-.modal-head .brand {
-  color: #6C5CE7;             /* Zona purple */
-  font-weight: 700;
-}
+.modal-head .brand { color: var(--brand); font-weight: 800; }
+.modal-head .ink   { color: #000; font-weight: 900; } /* black 'Desert!' */
 
 .modal-msg {
-  margin: 6px 2px 16px;
+  margin: 10px 2px 18px;
   color: #444;
 }
 
+.confetti { font-size: 1.6rem; margin: 6px 0 14px; }
+
 .modal-actions {
   display: flex;
-  align-items: center;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-actions .meta {
-  margin-left: auto;
   font-size: .9rem;
-  color: #6b7280;             /* subtle gray */
+  color: #6b7280;
+  margin-left: 10px;
 }
 
 /* Buttons reuse your .btn classes; ensure primary shows purple */
@@ -542,13 +532,18 @@ textarea.input{
   </div>
 
   <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
+        
 <!-- Success Modal -->
 <div id="successModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="modal-card">
     <div class="modal-head">
-      <span class="dot"></span>
-      <h3>Welcome to <span class="brand">Zona Desert</span>.</h3>
+      <h3>
+        Welcome to <span class="brand">Zona</span> <span class="ink">Desert!</span>
+      </h3>
     </div>
+
+    <div class="confetti" aria-hidden="true">🎉🎉🎉</div>
+
     <p class="modal-msg">
       Thanks for joining the Buyers List. We’ll match incoming opportunities to your buy box
       and reach out when we’ve got a fit. You’ll also receive deal alerts by email.
@@ -561,81 +556,43 @@ textarea.input{
     </div>
   </div>
 </div>
-<script src="assets/stateCounties.js"></script>
-<script>
-  // ----- Submit: show modal, then redirect -----
-  (function () {
-    const form = document.getElementById('buyersForm');
-    const modal = document.getElementById('successModal');
-    const goNowBtn = document.getElementById('goNowBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const autoMsg  = document.getElementById('autoMsg');
 
-    // Where to send them after success
-    const HOME_URL = 'index.html'; // change if your home route differs (e.g., '/')
-
-    let timer;
-
-    function openModal() {
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
-
-      // start 5s countdown then redirect
-      let secs = 5;
-      autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
-      timer = setInterval(() => {
-        secs -= 1;
-        autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
-        if (secs <= 0) {
-          clearInterval(timer);
-          window.location.href = HOME_URL;
-        }
-      }, 1000);
-    }
-
-    function closeModal() {
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
-      if (timer) clearInterval(timer);
-    }
-
-    // Intercept submit, prevent navigation, show success modal
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // (Optional) show your existing toast too:
-      const t = document.getElementById('toast');
-      if (t) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1200); }
-
-      // Clear the form UI (including chips/selects where possible)
-      form.reset();
-
-      // If you have custom chip selections, also clear their "active" state:
-      document.querySelectorAll('.chip.active').forEach(ch => ch.classList.remove('active'));
-
-      // Clear multiselect displays, if needed:
-      document.querySelectorAll('.ms .ms-toggle').forEach(tg => tg.textContent = tg.dataset.placeholder || tg.textContent);
-
-      openModal();
-    });
-
-    // Buttons inside modal
-    goNowBtn.addEventListener('click', () => { window.location.href = HOME_URL; });
-    closeBtn.addEventListener('click', closeModal);
-
-    // Close on overlay click (optional)
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    // Close on Esc (optional)
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
-    });
-  })();
-</script>
 <script src="assets/stateCounties.js"></script>
   <script>
+    /* ===== Modal helpers ===== */
+const modal    = document.getElementById('successModal');
+const goNowBtn = document.getElementById('goNowBtn');
+const closeBtn = document.getElementById('closeBtn');
+const autoMsg  = document.getElementById('autoMsg');
+const HOME_URL = 'index.html'; // adjust if your home route differs
+let redirectTimer;
+
+function openModal() {
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden', 'false');
+  let secs = 5;
+  autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+  redirectTimer = setInterval(() => {
+    secs -= 1;
+    autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+    if (secs <= 0) {
+      clearInterval(redirectTimer);
+      window.location.href = HOME_URL;
+    }
+  }, 1000);
+}
+
+function closeModal() {
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'true');
+  if (redirectTimer) clearInterval(redirectTimer);
+}
+
+goNowBtn.addEventListener('click', () => window.location.href = HOME_URL);
+closeBtn.addEventListener('click', closeModal);
+// optional close behaviors:
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
     /* =========================
        Minimal state + counties
        (Add more below — format is
@@ -825,6 +782,15 @@ notes: $('#buyerNotes').value.trim()
       // For now, just log + toast.
       console.log("Buyers submission:", payload);
       toast("Saved! We’ll start matching deals to your buy box.");
+
+      // Clear UI
+form.reset();
+$$('.chip').forEach(c => { c.classList.remove('is-on'); c.querySelector('input').checked = false; });
+msStates.setSelected([]);
+msCounties.setItems([]);
+
+// Show success modal + auto-redirect
+openModal();
 
       // TODO: wire to your backend (Netlify Functions, Google Sheet, Airtable, etc.)
       // Example: fetch('/api/buyers', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
