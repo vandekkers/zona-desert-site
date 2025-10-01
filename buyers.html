@@ -754,51 +754,59 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.cl
 
       if(!ok) return;
 
-      // Collect everything
-      const payload = {
-        fullName,
-        company: $('#company').value.trim(),
-        email, phone,
-        markets: {
-          states: states.map(name => ({ name })),
-          counties: msCounties.getSelected().map(v=>{
-            const [code, county] = v.split('::');
-            return { stateCode: code, state: STATE_DATA[code]?.name || code, county };
-          }),
-          notes: $('#marketNotes').value.trim()
-        },
-        buyBox: {
-          exits: $$('input[name="exit"]:checked').map(i=>i.value),
-          tenantOk: ($('input[name="tenant"]:checked')||{}).value || null,
-          types: $$('input[name="type"]:checked').map(i=>i.value),
-          beds: $('#beds').value || null,
-          baths: $('#baths').value || null,
-          sqft: $('#sqft').value || null,
-          yearBuilt: { min: $('#yrMin').value || null, max: $('#yrMax').value || null },
-          price: { min: $('#priceMin').value || null, max: $('#priceMax').value || null },
-          rehab: $('#rehab').value || null,
-maxARV: $('#maxArv').value || null,
-dealsPerMonth: $('#dealsPerMonth').value || null,
-notes: $('#buyerNotes').value.trim()
-        }
-      };
+      // Collect everything in Google Sheet–ready format
+const payload = {
+  fullName,
+  company: $('#company').value.trim(),
+  email,
+  phone,
+  counties: msCounties.getSelected()
+    .map(v => v.split('::')[1])   // just county name
+    .join(', '),                  // join multiple counties with commas
+  marketNotes: $('#marketNotes').value.trim(),
+  exitStrategies: $$('input[name="exit"]:checked').map(i => i.value).join(', '),
+  tenant: ($('input[name="tenant"]:checked')||{}).value || "",
+  propertyTypes: $$('input[name="type"]:checked').map(i => i.value).join(', '),
+  beds: $('#beds').value || "",
+  baths: $('#baths').value || "",
+  sqft: $('#sqft').value || "",
+  buildYearRange: [$('#yrMin').value, $('#yrMax').value].filter(Boolean).join(' - '),
+  priceRange: [$('#priceMin').value, $('#priceMax').value].filter(Boolean).join(' - '),
+  rehab: $('#rehab').value || "",
+  maxArv: $('#maxArv').value || "",
+  dealsPerMonth: $('#dealsPerMonth').value || "",
+  notes: $('#buyerNotes').value.trim(),
+  states: msStates.getSelected() // keep full list so we can duplicate into tabs
+};
 
-      // For now, just log + toast.
-      console.log("Buyers submission:", payload);
-      toast("Saved! We’ll start matching deals to your buy box.");
+      // Send to Google Apps Script
+fetch(APPS_SCRIPT_URL, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload),
+})
+  .then(r => r.json())
+  .then(data => {
+    console.log('Saved to Google Sheets:', data);
+    toast("Saved! We’ll start matching deals to your buy box.");
 
-      // Clear UI
-form.reset();
-$$('.chip').forEach(c => { c.classList.remove('is-on'); c.querySelector('input').checked = false; });
-msStates.setSelected([]);
-msCounties.setItems([]);
-
-// Show success modal + auto-redirect
-openModal();
-
-      // TODO: wire to your backend (Netlify Functions, Google Sheet, Airtable, etc.)
-      // Example: fetch('/api/buyers', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+    // Clear UI only on success
+    form.reset();
+    $$('.chip').forEach(c => {
+      c.classList.remove('is-on');
+      const inp = c.querySelector('input');
+      if (inp) inp.checked = false;
     });
+    msStates.setSelected([]);
+    msCounties.setItems([]);
+
+    // Show success modal + auto-redirect
+    openModal();
+  })
+  .catch(err => {
+    console.error('Error saving:', err);
+    toast('Error saving. Please try again.');
+  });
 
     // reset
     document.getElementById('resetBtn').addEventListener('click', ()=>{
