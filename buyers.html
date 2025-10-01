@@ -261,16 +261,20 @@
                 <input id="priceMax" class="input" inputmode="numeric" placeholder="Max $" />
               </div>
             </div>
-            <div>
-              <label>Rehab Scope</label>
-              <div class="chips">
-                <label class="chip"><input type="checkbox" name="rehab" value="Cosmetic"><span class="dot"></span>Cosmetic</label>
-                <label class="chip"><input type="checkbox" name="rehab" value="Light"><span class="dot"></span>Light</label>
-                <label class="chip"><input type="checkbox" name="rehab" value="Full gut"><span class="dot"></span>Full gut</label>
-                <label class="chip"><input type="checkbox" name="rehab" value="Tear-down"><span class="dot"></span>Tear-down</label>
-              </div>
-            </div>
-          </div>
+            
+            <!-- Rehab Scope (dropdown) -->
+<div class="field">
+  <label for="rehab" class="label">Rehab Scope (optional)</label>
+  <div class="select">
+    <select id="rehab" name="rehab">
+      <option value="">Any</option>
+      <option value="cosmetic">Cosmetic</option>
+      <option value="light">Light</option>
+      <option value="full_gut">Full gut</option>
+      <option value="teardown">Tear-down</option>
+    </select>
+  </div>
+</div>
 
           <div class="row two">
             <div>
