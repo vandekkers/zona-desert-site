@@ -267,6 +267,72 @@ textarea.input{
 #buyersForm .row.two:last-of-type {
   margin-bottom: 1rem; /* adjust size as needed */
 }
+    /* ===== Success Modal ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;            /* toggled via .show */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+}
+.modal.show { display: flex; }
+
+.modal-card {
+  width: min(560px, 92vw);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  padding: 24px 22px;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.modal-head .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #000;           /* black dot per brand motif */
+  flex: 0 0 auto;
+}
+
+.modal-head h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+  line-height: 1.2;
+}
+
+.modal-head .brand {
+  color: #6C5CE7;             /* Zona purple */
+  font-weight: 700;
+}
+
+.modal-msg {
+  margin: 6px 2px 16px;
+  color: #444;
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-actions .meta {
+  margin-left: auto;
+  font-size: .9rem;
+  color: #6b7280;             /* subtle gray */
+}
+
+/* Buttons reuse your .btn classes; ensure primary shows purple */
+.btn-primary { background: #6C5CE7; color: #fff; }
+.btn-primary:hover { filter: brightness(0.95); }
   </style>
 </head>
 <body>
@@ -476,21 +542,97 @@ textarea.input{
   </div>
 
   <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
+<!-- Success Modal -->
+<div id="successModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <span class="dot"></span>
+      <h3>Welcome to <span class="brand">Zona Desert</span>.</h3>
+    </div>
+    <p class="modal-msg">
+      Thanks for joining the Buyers List. We’ll match incoming opportunities to your buy box
+      and reach out when we’ve got a fit. You’ll also receive deal alerts by email.
+    </p>
 
+    <div class="modal-actions">
+      <button id="goNowBtn" class="btn btn-primary">Go to Home</button>
+      <button id="closeBtn" class="btn btn-light">Close</button>
+      <span class="meta" id="autoMsg">Auto-redirecting in 5s…</span>
+    </div>
+  </div>
+</div>
 <script src="assets/stateCounties.js"></script>
 <script>
-  // Refresh page after submit
-  document.getElementById("buyersForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+  // ----- Submit: show modal, then redirect -----
+  (function () {
+    const form = document.getElementById('buyersForm');
+    const modal = document.getElementById('successModal');
+    const goNowBtn = document.getElementById('goNowBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const autoMsg  = document.getElementById('autoMsg');
 
-    // Show the toast first
-    document.getElementById("toast").classList.add("show");
+    // Where to send them after success
+    const HOME_URL = 'index.html'; // change if your home route differs (e.g., '/')
 
-    // Reload the page after short delay
-    setTimeout(() => {
-      location.reload();
-    }, 1500); // 1.5 seconds so user sees toast
-  });
+    let timer;
+
+    function openModal() {
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+
+      // start 5s countdown then redirect
+      let secs = 5;
+      autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+      timer = setInterval(() => {
+        secs -= 1;
+        autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+        if (secs <= 0) {
+          clearInterval(timer);
+          window.location.href = HOME_URL;
+        }
+      }, 1000);
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      if (timer) clearInterval(timer);
+    }
+
+    // Intercept submit, prevent navigation, show success modal
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // (Optional) show your existing toast too:
+      const t = document.getElementById('toast');
+      if (t) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1200); }
+
+      // Clear the form UI (including chips/selects where possible)
+      form.reset();
+
+      // If you have custom chip selections, also clear their "active" state:
+      document.querySelectorAll('.chip.active').forEach(ch => ch.classList.remove('active'));
+
+      // Clear multiselect displays, if needed:
+      document.querySelectorAll('.ms .ms-toggle').forEach(tg => tg.textContent = tg.dataset.placeholder || tg.textContent);
+
+      openModal();
+    });
+
+    // Buttons inside modal
+    goNowBtn.addEventListener('click', () => { window.location.href = HOME_URL; });
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click (optional)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Close on Esc (optional)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    });
+  })();
 </script>
 <script src="assets/stateCounties.js"></script>
   <script>
