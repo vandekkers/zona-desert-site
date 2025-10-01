@@ -106,6 +106,64 @@
       opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;
     }
     .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+    /* ===== Right-column tidy layout ===== */
+.grid-two{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px; /* space between fields */
+}
+
+.field .label{
+  display:block;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.select select,
+.input,
+textarea.input{
+  width:100%;
+}
+
+/* Make Notes and actions span the full panel width */
+.span-2{ grid-column: 1 / -1; }
+
+/* Actions row: align to the right with spacing */
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  padding-top:4px;
+}
+
+/* Button polish (uses your palette; these are minimal) */
+.btn{ 
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:700;
+}
+.btn-light{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.12);
+}
+.btn-primary{
+  background: var(--zona-purple, #6366F1);
+  color:#fff;
+  border:none;
+}
+
+/* Mobile stacking for the right column */
+@media (max-width: 768px){
+  .grid-two{
+    grid-template-columns: 1fr;   /* one column */
+    gap: 12px;
+  }
+  .actions{
+    justify-content:stretch;
+  }
+  .actions .btn{ width:100%; }    /* full-width buttons on mobile */
+}
   </style>
 </head>
 <body>
@@ -276,42 +334,49 @@
   </div>
 </div>
 
-          <div class="row two">
-            <div>
-  <label for="maxArv" class="label">Max Purchase % of ARV (optional)</label>
-  <div class="select">
-    <select id="maxArv" name="maxArv">
-      <option value="">Any</option>
-      <option value="60">60%</option>
-      <option value="65">65%</option>
-      <option value="70">70%</option>
-      <option value="75">75%</option>
-      <option value="80">80%</option>
-    </select>
+          <!-- keep everything ABOVE this unchanged ... -->
+
+<div class="grid-two">
+  <!-- Max % ARV -->
+  <div class="field">
+    <label for="maxArv" class="label">Max Purchase % of ARV (optional)</label>
+    <div class="select">
+      <select id="maxArv" name="maxArv">
+        <option value="">Any</option>
+        <option value="60%">60%</option>
+        <option value="65%">65%</option>
+        <option value="70%">70%</option>
+        <option value="75%">75%</option>
+        <option value="80%">80%</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Deals / Month -->
+  <div class="field">
+    <label for="dealsPerMonth" class="label">Deals per Month</label>
+    <div class="select">
+      <select id="dealsPerMonth" name="dealsPerMonth">
+        <option value="">Any</option>
+        <option value="1">1</option>
+        <option value="2-3">2–3</option>
+        <option value="4+">4+</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Notes (span full width) -->
+  <div class="field span-2">
+    <label for="buyerNotes" class="label">Notes (optional)</label>
+    <textarea id="buyerNotes" name="buyerNotes" class="input" rows="4" placeholder="Anything else we should know?"></textarea>
+  </div>
+
+  <!-- Actions (right aligned) -->
+  <div class="actions span-2">
+    <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
+    <button type="submit" class="btn btn-primary">Join Buyers List</button>
   </div>
 </div>
-           <div>
-  <label for="dealsPerMonth" class="label">Deals per Month</label>
-  <div class="select">
-    <select id="dealsPerMonth" name="dealsPerMonth">
-      <option value="">Any</option>
-      <option value="1">1</option>
-      <option value="2-3">2–3</option>
-      <option value="4+">4+</option>
-    </select>
-  </div>
-</div>
-
-          <div style="height:8px"></div>
-          <label for="notes">Notes (optional)</label>
-          <textarea id="notes" class="input" placeholder="Anything else we should know?"></textarea>
-        </div>
-
-        <div class="actions">
-          <button type="button" class="btn secondary" id="resetBtn">Reset</button>
-          <button type="submit" class="btn primary">Join Buyers List</button>
-        </div>
-      </div>
     </form>
   </div>
 
