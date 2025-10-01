@@ -185,6 +185,11 @@ textarea.input{
   .row-two{ grid-template-columns: 1fr; }
   .actions .btn{ width: 100%; }
 }
+    /* Make controls fill their grid cells and prevent overflow clipping */
+.row.two > div { min-width: 0; }                 /* important for full-width inputs in CSS Grid */
+.row.two > div .input,
+.row.two > div select { width: 100%; }           /* force selects/inputs to span the cell */
+    
   </style>
 </head>
 <body>
