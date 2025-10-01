@@ -479,20 +479,15 @@ textarea.input{
   </div>
 
   <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
-
+<script src="assets/stateCounties.js"></script>
   <script>
     /* =========================
        Minimal state + counties
        (Add more below — format is
         "STATE CODE": { name, counties: [...] })
        ========================= */
-    const STATE_DATA = {
-      AZ:{name:"Arizona", counties:["Maricopa","Pima","Pinal","Yavapai","Yuma","Mohave","Coconino","Navajo","Apache","Gila","Cochise","Santa Cruz","Graham","Greenlee","La Paz"]},
-      CA:{name:"California", counties:["Los Angeles","San Diego","Orange","Riverside","San Bernardino","Santa Clara","Alameda","Sacramento","Contra Costa","Fresno","Kern","San Francisco","Ventura","San Mateo","Stanislaus"]},
-      TX:{name:"Texas", counties:["Harris","Dallas","Tarrant","Bexar","Travis","Collin","Denton","Hidalgo","El Paso","Fort Bend","Montgomery","Williamson","Cameron","Nueces","Bell"]},
-      FL:{name:"Florida", counties:["Miami-Dade","Broward","Palm Beach","Hillsborough","Orange","Pinellas","Duval","Lee","Polk","Brevard","Volusia","Sarasota","Manatee","Seminole","Osceola"]},
-      GA:{name:"Georgia", counties:["Fulton","Gwinnett","Cobb","DeKalb","Clayton","Chatham","Cherokee","Forsyth","Henry","Hall","Richmond","Muscogee","Houston","Clarke","Bibb"]},
-    };
+    const STATE_DATA = {// Use the full dataset from stateCounties.js
+const STATE_DATA = window.STATE_COUNTIES;};
     // To add more: STATE_DATA.NY = { name:"New York", counties:["Albany","Bronx", ...] };
 
     /* ========= helpers ========= */
