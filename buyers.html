@@ -574,8 +574,8 @@ textarea.input{
 
     /* ========= Build States selector ========= */
     const stateItems = Object.keys(STATE_DATA)
-      .sort((a,b)=> STATE_DATA[a].name.localeCompare(STATE_DATA[b].name))
-      .map(code => ({ value: code, label: STATE_DATA[code].name }));
+  .sort((a, b) => a.localeCompare(b))                  // sort state names
+  .map(name => ({ value: name, label: name }));        // value & label are the state name
 
     const msStates = MultiSelect(document.getElementById('msStates'), {
       placeholder: 'Select states…',
@@ -589,21 +589,19 @@ textarea.input{
       items: []
     });
 
-    function handleStatesChanged(codes){
-      // Merge counties from selected state codes
-      const merged = [];
-      codes.forEach(code=>{
-        const data = STATE_DATA[code];
-        if(!data) return;
-        data.counties.forEach(cty=>{
-          merged.push({ value: code + "::" + cty, label: cty + " (" + data.name + ")" });
-        });
-      });
-      merged.sort((a,b)=> a.label.localeCompare(b.label));
-      msCounties.setItems(merged);
-      // Clear previous county selections when states change
-      msCounties.setSelected([]);
-    }
+    function handleStatesChanged(stateNames){
+  const merged = [];
+  stateNames.forEach(name => {
+    const counties = STATE_DATA[name];
+    if (!Array.isArray(counties)) return;
+    counties.forEach(cty => {
+      merged.push({ value: name + "::" + cty, label: `${cty} (${name})` });
+    });
+  });
+  merged.sort((a,b)=> a.label.localeCompare(b.label));
+  msCounties.setItems(merged);
+  msCounties.setSelected([]);   // clear any previous county picks
+}
 
     /* ========= Validation + Submit ========= */
     const form = document.getElementById('buyersForm');
@@ -644,7 +642,7 @@ textarea.input{
         company: $('#company').value.trim(),
         email, phone,
         markets: {
-          states: states.map(c=> ({ code: c, name: STATE_DATA[c]?.name || c })),
+          states: states.map(name => ({ name })),
           counties: msCounties.getSelected().map(v=>{
             const [code, county] = v.split('::');
             return { stateCode: code, state: STATE_DATA[code]?.name || code, county };
