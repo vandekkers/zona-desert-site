@@ -193,6 +193,37 @@ textarea.input{
     body {
   background-color: #f9fafb; /* match Cash Offer background */
 }
+    .hero-box {
+  background: #f7f8fb; /* light background like the Cash Offer page */
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.hero-box .kicker {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.hero-box h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.hero-box h1 .highlight {
+  color: #5A57FF; /* your purple brand color */
+}
+
+.hero-box p {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
   </style>
 </head>
 <body>
@@ -202,11 +233,11 @@ textarea.input{
 
 <main class="container">
   <div class="wrap">
-    <header class="page-head">
-      <div class="kicker">Zona Desert · Buyer Portal</div>
-      <h1>Join Buyers List</h1>
-      <p class="subtle">Tell us what and where you buy so we can send you the right opportunities—fast.</p>
-    </header>
+    <div class="card section" style="margin-bottom:20px;">
+  <div class="kicker">Buyer Portal</div>
+  <h1>Join <span style="color:var(--brand)">Buyers List</span></h1>
+  <p class="subtle">Get vetted off-market deals delivered to your inbox. Local and nationwide opportunities.</p>
+</div>
 
     <form id="buyersForm" class="grid" novalidate>
       <!-- everything that was already inside your form stays here unchanged -->
