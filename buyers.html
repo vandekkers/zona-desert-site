@@ -569,7 +569,7 @@ const HOME_URL = 'index.html'; // adjust if your home route differs
 let redirectTimer;
 
     // === Google Apps Script endpoint (paste your /exec URL) ===
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzABm80N7_yeW1oG_bd7qQqHhshi5zoLXmn95f5unk2eQdNLD2W8d-ekW1i-lW0WZmiIA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyi_U1spfrH8j7ipeaoU3op32ZLHMYs4yRlbzpUws3FOcAy4JG9OeR9bxQM4nq8dwybqg/exec';
 
 function openModal() {
   modal.classList.add('show');
@@ -779,15 +779,17 @@ const payload = {
   states: msStates.getSelected() // keep full list so we can duplicate into tabs
 };
 
+// build a simple FormData – NO custom headers
+const fd = new FormData();
+fd.append('payload', JSON.stringify(payload));
+
 fetch(APPS_SCRIPT_URL, {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload)
+  body: fd
 })
 .then(r => r.json())
 .then(data => {
   console.log('Saved to Google Sheets:', data);
-  toast("Saved! We’ll start matching deals to your buy box.");
 
   // Clear UI on success
   form.reset();
@@ -799,7 +801,7 @@ fetch(APPS_SCRIPT_URL, {
   msStates.setSelected([]);
   msCounties.setItems([]);
 
-  // Success modal + auto-redirect
+  // success modal + auto-redirect
   openModal();
 })
 .catch(err => {
