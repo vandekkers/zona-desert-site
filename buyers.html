@@ -779,12 +779,35 @@ const payload = {
   states: msStates.getSelected() // keep full list so we can duplicate into tabs
 };
 
-      // Send to Google Apps Script
+      // NEW (simple POST – no preflight)
+const fd = new FormData();
+fd.append('payload', JSON.stringify(payload));
+
 fetch(APPS_SCRIPT_URL, {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload),
+  body: fd,
 })
+  .then(r => r.json())
+  .then(data => {
+    console.log('Saved to Google Sheets:', data);
+    toast("Saved! We’ll start matching deals to your buy box.");
+
+    // Clear UI on success
+    form.reset();
+    $$('.chip').forEach(c => {
+      c.classList.remove('is-on');
+      const inp = c.querySelector('input');
+      if (inp) inp.checked = false;
+    });
+    msStates.setSelected([]);
+    msCounties.setItems([]);
+
+    openModal(); // success modal + auto-redirect
+  })
+  .catch(err => {
+    console.error('Error saving:', err);
+    toast('Error saving. Please try again.');
+  });
   .then(r => r.json())
   .then(data => {
     console.log('Saved to Google Sheets:', data);
