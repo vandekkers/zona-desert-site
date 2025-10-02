@@ -779,47 +779,45 @@ const payload = {
   states: msStates.getSelected() // keep full list so we can duplicate into tabs
 };
 
-      // NEW (simple POST – no preflight)
-const fd = new FormData();
-fd.append('payload', JSON.stringify(payload));
-
 fetch(APPS_SCRIPT_URL, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload),
+  body: JSON.stringify(payload)
 })
-  .then(r => r.json())
-  .then(data => {
-    console.log('Saved to Google Sheets:', data);
-    toast('Saved! We’ll start matching deals to your buy box.');
+.then(r => r.json())
+.then(data => {
+  console.log('Saved to Google Sheets:', data);
+  toast("Saved! We’ll start matching deals to your buy box.");
 
-    // Clear UI on success
-    form.reset();
-    $$('.chip').forEach(c => {
-      c.classList.remove('is-on');
-      const inp = c.querySelector('input');
-      if (inp) inp.checked = false;
-    });
-    msStates.setSelected([]);
-    msCounties.setItems([]);
-
-    // Show success modal + auto-redirect
-    openModal();
-  })
-  .catch(err => {
-    console.error('Error saving:', err);
-    toast('Error saving. Please try again.');
+  // Clear UI on success
+  form.reset();
+  $$('.chip').forEach(c => {
+    c.classList.remove('is-on');
+    const inp = c.querySelector('input');
+    if (inp) inp.checked = false;
   });
+  msStates.setSelected([]);
+  msCounties.setItems([]);
 
-    // reset
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      form.reset();
-      // clear chips visual state
-      $$('.chip').forEach(c=>{ c.classList.remove('is-on'); c.querySelector('input').checked=false; });
-      // clear multiselects
-      msStates.setSelected([]);
-      msCounties.setItems([]); // blank until states picked
-    });
+  // Success modal + auto-redirect
+  openModal();
+})
+.catch(err => {
+  console.error('Error saving:', err);
+  toast('Error saving. Please try again.');
+});
+
+      // Reset button logic
+document.getElementById('resetBtn').addEventListener('click', () => {
+  form.reset();
+  $$('.chip').forEach(c => { 
+    c.classList.remove('is-on'); 
+    const inp = c.querySelector('input'); 
+    if (inp) inp.checked = false; 
+  });
+  msStates.setSelected([]);
+  msCounties.setItems([]);
+});
   </script>
         
         <!-- Footer -->
