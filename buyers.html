@@ -754,60 +754,96 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.cl
 
       if(!ok) return;
 
-      // Collect everything in Google Sheet–ready format
+      // Collect everything in Google Sheet–ready format (match Apps Script)
+const fullName = $('#fullName').value.trim();
+const email    = $('#email').value.trim();
+const phone    = $('#phone').value.trim();
+
+// 1) States array
+const states = msStates.getSelected(); // ["Arizona","Nevada",...]
+
+// 2) Build countiesByState from county picks like "Arizona::Maricopa"
+const countyPicks = msCounties.getSelected(); // ["Arizona::Maricopa","Nevada::Clark",...]
+const countiesByState = countyPicks.reduce((acc, v) => {
+  const [state, county] = String(v).split('::');
+  if (!state || !county) return acc;
+  (acc[state] ||= []).push(county);
+  return acc;
+}, {});
+
+// 3) Arrays for checkboxes
+const exitStrategies = $$('input[name="exit"]:checked').map(i => i.value);   // array
+const propertyTypes  = $$('input[name="type"]:checked').map(i => i.value);   // array
+
+// 4) Radio
+const tenantOccupied = ($('input[name="tenant"]:checked') || {}).value || "";
+
+// 5) Ranges as min/max
+const yearMin  = $('#yrMin').value.trim();
+const yearMax  = $('#yrMax').value.trim();
+const priceMin = $('#priceMin').value.trim();
+const priceMax = $('#priceMax').value.trim();
+
+// 6) Build payload matching Apps Script keys
 const payload = {
   fullName,
-  company: $('#company').value.trim(),
+  entity: $('#company').value.trim(),
   email,
   phone,
-  counties: msCounties.getSelected()
-    .map(v => v.split('::')[1])   // just county name
-    .join(', '),                  // join multiple counties with commas
+
+  states,                // ["Arizona","Nevada"]
+  countiesByState,       // { "Arizona":["Maricopa",...], "Nevada":["Clark"] }
+
   marketNotes: $('#marketNotes').value.trim(),
-  exitStrategies: $$('input[name="exit"]:checked').map(i => i.value).join(', '),
-  tenant: ($('input[name="tenant"]:checked')||{}).value || "",
-  propertyTypes: $$('input[name="type"]:checked').map(i => i.value).join(', '),
-  beds: $('#beds').value || "",
+  exitStrategies,        // array
+  tenantOccupied,        // "Yes" | "No" | ""
+
+  propertyTypes,         // array
+  beds:  $('#beds').value || "",
   baths: $('#baths').value || "",
-  sqft: $('#sqft').value || "",
-  buildYearRange: [$('#yrMin').value, $('#yrMax').value].filter(Boolean).join(' - '),
-  priceRange: [$('#priceMin').value, $('#priceMax').value].filter(Boolean).join(' - '),
-  rehab: $('#rehab').value || "",
-  maxArv: $('#maxArv').value || "",
+  sqft:  $('#sqft').value || "",
+
+  yearMin,               // strings are fine
+  yearMax,
+  priceMin,
+  priceMax,
+
+  rehabScope: $('#rehab').value || "",
+  arvPct:    $('#maxArv').value || "",
+
   dealsPerMonth: $('#dealsPerMonth').value || "",
-  notes: $('#buyerNotes').value.trim(),
-  states: msStates.getSelected() // keep full list so we can duplicate into tabs
+  notes: $('#buyerNotes').value.trim()
 };
 
-// build a simple FormData – NO custom headers
+// (optional) see exactly what we send
+console.log('Submitting payload:', payload);
+
+// Send as FormData (no custom headers so GAS handles CORS)
 const fd = new FormData();
 fd.append('payload', JSON.stringify(payload));
 
-fetch(APPS_SCRIPT_URL, {
-  method: 'POST',
-  body: fd
-})
-.then(r => r.json())
-.then(data => {
-  console.log('Saved to Google Sheets:', data);
+fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd })
+  .then(r => r.json())
+  .then(data => {
+    console.log('Saved to Google Sheets:', data);
 
-  // Clear UI on success
-  form.reset();
-  $$('.chip').forEach(c => {
-    c.classList.remove('is-on');
-    const inp = c.querySelector('input');
-    if (inp) inp.checked = false;
+    // Clear UI on success
+    form.reset();
+    $$('.chip').forEach(c => {
+      c.classList.remove('is-on');
+      const inp = c.querySelector('input');
+      if (inp) inp.checked = false;
+    });
+    msStates.setSelected([]);
+    msCounties.setItems([]);
+
+    // Show success modal + auto-redirect
+    openModal();
+  })
+  .catch(err => {
+    console.error('Error saving:', err);
+    toast('Error saving. Please try again.');
   });
-  msStates.setSelected([]);
-  msCounties.setItems([]);
-
-  // success modal + auto-redirect
-  openModal();
-})
-.catch(err => {
-  console.error('Error saving:', err);
-  toast('Error saving. Please try again.');
-});
 
       // Reset button logic
 document.getElementById('resetBtn').addEventListener('click', () => {
