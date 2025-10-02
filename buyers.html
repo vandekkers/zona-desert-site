@@ -754,11 +754,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.cl
 
       if(!ok) return;
 
-      // Collect everything in Google Sheet–ready format (match Apps Script)
-const fullName = $('#fullName').value.trim();
-const email    = $('#email').value.trim();
-const phone    = $('#phone').value.trim();
-
 // 1) States array
 const states = msStates.getSelected(); // ["Arizona","Nevada",...]
 
