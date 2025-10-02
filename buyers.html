@@ -811,23 +811,6 @@ fetch(APPS_SCRIPT_URL, {
     toast('Error saving. Please try again.');
   });
 
-    // Clear UI only on success
-    form.reset();
-    $$('.chip').forEach(c => {
-      c.classList.remove('is-on');
-      const inp = c.querySelector('input');
-      if (inp) inp.checked = false;
-    });
-    msStates.setSelected([]);
-    msCounties.setItems([]);
-
-    // Show success modal + auto-redirect
-    openModal();
-  })
-  .catch(err => {
-    console.error('Error saving:', err);
-    toast('Error saving. Please try again.');
-  });
     // reset
     document.getElementById('resetBtn').addEventListener('click', ()=>{
       form.reset();
