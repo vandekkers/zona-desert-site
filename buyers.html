@@ -785,12 +785,13 @@ fd.append('payload', JSON.stringify(payload));
 
 fetch(APPS_SCRIPT_URL, {
   method: 'POST',
-  body: fd,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload),
 })
   .then(r => r.json())
   .then(data => {
     console.log('Saved to Google Sheets:', data);
-    toast("Saved! We’ll start matching deals to your buy box.");
+    toast('Saved! We’ll start matching deals to your buy box.');
 
     // Clear UI on success
     form.reset();
@@ -802,7 +803,8 @@ fetch(APPS_SCRIPT_URL, {
     msStates.setSelected([]);
     msCounties.setItems([]);
 
-    openModal(); // success modal + auto-redirect
+    // Show success modal + auto-redirect
+    openModal();
   })
   .catch(err => {
     console.error('Error saving:', err);
