@@ -810,10 +810,6 @@ fetch(APPS_SCRIPT_URL, {
     console.error('Error saving:', err);
     toast('Error saving. Please try again.');
   });
-  .then(r => r.json())
-  .then(data => {
-    console.log('Saved to Google Sheets:', data);
-    toast("Saved! We’ll start matching deals to your buy box.");
 
     // Clear UI only on success
     form.reset();
