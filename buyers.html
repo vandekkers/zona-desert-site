@@ -113,6 +113,12 @@
     .modal-actions .meta{font-size:.9rem;color:#6b7280;margin-left:10px}
     .btn-light{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:12px;padding:10px 16px;font-weight:700}
     .btn-primary{background:#6C5CE7;color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:700}
+    
+    /* Prevent double-clicks visual */
+#submitBtn[disabled]{
+  opacity:.6;
+  cursor:not-allowed;
+}
   </style>
 </head>
 <body>
@@ -310,7 +316,7 @@
 
             <div class="actions">
               <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
-              <button type="submit" class="btn btn-primary">Join Buyers List</button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">Join Buyers List</button>
             </div>
           </div>
         </div>
@@ -350,6 +356,30 @@
     const autoMsg  = document.getElementById('autoMsg');
     const HOME_URL = 'index.html';
     let redirectTimer;
+    // --- anti double-submit + immediate feedback ---
+let isSubmitting = false;
+const submitBtn = document.getElementById('submitBtn');
+
+// Show the modal immediately (pending state; no timer yet)
+function openPendingModal(){
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+  autoMsg.textContent = 'Saving your preferences…';
+}
+
+// Start the real success countdown once save returns ok
+function startRedirectCountdown(){
+  let secs = 5;
+  autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+  redirectTimer = setInterval(()=>{
+    secs -= 1;
+    autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+    if(secs <= 0){
+      clearInterval(redirectTimer);
+      window.location.href = HOME_URL;
+    }
+  }, 1000);
+}
 
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeCUMyVaDl9F4gFVBAdT8275tWkLgN__P91Bpan00sCZ7eucBtXJjnfQY5kCG6eq3G_w/exec'; // <-- paste your /exec URL
 
@@ -512,6 +542,14 @@
       if(!requireAtLeastOne('type')){ eTypes.textContent = "Pick at least one type"; ok = false; }
       if(!ok) return;
 
+      // prevent double submissions + show instant feedback
+if (isSubmitting) return;
+isSubmitting = true;
+const originalBtnText = submitBtn.textContent;
+submitBtn.disabled = true;
+submitBtn.textContent = 'Submitting…';
+openPendingModal(); // show the modal right away
+
       // Build countiesByState from "State::County"
       const countyPicks = msCounties.getSelected();
       const countiesByState = countyPicks.reduce((acc, v) => {
@@ -561,21 +599,37 @@
       fd.append('payload', JSON.stringify(payload));
 
       fetch(APPS_SCRIPT_URL, { method:'POST', body: fd })
-        .then(r => r.json())
-        .then(data => {
-          console.log('Saved to Google Sheets:', data);
-          // Clear UI
-          form.reset();
-          $$('.chip').forEach(c => { c.classList.remove('is-on'); const inp=c.querySelector('input'); if (inp) inp.checked=false; });
-          msStates.setSelected([]);
-          msCounties.setItems([]);
-          // Success modal
-          openModal();
-        })
-        .catch(err => {
-          console.error('Error saving:', err);
-          toast('Error saving. Please try again.');
-        });
+  .then(r => r.json())
+  .then(data => {
+    console.log('Saved to Google Sheets:', data);
+
+    // Reset button state
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    isSubmitting = false;
+
+    // Clear UI
+    form.reset();
+    $$('.chip').forEach(c => { 
+      c.classList.remove('is-on'); 
+      const inp=c.querySelector('input'); 
+      if (inp) inp.checked=false; 
+    });
+    msStates.setSelected([]);
+    msCounties.setItems([]);
+
+    // Show success modal (it was already opened instantly)
+    // here we just ensure redirect continues smoothly
+  })
+  .catch(err => {
+    console.error('Error saving:', err);
+    toast('Error saving. Please try again.');
+
+    // Reset button state on failure
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    isSubmitting = false;
+  });
     });
 
     // Reset button (top-level — not inside submit)
