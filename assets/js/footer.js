@@ -192,7 +192,7 @@
 
       <div class="zd-f-bottom">
         <div class="zd-f-copy">
-          © 2026 Zona Desert Property Solutions LLC &nbsp;|&nbsp; Phoenix, AZ
+          © 2025 Zona Desert Property Solutions LLC &nbsp;|&nbsp; Phoenix, AZ
         </div>
       </div>
     </footer>
