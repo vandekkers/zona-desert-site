@@ -8,11 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; text-transform: capitalize; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; text-transform: none; }
+    h1, h2, h3, h4, h5, h6 { text-transform: capitalize; }
     input, select, textarea { border-color:#374151; color:#1F2937; }
     input:focus, select:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(99,102,241,.35); border-color:#4F46E5; }
     .no-capitalize { text-transform:none !important; }
     .label { display:block; margin-top:.5rem; margin-bottom:.25rem; font-weight:600; }
+    .checklist > li::marker { color: #4F46E5; }
   </style>
 </head>
 <body class="bg-slate-50">
@@ -37,9 +39,9 @@
     <div class="grid md:grid-cols-2 gap-10 items-start">
       <!-- Left: Logo + message -->
       <section>
-        <img src="/assets/zona-wordmark.png" 
-             alt="Zona Desert. Property Solutions" 
-             class="w-84 md:w-[28rem] mt-10 mb-10 select-none">
+        <img src="assets/zona-wordmark.svg"
+             alt="Zona Desert Property Solutions wordmark"
+             class="w-64 md:w-[26rem] mt-10 mb-10 select-none">
 
         <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">
           Fair Cash Offer. <span class="text-indigo-600">No Repairs.</span> Your Timeline.
@@ -49,10 +51,10 @@
           We Buy Properties Nationwide As-Is. Skip Showings And Fees. Tell Us A Few Details And We’ll Send A No-Obligation Offer.
         </p>
 
-        <ul class="mt-6 space-y-2 text-slate-700">
-          <li>• No Realtor Commissions Or Hidden Fees</li>
-          <li>• Close In As Little As 7–14 Days</li>
-          <li>• You Pick The Closing Date</li>
+        <ul class="mt-6 space-y-2 text-slate-700 checklist list-disc pl-5">
+          <li>No Realtor Commissions Or Hidden Fees</li>
+          <li>Close In As Little As 7–14 Days</li>
+          <li>You Pick The Closing Date</li>
         </ul>
       </section>
 
@@ -166,10 +168,74 @@
             Get My Offer.
           </button>
 
-          <p id="toast" class="hidden mt-3 text-sm"></p>
+          <p id="toast" class="hidden mt-3 text-sm" role="status" aria-live="polite"></p>
         </form>
       </section>
     </div>
+
+    <!-- Process -->
+    <section class="mt-16 bg-white rounded-2xl shadow border border-slate-200 px-6 py-10">
+      <h2 class="text-3xl font-bold text-slate-900 text-center">How It Works</h2>
+      <p class="mt-3 text-center text-slate-600 max-w-2xl mx-auto">
+        Selling your property should be simple. Our three-step process keeps you informed and in control from the first call to closing day.
+      </p>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <article class="p-6 rounded-xl border border-slate-100 bg-slate-50/60">
+          <h3 class="text-xl font-semibold text-indigo-600">1. Tell Us About The Property</h3>
+          <p class="mt-3 text-slate-600">Share a few details using the form or by calling our team. We review the information the same day.</p>
+        </article>
+        <article class="p-6 rounded-xl border border-slate-100 bg-slate-50/60">
+          <h3 class="text-xl font-semibold text-indigo-600">2. Receive Your Cash Offer</h3>
+          <p class="mt-3 text-slate-600">Within 24 hours you get a transparent cash offer with no obligation, fees, or repair requests.</p>
+        </article>
+        <article class="p-6 rounded-xl border border-slate-100 bg-slate-50/60">
+          <h3 class="text-xl font-semibold text-indigo-600">3. Close On Your Schedule</h3>
+          <p class="mt-3 text-slate-600">Pick the closing date that works best for you. We handle the paperwork and cover standard closing costs.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="mt-16">
+      <h2 class="text-3xl font-bold text-slate-900 text-center">Sellers Trust Zona Desert</h2>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <figure class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+          <blockquote class="text-slate-700">“They closed in ten days and handled the title work. It was the easiest home sale I’ve experienced.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— Maria G., Phoenix, AZ</figcaption>
+        </figure>
+        <figure class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+          <blockquote class="text-slate-700">“Zona Desert gave us a fair price without asking for repairs. We were able to move out of state quickly.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— The Robinson Family, Austin, TX</figcaption>
+        </figure>
+        <figure class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+          <blockquote class="text-slate-700">“Communication was excellent from offer to closing. I’d recommend them to any landlord ready to sell.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— David L., Las Vegas, NV</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-16 bg-indigo-50 border border-indigo-100 rounded-2xl px-6 py-10">
+      <h2 class="text-3xl font-bold text-slate-900 text-center">Frequently Asked Questions</h2>
+      <dl class="mt-8 grid md:grid-cols-2 gap-6 text-slate-700">
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <dt class="font-semibold text-indigo-600">Do I need to clean or repair anything?</dt>
+          <dd class="mt-2">No. We purchase properties exactly as they sit and factor repairs into our cash offer.</dd>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <dt class="font-semibold text-indigo-600">How fast can we close?</dt>
+          <dd class="mt-2">Most sellers close in 7–14 days, but we can move faster or slower depending on your timeline.</dd>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <dt class="font-semibold text-indigo-600">Are there any fees or commissions?</dt>
+          <dd class="mt-2">Never. You receive the amount agreed to in your offer, and we pay standard closing costs.</dd>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <dt class="font-semibold text-indigo-600">What types of properties do you buy?</dt>
+          <dd class="mt-2">Single-family homes, condos, townhomes, and small multifamily properties nationwide.</dd>
+        </div>
+      </dl>
+    </section>
   </main>
 
   <!-- Footer -->
@@ -191,11 +257,14 @@
     function showToast(msg, ok=true) {
       toast.textContent = msg;
       toast.className = ok ? 'mt-3 text-green-700' : 'mt-3 text-red-600';
+      toast.classList.remove('hidden');
     }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Submitting…';
 
       try {
         const fd = new FormData(form);
@@ -228,6 +297,7 @@
         showToast('Network error submitting the form.', false);
       } finally {
         submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     });
   </script>
