@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zona Desert Property Solutions</title>
-  <meta name="description" content="Turning Properties Into Possibilities." />
-
-  <!-- (Optional) Preload hero image -->
+  <title>Sell Your Property Fast | Zona Desert Property Solutions</title>
+  <meta name="description" content="We buy houses nationwide as-is. No fees. No repairs. Choose your closing date and get a fair cash offer from Zona Desert Property Solutions."/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preload" as="image" href="assets/modern_house_background_landscape.png" />
-
   <style>
     :root { --zona-purple: #6366F1; }
 
@@ -21,191 +20,23 @@
       background: #fff;
     }
     a { color: inherit; text-decoration: none; }
-
-    /* ===== HERO ===== */
-    .hero { position: relative; text-align: center; color: #fff; }
-    .hero img { width: 100%; height: 80vh; object-fit: cover; display: block; }
-
-    .hero-text {
-      position: absolute;
-      top: 25%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(1100px,92vw);
-      text-align: center;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(3.5rem,6vw,6rem);
-      line-height: 1.08;
-      font-weight: 800;
-      margin: 0;
-      color: #fff;
-      text-shadow: 3px 3px 12px rgba(0,0,0,.85);
-    }
-    .hero-text h1 span {
-      color: var(--zona-purple);
-      text-shadow: 3px 3px 12px rgba(0,0,0,.85);
-    }
-
-    /* Desktop tagline */
-    .hero-p.desktop-only {
-      display: block;
-      margin: .9rem 0 0;
-      font-size: 1.15rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      white-space: nowrap;
-      text-shadow: 1px 1px 6px rgba(0,0,0,.7);
-    }
-
-    /* Mobile tagline hidden by default */
-    .hero-p.mobile-only { display: none; }
-
-    /* ===== Action tiles ===== */
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: -3rem;
-      position: relative;
-      z-index: 5;
-    }
-    .action {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 150px;
-      height: 100px;
-      line-height: 1.25;
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #000;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,.15);
-      transition: transform .2s ease, box-shadow .2s ease,
-                  background .2s ease, color .2s ease;
-    }
-    .action:hover {
-      background: var(--zona-purple);
-      color: #fff;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0,0,0,.25);
-    }
-
-/* =========================
-   MOBILE ≤ 768px
-   ========================= */
-@media (max-width:768px) {
-  .hero {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-    min-height: 68vh;
-  }
-  .hero img {
-    display: block;
-    width: 120vw;
-    height: 100%;
-    min-height: 68vh;
-    object-fit: cover;
-    border-radius: 0;
-    transform: translateX(0);
-    animation: heroPan 18s ease-in-out infinite alternate;
-  }
-  .hero-text {
-    position: absolute;
-    top: clamp(14vh,20vh,24vh);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    text-align: center;
-  }
-  .hero-text h1 {
-  font-size: clamp(2.1rem, 8vw, 3.4rem);
-  line-height: 1.2;
-  text-shadow: 3px 3px 10px rgba(0,0,0,.85);
-  margin-bottom: 2.5rem;   /* add spacing below headline */
-}
-  /* extra space between the headline and the stacked tagline (mobile only) */
-.hero-subtext.mobile-only {
-  margin-top: 2rem;    /* bump this up/down to taste */
-}
-
-  /* swap taglines */
-  .hero-p.desktop-only { display: none; }
-  .hero-p.mobile-only {
-    display: block;
-    margin: .8rem 0 0;
-    color: #fff;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-shadow: 2px 2px 10px rgba(0,0,0,.85);
-  }
-  .hero-p.mobile-only span {
-    display: block;
-    margin: 10px auto;
-    padding: 2px 8px;
-    width: max-content;
-  }
-  .hero-p.mobile-only span::after {
-    content: "";
-    display: block;
-    width: 56%;
-    height: 2px;
-    margin: 6px auto 0;
-    background: rgba(255,255,255,.9);
-    border-radius: 2px;
-  }
-  .hero-p.mobile-only span:last-child::after { display: none; }
-
-  /* smaller action tiles */
-  .actions { margin-top: -40px; gap: 10px; }
-  .actions .action {
-    width: 75%;
-    max-width: 300px;
-    margin: 0 auto;
-    font-size: 1.05rem;
-    padding: 12px 16px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 5px 14px rgba(0,0,0,.15);
-  }
-}
-
-/* Hero image pan animation (mobile only) */
-@keyframes heroPan {
-  0%   { transform: translateX(0); }
-  50%  { transform: translateX(-20vw); }
-  100% { transform: translateX(0); }
-}
-    .trusted {
-  padding: 0 20px;       /* keeps the left/right breathing room */
-  text-align: center;
-  margin-top: 40px;      /* pushes the whole section down */
-}
-
-.trusted h2 {
-  margin: 0 auto 1rem;   /* space below the heading */
-  max-width: 900px;
-}
-    @media (min-width: 1025px) {
-  .trusted h2 {
-    font-size: 2rem;   /* adjust this as needed */
-  }
-}
+    /* (keep all your existing CSS below this point unchanged) */
   </style>
 </head>
-
-<body>
+<body class="bg-slate-50">
   <!-- Header -->
-  <script src="assets/js/header.js"></script>
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
+        <div>
+          <h1 class="text-lg font-semibold leading-tight">Zona Desert Property Solutions</h1>
+          <p class="text-sm text-slate-500 no-capitalize">Sell Your Home, As-Is. We Pay Closing Costs.</p>
+        </div>
+      </a>
+      <a href="#offer" class="px-5 py-2 rounded-xl bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700">Get An Offer.</a>
+    </div>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
@@ -244,17 +75,24 @@
     </div>
   </section>
 
+  <!-- Main Offer Form -->
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- Keep the form content from main here -->
+    <!-- (you can leave it as-is from your main branch, nothing needs to change here) -->
+  </main>
+
   <!-- Footer -->
-  <script src="assets/js/footer.js"></script>
-  <noscript>
-    <footer>
-      <div class="logo">Zona Desert.</div>
-      <nav>
-        <a href="cash-offer.html">Sell Property</a>
-        <a href="buyers.html">Join Buyer List</a>
-        <a href="submit-deal.html">Submit Your Deal</a>
-      </nav>
-    </footer>
-  </noscript>
+  <footer class="mt-10 border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 py-6 text-slate-600 text-sm flex flex-wrap items-center gap-x-6 gap-y-2">
+      © 2025 Zona Desert Property Solutions. All Rights Reserved.
+      <span class="ml-auto">Phoenix, AZ · (480) 589-4212 · <span class="no-capitalize">vandekkers@zonadesert.com</span></span>
+    </div>
+  </footer>
+
+  <!-- App Script -->
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjant-QyQDxDyQzRcAaEfPhxIlTzewfa3sRRu26LrfPt0ehm9IiMnL24IX4y8KO56-Yg/exec';
+    // Keep your existing form submission script here
+  </script>
 </body>
 </html>
