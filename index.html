@@ -7,12 +7,20 @@
   <meta name="description" content="We buy houses nationwide as-is. No fees. No repairs. Choose your closing date and get a fair cash offer from Zona Desert Property Solutions."/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preload" as="image" href="assets/modern_house_background_landscape.png" />
   <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; text-transform: capitalize; }
-    input, select, textarea { border-color:#374151; color:#1F2937; }
-    input:focus, select:focus, textarea:focus { outline:none; box-shadow:0 0 0 3px rgba(99,102,241,.35); border-color:#4F46E5; }
-    .no-capitalize { text-transform:none !important; }
-    .label { display:block; margin-top:.5rem; margin-bottom:.25rem; font-weight:600; }
+    :root { --zona-purple: #6366F1; }
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      color: #111;
+      background: #fff;
+    }
+    a { color: inherit; text-decoration: none; }
+    /* (keep all your existing CSS below this point unchanged) */
   </style>
 </head>
 <body class="bg-slate-50">
@@ -20,7 +28,6 @@
   <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3">
-        <!-- Purple ZD box -->
         <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
         <div>
           <h1 class="text-lg font-semibold leading-tight">Zona Desert Property Solutions</h1>
@@ -31,145 +38,47 @@
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="max-w-5xl mx-auto px-4 py-10">
-    <!-- Two-column layout -->
-    <div class="grid md:grid-cols-2 gap-10 items-start">
-      <!-- Left: Logo + message -->
-      <section>
-        <img src="/assets/zona-wordmark.png" 
-             alt="Zona Desert. Property Solutions" 
-             class="w-84 md:w-[28rem] mt-10 mb-10 select-none">
+  <!-- HERO -->
+  <section class="hero">
+    <img src="assets/modern_house_background_landscape.png" alt="Modern home background">
+    <div class="hero-text">
+      <h1>Turning Properties<br>Into <span>Possibilities.</span></h1>
 
-        <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          Fair Cash Offer. <span class="text-indigo-600">No Repairs.</span> Your Timeline.
-        </h2>
+      <!-- Desktop tagline -->
+      <p class="hero-p desktop-only">
+        Cash Offers • Buyer Connections • Wholesale Dispo
+      </p>
 
-        <p class="mt-4 text-slate-700">
-          We Buy Properties Nationwide As-Is. Skip Showings And Fees. Tell Us A Few Details And We’ll Send A No-Obligation Offer.
-        </p>
-
-        <ul class="mt-6 space-y-2 text-slate-700">
-          <li>• No Realtor Commissions Or Hidden Fees</li>
-          <li>• Close In As Little As 7–14 Days</li>
-          <li>• You Pick The Closing Date</li>
-        </ul>
-      </section>
-
-      <!-- Right: Form card -->
-      <section id="offer" class="bg-white rounded-2xl shadow p-6 border border-slate-200">
-        <div class="flex items-center gap-3 mb-2">
-          <!-- Purple ZD box -->
-          <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold">ZD</div>
-          <div>
-            <h3 class="text-2xl font-bold">Get Your Cash Offer</h3>
-            <p class="text-slate-500 mt-1 no-capitalize">Tell Us About The Property. We’ll Reach Out Within 24 Hours.</p>
-          </div>
-        </div>
-
-        <form id="leadForm" class="mt-6 space-y-4" autocomplete="on">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="label">First Name</label>
-              <input name="firstName" required class="w-full border rounded-xl px-3 py-2" autocomplete="given-name"/>
-            </div>
-            <div>
-              <label class="label">Last Name</label>
-              <input name="lastName" required class="w-full border rounded-xl px-3 py-2" autocomplete="family-name"/>
-            </div>
-            <div>
-              <label class="label">Phone</label>
-              <input type="tel" name="sellerPhone" required class="w-full border rounded-xl px-3 py-2 no-capitalize" inputmode="tel" placeholder="(###) ###-####"/>
-            </div>
-            <div>
-              <label class="label">Email</label>
-              <input type="email" name="sellerEmail" required class="w-full border rounded-xl px-3 py-2 no-capitalize" autocomplete="email" />
-            </div>
-            <div class="md:col-span-2">
-              <label class="label">Street</label>
-              <input name="streetAddress" required class="w-full border rounded-xl px-3 py-2" autocomplete="address-line1"/>
-            </div>
-            <div>
-              <label class="label">City</label>
-              <input name="city" required class="w-full border rounded-xl px-3 py-2" autocomplete="address-level2"/>
-            </div>
-            <div>
-              <label class="label">State</label>
-              <select name="state" required class="w-full border rounded-xl px-3 py-2 bg-white" autocomplete="address-level1">
-                <option value="">Select State</option>
-                <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
-                <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
-                <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
-                <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-                <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
-                <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
-                <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
-                <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-                <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
-                <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
-              </select>
-            </div>
-            <div class="md:col-span-2">
-              <label class="label">Zip</label>
-              <input name="zip" required class="w-full border rounded-xl px-3 py-2 no-capitalize" inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="#####"/>
-            </div>
-          </div>
-
-          <fieldset class="mt-2">
-            <legend class="label">Motivation (Select All That Apply)</legend>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-slate-700">
-              <label><input type="checkbox" name="motivations[]" value="Tired Landlord" class="mr-2">Tired Landlord</label>
-              <label><input type="checkbox" name="motivations[]" value="Financial Reasons" class="mr-2">Financial Reasons</label>
-              <label><input type="checkbox" name="motivations[]" value="Downsizing" class="mr-2">Downsizing</label>
-              <label><input type="checkbox" name="motivations[]" value="Relocating" class="mr-2">Relocating</label>
-              <label><input type="checkbox" name="motivations[]" value="Selling Vacant House" class="mr-2">Selling Vacant House</label>
-              <label><input type="checkbox" name="motivations[]" value="Retirement Elsewhere" class="mr-2">Retirement Elsewhere</label>
-              <label><input type="checkbox" name="motivations[]" value="Shopping Offers" class="mr-2">Shopping Offers</label>
-              <label><input type="checkbox" name="motivations[]" value="Investment Liquidation" class="mr-2">Investment Liquidation</label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend class="label">Anyone Living In The Property?</legend>
-            <label class="mr-6"><input type="radio" name="occupancy" value="Yes" required class="mr-2">Yes</label>
-            <label><input type="radio" name="occupancy" value="No" required class="mr-2">No</label>
-          </fieldset>
-
-          <fieldset>
-            <legend class="label">Do You Own The Property?</legend>
-            <label class="mr-6"><input type="radio" name="ownership" value="Yes" required class="mr-2">Yes</label>
-            <label><input type="radio" name="ownership" value="No" required class="mr-2">No</label>
-          </fieldset>
-
-          <div>
-            <label class="label">Best Time To Contact</label>
-            <input name="bestTime" class="w-full border rounded-xl px-3 py-2 no-capitalize" placeholder="Best Time" />
-          </div>
-
-          <div>
-            <label class="label">How Soon Do You Want To Sell?</label>
-            <select name="timeline" required class="w-full border rounded-xl px-3 py-2 bg-white">
-              <option value="">Select...</option>
-              <option>ASAP</option>
-              <option>1–2 Months</option>
-              <option>3–5 Months</option>
-              <option>6+ Months</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="label">Notes (Optional)</label>
-            <textarea name="notes" class="w-full border rounded-xl px-3 py-2 h-28 no-capitalize" placeholder="Notes..."></textarea>
-          </div>
-
-          <button id="submitBtn" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-3 rounded-xl">
-            Get My Offer.
-          </button>
-
-          <p id="toast" class="hidden mt-3 text-sm"></p>
-        </form>
-      </section>
+      <!-- Mobile tagline -->
+      <p class="hero-p mobile-only">
+        <span>Cash Offers</span>
+        <span>Buyer Connections</span>
+        <span>Wholesale Dispo</span>
+      </p>
     </div>
+  </section>
+
+  <!-- ACTION TILES -->
+  <section class="actions">
+    <a class="action" href="cash-offer.html">Sell<br>Property</a>
+    <a class="action" href="buyers.html">Join<br>Buyers List</a>
+    <a class="action" href="submit-deal.html">Submit<br>Your Deal</a>
+  </section>
+
+  <!-- Trusted section -->
+  <section class="trusted">
+    <h2>Trusted by Sellers, Investors & Wholesalers Nationwide.</h2>
+    <div class="stats">
+      <div>✔ 24hr Cash Offers</div>
+      <div>✔ As-Is, No Repairs</div>
+      <div>✔ Close on Your Timeline</div>
+    </div>
+  </section>
+
+  <!-- Main Offer Form -->
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- Keep the form content from main here -->
+    <!-- (you can leave it as-is from your main branch, nothing needs to change here) -->
   </main>
 
   <!-- Footer -->
@@ -183,53 +92,7 @@
   <!-- App Script -->
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjant-QyQDxDyQzRcAaEfPhxIlTzewfa3sRRu26LrfPt0ehm9IiMnL24IX4y8KO56-Yg/exec';
-
-    const form = document.getElementById('leadForm');
-    const toast = document.getElementById('toast');
-    const submitBtn = document.getElementById('submitBtn');
-
-    function showToast(msg, ok=true) {
-      toast.textContent = msg;
-      toast.className = ok ? 'mt-3 text-green-700' : 'mt-3 text-red-600';
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-
-      try {
-        const fd = new FormData(form);
-        const params = new URLSearchParams();
-        for (const [k, v] of fd.entries()) params.append(k, v);
-
-        const res = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: params.toString(),
-          mode: 'cors'
-        });
-
-        let ok = res.ok;
-        let msg = 'Submitted.';
-        try {
-          const data = await res.json();
-          ok = ok && data.status === 'ok';
-          if (!ok && data.message) msg = data.message;
-        } catch (_) {}
-
-        if (ok) {
-          showToast('Thanks — we received your info. We’ll reach out within 24 hours.', true);
-          form.reset();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          showToast('Sorry — there was an issue submitting the form.', false);
-        }
-      } catch (err) {
-        showToast('Network error submitting the form.', false);
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
+    // Keep your existing form submission script here
   </script>
 </body>
 </html>

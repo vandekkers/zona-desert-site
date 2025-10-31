@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join Buyers List • Zona Desert</title>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#0f172a;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --card:#f9fafb;
+      --brand:#6366F1;
+      --brand-ink:#4338CA;
+      --ok:#10b981;
+      --warn:#f59e0b;
+      --err:#ef4444;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Inter","Helvetica Neue",Arial,sans-serif}
+    .wrap{max-width:1100px;margin:auto;padding:24px 18px 80px}
+
+    h1{font-weight:800;font-size:clamp(1.6rem,2.8vw,2.6rem);line-height:1.15;margin:4px 0 18px}
+    p.subtle{color:var(--muted);margin:0 0 18px}
+
+    .grid{display:grid;gap:22px}
+    @media(min-width:900px){ .grid{grid-template-columns: 1.15fr .85fr; gap:30px } }
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .section{padding:18px 18px 8px;border-bottom:1px solid var(--line)}
+    .section:last-child{border-bottom:0;padding-bottom:20px}
+    .section h2{margin:0 0 8px;font-size:1.1rem;font-weight:800;letter-spacing:.02em;color:var(--brand)}
+    .row{display:grid;gap:14px}
+    @media(min-width:700px){ .row.two{grid-template-columns: 1fr 1fr} }
+    label{display:block;font-size:.9rem;font-weight:700;margin:8px 0 6px}
+    .input, select, textarea{
+      width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;
+      padding:14px 14px;font-size:1rem;outline:none;
+      transition:border .15s, box-shadow .15s;
+    }
+    .input:focus, select:focus, textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+    textarea{min-height:110px;resize:vertical}
+    .err{color:var(--err);font-size:.9rem}
+
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{
+      position:relative;display:inline-flex;align-items:center;gap:10px;
+      padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;
+      cursor:pointer;font-weight:700;font-size:.95rem;user-select:none;
+    }
+    .chip input{position:absolute;opacity:0;pointer-events:none}
+    .chip[data-single="1"] { border-radius:12px }
+    .chip.is-on{border-color:var(--brand);background:rgba(99,102,241,.06);color:var(--brand-ink)}
+    .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--line)}
+    .chip.is-on .dot{background:var(--brand)}
+
+    /* Multiselect */
+    .ms{position:relative}
+    .ms-toggle{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer
+    }
+    .ms-toggle span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ms.open .ms-toggle{border-color:var(--brand);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+    .ms-menu{
+      position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:#fff;
+      border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:10px 10px 12px;display:none;
+    }
+    .ms.open .ms-menu{display:block}
+    .ms-search{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 12px;margin:2px 2px 8px}
+    .ms-search input{border:0;outline:none;width:100%;font-size:1rem}
+    .ms-actions{display:flex;justify-content:space-between;align-items:center;margin:6px 4px 8px}
+    .ms-actions .mini{font-size:.86rem;color:var(--brand-ink);background:transparent;border:0;cursor:pointer;font-weight:800}
+    .ms-list{max-height:280px;overflow:auto;padding-right:6px}
+    .ms-item{display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:10px;cursor:pointer}
+    .ms-item:hover{background:var(--card)}
+    .ms-item input{width:18px;height:18px}
+    .ms-empty{color:var(--muted);padding:12px}
+
+    .actions{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:12px}
+    .btn{border:0;border-radius:12px;padding:14px 18px;font-weight:800;cursor:pointer;font-size:1rem}
+    .btn.primary{background:var(--brand);color:#fff}
+    .btn.secondary{background:#fff;border:1px solid var(--line)}
+
+    /* Toast */
+    .toast{
+      position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+      background:#111;color:#fff;padding:12px 16px;border-radius:999px;box-shadow:var(--shadow);
+      opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+    /* Hero card */
+    .hero-card {background:#f9fafb;padding:2rem;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:20px}
+
+    /* Modal */
+    .modal {position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.45);backdrop-filter: blur(3px); z-index: 9999;}
+    .modal.show { display:flex; }
+    .modal-card {width:min(640px,92vw);background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.28);
+      padding:28px;text-align:center}
+    .modal-head h3{margin:0;font-size:clamp(1.35rem,1.05rem + 1vw,1.75rem)}
+    .modal-head .brand{color:var(--brand);font-weight:800}
+    .modal-head .ink{color:#000;font-weight:900}
+    .confetti{font-size:1.6rem;margin:6px 0 14px}
+    .modal-msg{margin:10px 2px 18px;color:#444}
+    .modal-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+    .modal-actions .meta{font-size:.9rem;color:#6b7280;margin-left:10px}
+    .btn-light{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:12px;padding:10px 16px;font-weight:700}
+    .btn-primary{background:#6C5CE7;color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:700}
+    
+    /* Prevent double-clicks visual */
+#submitBtn[disabled]{
+  opacity:.6;
+  cursor:not-allowed;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <script src="assets/js/header.js"></script>
+
+  <main class="container">
+    <div class="wrap">
+      <div class="card hero-card">
+        <h1>Join <span style="color:var(--brand)">Buyers List</span><span style="color:#000;">.</span></h1>
+        <p class="subtle">Get vetted off-market deals delivered to your inbox. Local and nationwide opportunities.</p>
+      </div>
+
+      <form id="buyersForm" class="grid" novalidate>
+        <!-- LEFT: Contact + Markets -->
+        <div class="card">
+          <div class="section">
+            <h2>Contact</h2>
+            <div class="row two">
+              <div>
+                <label for="fullName">Full Name <span class="err" id="e_fullName"></span></label>
+                <input id="fullName" name="fullName" class="input" autocomplete="name" required />
+              </div>
+              <div>
+                <label for="company">Company / Entity (optional)</label>
+                <input id="company" name="company" class="input" autocomplete="organization" />
+              </div>
+            </div>
+            <div class="row two">
+              <div>
+                <label for="email">Email <span class="err" id="e_email"></span></label>
+                <input id="email" name="email" type="email" class="input" autocomplete="email" required />
+              </div>
+              <div>
+                <label for="phone">Phone <span class="err" id="e_phone"></span></label>
+                <input id="phone" name="phone" class="input" inputmode="tel" autocomplete="tel" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Markets</h2>
+            <label>States <span class="err" id="e_states"></span></label>
+            <div class="ms" id="msStates">
+              <button type="button" class="ms-toggle"><span>Select states</span>▾</button>
+              <div class="ms-menu">
+                <div class="ms-search"><input type="search" placeholder="Search states…" /></div>
+                <div class="ms-actions">
+                  <button type="button" class="mini js-select-all">Select all</button>
+                  <button type="button" class="mini js-clear">Clear</button>
+                </div>
+                <div class="ms-list" role="listbox"></div>
+              </div>
+            </div>
+
+            <div style="height:12px"></div>
+            <label>Counties</label>
+            <div class="ms" id="msCounties">
+              <button type="button" class="ms-toggle"><span>Select counties</span>▾</button>
+              <div class="ms-menu">
+                <div class="ms-search"><input type="search" placeholder="Search counties…" /></div>
+                <div class="ms-actions">
+                  <button type="button" class="mini js-select-all">Select all</button>
+                  <button type="button" class="mini js-clear">Clear</button>
+                </div>
+                <div class="ms-list" role="listbox"></div>
+              </div>
+            </div>
+
+            <div style="height:12px"></div>
+            <label for="marketNotes">Market Notes</label>
+            <textarea id="marketNotes" name="marketNotes" class="input" placeholder="Cities, Zipcodes, Neighborhoods, etc."></textarea>
+          </div>
+        </div>
+
+        <!-- RIGHT: Buy Box -->
+        <div class="card">
+          <div class="section">
+            <h2>Exit Strategies</h2>
+            <div class="chips" id="exitStrategies">
+              <label class="chip"><input type="checkbox" name="exit" value="Fix & Flip"><span class="dot"></span>Fix &amp; Flip</label>
+              <label class="chip"><input type="checkbox" name="exit" value="Buy & Hold"><span class="dot"></span>Buy &amp; Hold</label>
+              <label class="chip"><input type="checkbox" name="exit" value="BRRRR"><span class="dot"></span>BRRRR</label>
+            </div>
+            <div class="err" id="e_exit" style="margin-top:6px"></div>
+          </div>
+
+          <div class="section">
+            <h2>Tenant-Occupied?</h2>
+            <div class="chips" id="tenant">
+              <label class="chip" data-single="1"><input type="radio" name="tenant" value="Yes"><span class="dot"></span>Yes</label>
+              <label class="chip" data-single="1"><input type="radio" name="tenant" value="No"><span class="dot"></span>No</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Property Types</h2>
+            <div class="chips" id="types">
+              <label class="chip"><input type="checkbox" name="type" value="Single Family"><span class="dot"></span>Single Family</label>
+              <label class="chip"><input type="checkbox" name="type" value="Multifamily 2-4"><span class="dot"></span>Multifamily 2-4</label>
+              <label class="chip"><input type="checkbox" name="type" value="Multifamily 5+"><span class="dot"></span>Multifamily 5+</label>
+              <label class="chip"><input type="checkbox" name="type" value="Land"><span class="dot"></span>Land</label>
+            </div>
+            <div class="err" id="e_types" style="margin-top:6px"></div>
+          </div>
+
+          <div class="section">
+            <h2>Basic Criteria</h2>
+            <div class="row two">
+              <div>
+                <label for="beds">Beds</label>
+                <select id="beds" class="input">
+                  <option value="">Any</option>
+                  <option>1+</option><option>2+</option><option>3+</option><option>4+</option><option>5+</option>
+                </select>
+              </div>
+              <div>
+                <label for="baths">Baths</label>
+                <select id="baths" class="input">
+                  <option value="">Any</option>
+                  <option>1+</option><option>1.5+</option><option>2+</option><option>3+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row two">
+              <div>
+                <label for="sqft">Sqft</label>
+                <select id="sqft" class="input">
+                  <option value="">Any</option>
+                  <option>0–1,000</option><option>1,000–1,500</option><option>1,500–2,000</option>
+                  <option>2,000–3,000</option><option>3,000+</option>
+                </select>
+              </div>
+              <div>
+                <label>Year Built</label>
+                <div class="row two">
+                  <input id="yrMin" class="input" inputmode="numeric" placeholder="Min" />
+                  <input id="yrMax" class="input" inputmode="numeric" placeholder="Max" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row two">
+              <div>
+                <label>Price Range</label>
+                <div class="row two">
+                  <input id="priceMin" class="input" inputmode="numeric" placeholder="Min $" />
+                  <input id="priceMax" class="input" inputmode="numeric" placeholder="Max $" />
+                </div>
+              </div>
+
+              <div>
+                <label for="rehab">Rehab Scope</label>
+                <select id="rehab" name="rehab" class="input">
+                  <option value="">Any</option>
+                  <option value="None">None</option>
+                  <option value="Cosmetic">Cosmetic</option>
+                  <option value="Light">Light</option>
+                  <option value="Full gut">Full gut</option>
+                  <option value="Tear-down">Tear-down</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="dealsPerMonth">Deals per Month</label>
+                <select id="dealsPerMonth" name="dealsPerMonth" class="input">
+                  <option value="">Any</option>
+                  <option value="1">1</option>
+                  <option value="2–3">2–3</option>
+                  <option value="4+">4+</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="maxArv">% of ARV</label>
+                <select id="maxArv" name="maxArv" class="input">
+                  <option value="">Any</option>
+                  <option value="60%">60%</option>
+                  <option value="65%">65%</option>
+                  <option value="70%">70%</option>
+                  <option value="75%">75%</option>
+                  <option value="80%">80%</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span-2">
+                <label for="buyerNotes">Notes</label>
+                <textarea id="buyerNotes" class="input" rows="5" placeholder="Anything else we should know?"></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">Join Buyers List</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="toast" id="toast">Saved! We’ll start matching deals to your buy box.</div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Welcome to <span class="brand">Zona</span> <span class="ink">Desert!</span></h3>
+        </div>
+        <div class="confetti" aria-hidden="true">🎉🎉🎉</div>
+        <p class="modal-msg">
+          Thanks for joining the Buyers List. We’ll match incoming opportunities to your buy box
+          and reach out when we’ve got a fit. You’ll also receive deal alerts by email.
+        </p>
+        <div class="modal-actions">
+          <button id="goNowBtn" class="btn btn-primary">Go to Home</button>
+          <button id="closeBtn" class="btn btn-light">Close</button>
+          <span class="meta" id="autoMsg">Auto-redirecting in 5s…</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Data: states & counties -->
+  <script src="assets/stateCounties.js"></script>
+
+  <script>
+    /* ==== Modal helpers ==== */
+    const modal    = document.getElementById('successModal');
+    const goNowBtn = document.getElementById('goNowBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const autoMsg  = document.getElementById('autoMsg');
+    const HOME_URL = 'index.html';
+    let redirectTimer;
+    // --- anti double-submit + immediate feedback ---
+let isSubmitting = false;
+const submitBtn = document.getElementById('submitBtn');
+
+// Show the modal immediately (pending state; no timer yet)
+function openPendingModal(){
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+  autoMsg.textContent = 'Saving your preferences…';
+}
+
+// Start the real success countdown once save returns ok
+function startRedirectCountdown(){
+  let secs = 5;
+  autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+  redirectTimer = setInterval(()=>{
+    secs -= 1;
+    autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+    if(secs <= 0){
+      clearInterval(redirectTimer);
+      window.location.href = HOME_URL;
+    }
+  }, 1000);
+}
+
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdU_XLjtHzBdr5Y31NqY_Jm-Z5epQcUUSUCAIqzY2FNTDHIIhq20BNB57Ngba4NI1FCg/exec'; // <-- paste your /exec URL
+
+    function openModal(){
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      let secs = 5;
+      autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+      redirectTimer = setInterval(()=>{
+        secs -= 1;
+        autoMsg.textContent = `Auto-redirecting in ${secs}s…`;
+        if(secs <= 0){ clearInterval(redirectTimer); window.location.href = HOME_URL; }
+      }, 1000);
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      if (redirectTimer) clearInterval(redirectTimer);
+    }
+    goNowBtn.addEventListener('click', ()=> window.location.href = HOME_URL);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('show')) closeModal(); });
+
+    const STATE_DATA = window.STATE_COUNTIES || {}; // { "Arizona":[...], "Nevada":[...] }
+
+    const $  = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const toast = (msg) => {
+      const el = $("#toast"); el.textContent = msg || el.textContent;
+      el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), 2200);
+    };
+
+    function wireChips(scope){
+      scope.addEventListener('change', (e)=>{
+        const label = e.target.closest('.chip');
+        if(!label) return;
+        if(label.dataset.single === "1"){
+          label.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('is-on'));
+        }
+        if(e.target.checked){ label.classList.add('is-on'); }
+        else { label.classList.remove('is-on'); }
+      });
+    }
+    ['exitStrategies','tenant','types'].forEach(id => wireChips(document.getElementById(id)));
+
+    // Multiselect
+    function MultiSelect(root, { placeholder, items = [], onChange }){
+      const toggle = root.querySelector('.ms-toggle');
+      const menu = root.querySelector('.ms-menu');
+      const list = root.querySelector('.ms-list');
+      const search = root.querySelector('.ms-search input');
+      const selectAllBtn = root.querySelector('.js-select-all');
+      const clearBtn = root.querySelector('.js-clear');
+
+      let selected = new Set();
+      let filtered = [...items];
+
+      const render = () => {
+        list.innerHTML = "";
+        if(!filtered.length){ list.innerHTML = `<div class="ms-empty">No matches</div>`; return; }
+        filtered.forEach(({value,label})=>{
+          const row = document.createElement('div');
+          row.className = 'ms-item';
+          row.innerHTML = `<input type="checkbox" value="${value}"><span>${label}</span>`;
+          const cb = row.querySelector('input');
+          cb.checked = selected.has(value);
+          cb.addEventListener('change', ()=>{
+            if(cb.checked) selected.add(value); else selected.delete(value);
+            bubble();
+          });
+          row.addEventListener('click', (e)=>{ if(e.target.tagName!=="INPUT"){ cb.checked=!cb.checked; cb.dispatchEvent(new Event('change')); }});
+          list.appendChild(row);
+        });
+        const count = selected.size;
+        toggle.querySelector('span').textContent = count ? `${count} selected` : placeholder;
+      };
+
+      const bubble = () => { onChange && onChange([...selected]); render(); };
+
+      toggle.addEventListener('click', ()=> root.classList.toggle('open'));
+      document.addEventListener('click', (e)=>{ if(!root.contains(e.target)) root.classList.remove('open'); });
+
+      search.addEventListener('input', ()=>{
+        const q = search.value.trim().toLowerCase();
+        filtered = items.filter(it => it.label.toLowerCase().includes(q));
+        render();
+      });
+
+      selectAllBtn.addEventListener('click', ()=>{ filtered.forEach(it=> selected.add(it.value)); bubble(); });
+      clearBtn.addEventListener('click', ()=>{ selected.clear(); bubble(); });
+
+      const api = {
+        setItems(nextItems){ items = [...nextItems]; filtered = [...items]; selected.clear(); render(); },
+        getSelected(){ return [...selected]; },
+        setSelected(values){ selected = new Set(values); render(); }
+      };
+      render();
+      return api;
+    }
+
+    // Build states: list of state names (keys)
+    const stateItems = Object.keys(STATE_DATA)
+      .sort((a,b)=>a.localeCompare(b))
+      .map(name => ({ value: name, label: name }));
+
+    const msStates = MultiSelect(document.getElementById('msStates'), {
+      placeholder: 'Select states…',
+      items: stateItems,
+      onChange: handleStatesChanged
+    });
+
+    // Counties
+    const msCounties = MultiSelect(document.getElementById('msCounties'), {
+      placeholder: 'Select counties…',
+      items: []
+    });
+
+    function handleStatesChanged(stateNames){
+      const merged = [];
+      stateNames.forEach(name => {
+        const counties = STATE_DATA[name];
+        if (!Array.isArray(counties)) return;
+        counties.forEach(cty => {
+          merged.push({ value: name + "::" + cty, label: `${cty} (${name})` });
+        });
+      });
+      merged.sort((a,b)=> a.label.localeCompare(b.label));
+      msCounties.setItems(merged);
+      msCounties.setSelected([]);
+    }
+
+    // Validation + submit
+    const form   = document.getElementById('buyersForm');
+    const eFull  = document.getElementById('e_fullName');
+    const eEmail = document.getElementById('e_email');
+    const ePhone = document.getElementById('e_phone');
+    const eStates= document.getElementById('e_states');
+    const eExit  = document.getElementById('e_exit');
+    const eTypes = document.getElementById('e_types');
+
+    function requireAtLeastOne(name){ return $$(`input[name="${name}"]:checked`).length > 0; }
+
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      [eFull,eEmail,ePhone,eStates,eExit,eTypes].forEach(el=> el.textContent = "");
+
+      let ok = true;
+      const fullName = $('#fullName').value.trim();
+      const email    = $('#email').value.trim();
+      const phone    = $('#phone').value.trim();
+
+      if(!fullName){ eFull.textContent = " • required"; ok = false; }
+      if(!email || !/^\S+@\S+\.\S+$/.test(email)){ eEmail.textContent = " • valid email required"; ok = false; }
+      if(!phone){ ePhone.textContent = " • required"; ok = false; }
+
+      const states = msStates.getSelected();
+      if(states.length === 0){ eStates.textContent = " • select at least one state"; ok = false; }
+      if(!requireAtLeastOne('exit')){ eExit.textContent = "Pick at least one strategy"; ok = false; }
+      if(!requireAtLeastOne('type')){ eTypes.textContent = "Pick at least one type"; ok = false; }
+      if(!ok) return;
+
+      // prevent double submissions + show instant feedback
+if (isSubmitting) return;
+isSubmitting = true;
+const originalBtnText = submitBtn.textContent;
+submitBtn.disabled = true;
+submitBtn.textContent = 'Submitting…';
+openPendingModal(); // show the modal right away
+
+      // Build countiesByState from "State::County"
+      const countyPicks = msCounties.getSelected();
+      const countiesByState = countyPicks.reduce((acc, v) => {
+        const [state, county] = String(v).split('::');
+        if (!state || !county) return acc;
+        (acc[state] ||= []).push(county);
+        return acc;
+      }, {});
+
+      // Arrays for chips
+      const exitStrategies = $$('input[name="exit"]:checked').map(i => i.value);
+      const propertyTypes  = $$('input[name="type"]:checked').map(i => i.value);
+      const tenantOccupied = ($('input[name="tenant"]:checked') || {}).value || "";
+
+      const payload = {
+        fullName,
+        entity: $('#company').value.trim(),
+        email,
+        phone,
+
+        states,
+        countiesByState,
+
+        marketNotes: $('#marketNotes').value.trim(),
+        exitStrategies,
+        tenantOccupied,
+
+        propertyTypes,
+        beds:  $('#beds').value || "",
+        baths: $('#baths').value || "",
+        sqft:  $('#sqft').value || "",
+
+        yearMin:  $('#yrMin').value.trim(),
+        yearMax:  $('#yrMax').value.trim(),
+        priceMin: $('#priceMin').value.trim(),
+        priceMax: $('#priceMax').value.trim(),
+
+        rehabScope: $('#rehab').value || "",
+        arvPct:     $('#maxArv').value || "",
+
+        dealsPerMonth: $('#dealsPerMonth').value || "",
+        notes: $('#buyerNotes').value.trim()
+      };
+
+      // Send to Apps Script as FormData (lets GAS handle CORS cleanly)
+      const fd = new FormData();
+      fd.append('payload', JSON.stringify(payload));
+
+      fetch(APPS_SCRIPT_URL, { method:'POST', body: fd })
+  .then(r => r.json())
+  .then(data => {
+    console.log('Saved to Google Sheets:', data);
+
+    // Reset button state
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    isSubmitting = false;
+
+    // Clear UI
+    form.reset();
+    $$('.chip').forEach(c => { 
+      c.classList.remove('is-on'); 
+      const inp=c.querySelector('input'); 
+      if (inp) inp.checked=false; 
+    });
+    msStates.setSelected([]);
+    msCounties.setItems([]);
+
+    // Show success modal (it was already opened instantly)
+    // here we just ensure redirect continues smoothly
+  })
+  .catch(err => {
+    console.error('Error saving:', err);
+    toast('Error saving. Please try again.');
+
+    // Reset button state on failure
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    isSubmitting = false;
+  });
+    });
+
+    // Reset button (top-level — not inside submit)
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      form.reset();
+      $$('.chip').forEach(c => { c.classList.remove('is-on'); const inp=c.querySelector('input'); if (inp) inp.checked=false; });
+      msStates.setSelected([]);
+      msCounties.setItems([]);
+    });
+  </script>
+
+  <!-- Footer -->
+  <script src="assets/js/footer.js"></script>
+</body>
+</html>
