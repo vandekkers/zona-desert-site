@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Zona Desert",
-  description: "Who we are and why institutional and independent buyers trust us for off-market inventory."
+  description: "Who we are and why institutional and independent buyers trust us for private-market inventory."
 };
 
 const values = [
   {
-    title: "Sourcing first",
+    title: "Sourcing First",
     body: "We invest heavily in boots-on-ground canvassing, direct-to-seller campaigns, and agent referrals."
   },
   {
-    title: "Data-backed underwriting",
+    title: "Data-Backed Underwriting",
     body: "Each deal is packaged with rent comps, rehab notes, and exit scenarios so you can move quickly."
   },
   {
-    title: "Aligned incentives",
+    title: "Aligned Incentives",
     body: "We only win when investors close great deals. Expect transparency, speed, and clear communication."
   }
 ];
@@ -24,8 +24,8 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-12 px-4 py-16">
       <div className="space-y-4">
-        <p className="text-sm uppercase tracking-[0.2em] text-zona-purple">About us</p>
-        <h1 className="text-4xl font-semibold text-slate-900">We&apos;re building the off-market Zillow for serious operators</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-zona-purple">About Us</p>
+        <h1 className="text-4xl font-semibold text-slate-900">We&apos;re Building The Private-Market Zillow For Serious Operators</h1>
         <p className="text-slate-600">
           Zona Desert pairs a local acquisitions team with tech-enabled underwriting so investors can evaluate creative deals in minutes,
           not weeks.

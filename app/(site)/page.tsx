@@ -18,13 +18,12 @@ export default async function HomePage() {
           className="object-cover opacity-40"
         />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-4 py-32">
-          <p className="text-sm uppercase tracking-[0.4em] text-zona-purple">Off-market only</p>
+          <p className="text-sm uppercase tracking-[0.4em] text-zona-purple">Investor-Ready Platform</p>
           <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl">
-            Zona Desert is the invite-only marketplace for private Southwest deals.
+            Zona Desert Is The Investor-First Marketplace For Creative Real Estate Deals Nationwide.
           </h1>
           <p className="max-w-2xl text-lg text-slate-200 md:text-xl">
-            Discover off-market rentals, flips, and creative finance opportunities before they hit MLS. Submit soft offers,
-            request deal packs, and close faster with our in-house team.
+            Browse vetted rentals, flips, and creative finance opportunities sourced from top agents, trusted wholesalers, and our in-house acquisitions team.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
@@ -37,7 +36,7 @@ export default async function HomePage() {
               href="/buyers/join"
               className="rounded-full border border-white/40 px-6 py-3 text-base font-semibold text-white"
             >
-              Join Buyer List
+              Join Buyers List
             </Link>
           </div>
         </div>
@@ -46,11 +45,11 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-20">
         <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-zona-purple">Featured deals</p>
-            <h2 className="text-3xl font-semibold text-slate-900">Handpicked inventory (updated daily)</h2>
+            <p className="text-sm uppercase tracking-[0.2em] text-zona-purple">Featured Deals</p>
+            <h2 className="text-3xl font-semibold text-slate-900">Curated Investment Opportunities. Updated Frequently.</h2>
           </div>
           <Link href="/listings" className="text-sm font-semibold text-zona-purple">
-            See all listings →
+            See All Listings →
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -64,16 +63,16 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-3">
           {[
             {
-              title: "Creative finance ready",
-              body: "Seller-finance, novations, wraps, and more—pre-underwritten packages make approvals quick."
+              title: "Creative Finance Ready",
+              body: "Seller finance, novations, wraps, and other creative structures are clearly packaged for fast approvals."
             },
             {
-              title: "Local boots on ground",
-              body: "We source, inspect, and dispo across Phoenix, Tucson, Vegas, Albuquerque, and Palm Springs."
+              title: "Nationwide Private-Market Pipeline",
+              body: "Inventory feeds in from agents and wholesalers across major metros, plus our internal sourcing desk."
             },
             {
-              title: "Serious buyers only",
-              body: "Fully-vetted investors get first look before we open to the broader list."
+              title: "Serious Buyers Only",
+              body: "Fully vetted investors get first look on investor-ready deals before we widen distribution."
             }
           ].map((item) => (
             <div key={item.title} className="rounded-3xl border border-white/10 bg-white/5 p-6">

@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
 export const metadata: Metadata = {
-  title: "Zona Desert | Off-Market Investment Marketplace",
-  description: "Curated off-market deals across the Southwest for serious investors, flippers, and operators."
+  title: "Zona Desert | Investor-First Real Estate Marketplace",
+  description: "Curated private-market deals for buyers, investors, and creative finance pros nationwide."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-col bg-gradient-to-b from-white to-slate-50">
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+      <body className="bg-gradient-to-b from-white to-slate-50">
+        {children}
       </body>
     </html>
   );

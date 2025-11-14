@@ -30,13 +30,17 @@ export function ListingCardGrid({ listing }: Props) {
       </div>
       <div className="space-y-3 p-5">
         <div>
-          <p className="text-xs uppercase tracking-wide text-zona-purple">{listing.city}, {listing.state}</p>
+          <p className="text-xs font-semibold text-zona-purple">{listing.city}, {listing.state}</p>
           <p className="text-lg font-semibold text-slate-900">{listing.title}</p>
         </div>
-        <p className="text-2xl font-bold text-slate-900">${listing.price.toLocaleString()}</p>
-        <div className="flex items-center justify-between text-xs text-slate-500">
-          <span>Est. rent {listing.estRent ? `$${listing.estRent.toLocaleString()}` : "—"}</span>
-          <span>Cap rate {listing.capRate ? `${listing.capRate}%` : "—"}</span>
+        <div>
+          <p className="text-xs font-semibold text-slate-500">Asking:</p>
+          <p className="text-2xl font-bold text-slate-900">${listing.price.toLocaleString()}</p>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-semibold text-slate-600">
+          <span className="rounded-full bg-slate-100 px-3 py-1">Est. Rent {listing.estRent ? `$${listing.estRent.toLocaleString()}` : "—"}</span>
+          <span className="rounded-full bg-slate-100 px-3 py-1">Cap Rate {listing.capRate ? `${listing.capRate}%` : "—"}</span>
+          <span className="rounded-full bg-slate-100 px-3 py-1">ARV {listing.arv ? `$${listing.arv.toLocaleString()}` : "—"}</span>
         </div>
       </div>
     </Link>

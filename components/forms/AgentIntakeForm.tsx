@@ -6,8 +6,20 @@ import { AgentIntakePayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
 
+const partnershipOptions = [
+  "Refer Buyers",
+  "Share Creative Leads",
+  "Send Listings Before Price Cuts",
+  "Boots On Ground",
+  "List With Zona"
+];
+
+const listingTypeOptions = ["Private-Market", "On-Market", "Creative Finance Friendly", "Pocket Listing"];
+
 export default function AgentIntakeForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [selectedPartnerships, setSelectedPartnerships] = useState<string[]>([]);
+  const [selectedListingTypes, setSelectedListingTypes] = useState<string[]>([]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -17,9 +29,10 @@ export default function AgentIntakeForm() {
       email: getValue(formData, "email"),
       phone: getOptionalValue(formData, "phone"),
       brokerage: getValue(formData, "brokerage"),
-      license: getValue(formData, "license"),
       markets: getValue(formData, "markets"),
-      partnershipIntent: getValue(formData, "partnershipIntent")
+      partnershipFocus: selectedPartnerships,
+      listingTypes: selectedListingTypes,
+      notes: getOptionalValue(formData, "notes")
     };
 
     try {
@@ -27,10 +40,16 @@ export default function AgentIntakeForm() {
       await submitAgentIntake(payload);
       setStatus("success");
       event.currentTarget.reset();
+      setSelectedListingTypes([]);
+      setSelectedPartnerships([]);
     } catch (error) {
       console.error(error);
       setStatus("error");
     }
+  }
+
+  function toggleSelection(value: string, setter: React.Dispatch<React.SetStateAction<string[]>>) {
+    setter((prev) => (prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]));
   }
 
   return (
@@ -40,15 +59,53 @@ export default function AgentIntakeForm() {
         <FormField label="Email" name="email" type="email" required />
         <FormField label="Phone" name="phone" type="tel" />
         <FormField label="Brokerage" name="brokerage" required />
-        <FormField label="License #" name="license" required />
-        <FormField label="Primary markets" name="markets" required />
+        <FormField label="Primary Markets" name="markets" required />
         <FormField
-          label="How do you want to partner?"
-          name="partnershipIntent"
+          label="Additional Notes"
+          name="notes"
           multiline
-          placeholder="Refer buyers, list deals, boots on ground..."
-          required
+          placeholder="Do you prefer referrals, dispo, creative finance, etc."
         />
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-xs font-semibold text-slate-600">How Do You Want To Partner?</p>
+        <div className="flex flex-wrap gap-2">
+          {partnershipOptions.map((option) => (
+            <button
+              type="button"
+              key={option}
+              onClick={() => toggleSelection(option, setSelectedPartnerships)}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                selectedPartnerships.includes(option)
+                  ? "border-zona-purple bg-zona-purple text-white"
+                  : "border-slate-200 text-slate-600"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-xs font-semibold text-slate-600">Listing Types You Can Provide</p>
+        <div className="flex flex-wrap gap-2">
+          {listingTypeOptions.map((type) => (
+            <button
+              type="button"
+              key={type}
+              onClick={() => toggleSelection(type, setSelectedListingTypes)}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                selectedListingTypes.includes(type)
+                  ? "border-zona-purple bg-zona-purple text-white"
+                  : "border-slate-200 text-slate-600"
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
       </div>
 
       <button

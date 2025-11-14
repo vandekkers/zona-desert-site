@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 text-sm text-slate-600 md:flex-row md:justify-between">
         <div>
           <p className="font-semibold text-slate-900">Zona Desert</p>
-          <p className="mt-2 max-w-sm">Off-market opportunities curated for serious investors across the Southwest.</p>
+          <p className="mt-2 max-w-sm">Private-market opportunities curated for serious investors nationwide.</p>
           <p className="mt-4">hello@zonadesert.com • (602) 555-1212</p>
         </div>
         <div className="flex flex-1 justify-between gap-8 md:justify-end">

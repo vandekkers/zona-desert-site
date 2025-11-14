@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 
 const navLinks = [
-  { href: "/listings", label: "Browse Deals" },
   { href: "/sell", label: "Sell" },
   { href: "/buyers/join", label: "Buyers" },
   { href: "/agents/apply", label: "Agents" },
@@ -17,14 +15,16 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="border-b border-slate-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 sticky top-0 z-50">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4">
-        <Link href="/" className="flex items-center gap-3 font-semibold text-slate-900">
-          <Image src="/zona-wordmark-only.png" alt="Zona Desert" width={40} height={40} sizes="40px" />
-          <span className="text-lg">Zona Desert</span>
+    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 md:gap-4">
+        <Link href="/" className="flex items-center font-semibold leading-tight text-slate-900">
+          <span className="text-xl tracking-tight">
+            <span className="text-zona-purple">Zona</span>{" "}
+            <span className="text-slate-900">Desert.</span>
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
+        <nav className="hidden items-center gap-4 text-sm font-medium text-slate-700 md:flex">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className="transition hover:text-zona-purple">
               {link.label}
