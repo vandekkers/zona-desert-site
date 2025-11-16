@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@types/pdfkit": "^0.17.3",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.16",
