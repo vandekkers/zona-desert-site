@@ -41,12 +41,6 @@ export default function AboutPage() {
         ))}
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-slate-900 p-8 text-white">
-        <h2 className="text-2xl font-semibold">Local markets we cover</h2>
-        <p className="mt-3 text-white/80">
-          Phoenix Metro • Tucson • Flagstaff • Las Vegas • Albuquerque • Palm Springs • West Texas
-        </p>
-      </div>
     </div>
   );
 }

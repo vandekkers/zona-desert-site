@@ -11,13 +11,14 @@ interface ListingDetailPageProps {
 export async function generateMetadata({ params }: ListingDetailPageProps): Promise<Metadata> {
   const listing = await fetchListing(params.slug);
   return {
-    title: `${listing.title} | Zona Desert`,
+    title: `${listing.address || listing.title} | Zona Desert`,
     description: `${listing.city}, ${listing.state} • ${listing.description.slice(0, 140)}...`
   };
 }
 
 export default async function ListingDetailPage({ params }: ListingDetailPageProps) {
   const listing: ListingDetail = await fetchListing(params.slug);
+  const displayTitle = listing.address || listing.title;
   const photos = listing.photos?.length ? listing.photos : [listing.thumbnailUrl ?? "/hero-bg.png"];
   const spreadValue =
     listing.financials?.arv && listing.price ? listing.financials.arv - listing.price : undefined;
@@ -53,21 +54,22 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
       <div className="space-y-3">
         <div className="flex flex-wrap gap-3 text-xs font-semibold text-zona-purple">
           <span className="rounded-full bg-zona-purple/10 px-3 py-1 text-zona-purple">
-            {listing.strategy || "Investor-Ready"}
+            {listing.marketStatus === "on-market" ? "On-Market" : "Off-Market"}
           </span>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700">
-            {listing.tenantStatus || "Tenant Status TBD"}
+            {listing.tenantStatus?.toLowerCase().includes("vacant") ? "Vacant" : "Occupied"}
           </span>
         </div>
-        <h1 className="text-4xl font-semibold text-slate-900">{listing.title}</h1>
+        <h1 className="text-4xl font-semibold text-slate-900">{displayTitle}</h1>
         <p className="text-lg text-slate-600">
+          {listing.zip ? `${listing.zip} ` : ""}
           {listing.city}, {listing.state}
         </p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[3fr,1.1fr]">
         <div className="space-y-8">
-          <ListingPhotoGallery photos={photos} title={listing.title} />
+          <ListingPhotoGallery photos={photos} title={displayTitle} />
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-xl font-semibold text-slate-900">Key Stats</h2>
@@ -134,30 +136,23 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
             <p className="mt-2 text-4xl font-bold text-slate-900">${listing.price.toLocaleString()}</p>
             <div className="mt-4 space-y-3 text-sm text-slate-600">
               <div className="flex items-center justify-between">
-                <span>Est. Rent</span>
+                <span>Est. Rent:</span>
                 <span>{listing.estRent ? `$${listing.estRent.toLocaleString()}` : "—"}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Cap Rate</span>
+                <span>Cap Rate:</span>
                 <span>{listing.capRate ? `${listing.capRate}%` : "—"}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Cash-On-Cash</span>
+                <span>Cash-On-Cash:</span>
                 <span>
                   {listing.financials?.cashOnCash ? `${Math.round(listing.financials.cashOnCash * 100)}%` : "—"}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Deal Structure</span>
+                <span>Deal Structure:</span>
                 <span className="capitalize">{listing.structure?.type ?? "Cash"}</span>
               </div>
-              {listing.structure?.type === "seller-finance" && (
-                <ul className="space-y-1 text-xs text-slate-500">
-                  <li>Down Payment: {listing.structure.downPayment ? `${listing.structure.downPayment * 100}%` : "TBD"}</li>
-                  <li>Rate: {listing.structure.interestRate ? `${listing.structure.interestRate}%` : "TBD"}</li>
-                  <li>Term: {listing.structure.termMonths ? `${listing.structure.termMonths} months` : "Flexible"}</li>
-                </ul>
-              )}
             </div>
           </div>
 

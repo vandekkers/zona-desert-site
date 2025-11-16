@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import { submitSellerLead } from "@/lib/api";
+import { createPublicSeller } from "@/lib/publicApi";
 import { SellerLeadPayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
 import { checkExistingAgent, checkExistingWholesaler } from "@/lib/placeholders";
 
-const propertyTypes = ["Single Family", "Small Multifamily", "Large Multifamily", "Townhome", "Land", "Portfolio"];
+const propertyTypes = ["Single Family", "Small Multifamily", "Large Multifamily", "Townhome", "Land", "Portfolio", "Other"];
 const conditionOptions = ["Turnkey", "Light Updates", "Heavy Rehab", "Fire/Structural"];
 const timelineOptions = ["Ready Now", "30 Days", "60-90 Days", "Flexible"];
-const financingOptions = ["Free And Clear", "Mortgage In Place", "Creative Finance Friendly", "Behind On Payments"];
-const sellerTypes: SellerLeadPayload["sellerType"][] = ["property-owner", "real-estate-agent", "wholesaler"];
+const financingOptions = ["Free And Clear", "Mortgage In Place", "Creative Finance Friendly", "Behind On Payments", "Other"];
+const sellerTypes: SellerLeadPayload["sellerType"][] = ["property-owner", "real-estate-agent", "wholesaler", "other"];
 
 interface SellerLeadFormProps {
   defaultSellerType?: SellerLeadPayload["sellerType"];
@@ -38,15 +38,15 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       state: getValue(formData, "state"),
       zip: getValue(formData, "zip"),
       propertyType: getValue(formData, "propertyType"),
-      beds: getOptionalValue(formData, "beds"),
-      baths: getOptionalValue(formData, "baths"),
-      condition: getOptionalValue(formData, "condition"),
-      timeline: getOptionalValue(formData, "timeline"),
-      financingSituation: getOptionalValue(formData, "financingSituation"),
+      beds: getValue(formData, "beds"),
+      baths: getValue(formData, "baths"),
+      condition: getValue(formData, "condition"),
+      timeline: getValue(formData, "timeline"),
+      financingSituation: getValue(formData, "financingSituation"),
       sellerType: (formData.get("sellerType") as SellerLeadPayload["sellerType"]) || selectedSellerType,
       name: getValue(formData, "name"),
       email: getValue(formData, "email"),
-      phone: getOptionalValue(formData, "phone"),
+      phone: getValue(formData, "phone"),
       heardAbout: getOptionalValue(formData, "heardAbout")
     };
 
@@ -70,7 +70,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
           return;
         }
       }
-      await submitSellerLead(payload);
+      await createPublicSeller(payload);
       setStatus("success");
       event.currentTarget.reset();
       setModalType(sellerType);
@@ -98,9 +98,9 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
               </option>
             ))}
           </FormField>
-          <FormField label="Beds" name="beds" />
-          <FormField label="Baths" name="baths" />
-          <FormField label="Condition" name="condition" component="select" defaultValue="">
+          <FormField label="Beds" name="beds" required />
+          <FormField label="Baths" name="baths" required />
+          <FormField label="Condition" name="condition" component="select" defaultValue="" required>
             <option value="">Select Condition</option>
             {conditionOptions.map((option) => (
               <option key={option} value={option.toLowerCase().replace(/\s+/g, "-")}>
@@ -108,7 +108,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
               </option>
             ))}
           </FormField>
-          <FormField label="Timeline" name="timeline" component="select" defaultValue="">
+          <FormField label="Timeline" name="timeline" component="select" defaultValue="" required>
             <option value="">Select Timeline</option>
             {timelineOptions.map((option) => (
               <option key={option} value={option.toLowerCase().replace(/\s+/g, "-")}>
@@ -116,7 +116,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
               </option>
             ))}
           </FormField>
-          <FormField label="Financing Situation" name="financingSituation" component="select" defaultValue="">
+          <FormField label="Financing Situation" name="financingSituation" component="select" defaultValue="" required>
             <option value="">Select Situation</option>
             {financingOptions.map((option) => (
               <option key={option} value={option.toLowerCase().replace(/\s+/g, "-")}>
@@ -129,11 +129,17 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
         <div className="grid gap-4 md:grid-cols-2">
           <FormField label="Your Name" name="name" required />
           <FormField label="Email" name="email" type="email" required />
-          <FormField label="Phone" name="phone" type="tel" />
+          <FormField label="Phone" name="phone" type="tel" required />
           <FormField label="Seller Type" name="sellerType" component="select" required value={selectedSellerType} onChange={(event) => setSelectedSellerType(event.target.value as SellerLeadPayload["sellerType"])}>
             {sellerTypes.map((type) => (
               <option key={type} value={type}>
-                {type === "property-owner" ? "Property Owner" : type === "real-estate-agent" ? "Real Estate Agent" : "Wholesaler"}
+                {type === "property-owner"
+                  ? "Property Owner"
+                  : type === "real-estate-agent"
+                  ? "Real Estate Agent"
+                  : type === "wholesaler"
+                  ? "Wholesaler"
+                  : "Other"}
               </option>
             ))}
           </FormField>

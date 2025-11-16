@@ -4,6 +4,8 @@ export const mockListings: ListingCard[] = [
   {
     id: "1",
     slug: "arcadia-midcentury-triplex",
+    address: "4123 E Palm Lane",
+    zip: "85008",
     title: "Arcadia Midcentury Triplex",
     city: "Phoenix",
     state: "AZ",
@@ -18,6 +20,8 @@ export const mockListings: ListingCard[] = [
   {
     id: "2",
     slug: "tempe-townhome-portfolio",
+    address: "1840 S Mill Ave",
+    zip: "85281",
     title: "Tempe Townhome Portfolio",
     city: "Tempe",
     state: "AZ",
@@ -32,6 +36,8 @@ export const mockListings: ListingCard[] = [
   {
     id: "3",
     slug: "flagstaff-short-term",
+    address: "221 N Aspen Ave",
+    zip: "86001",
     title: "Flagstaff Short-Term Cabin",
     city: "Flagstaff",
     state: "AZ",
@@ -112,3 +118,11 @@ export const mockListingDetail: ListingDetail = {
     }
   ]
 };
+
+export function getListingBySlug(slug: string): ListingDetail {
+  const base = mockListings.find((listing) => listing.slug === slug);
+  if (!base) {
+    return { ...mockListingDetail, slug };
+  }
+  return { ...mockListingDetail, ...base };
+}

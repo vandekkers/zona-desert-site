@@ -11,7 +11,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> &
     children?: ReactNode;
   };
 
-export default function FormField({ label, multiline, className, component, children, ...props }: Props) {
+export default function FormField({ label, multiline, className, component, children, required, ...props }: Props) {
   const tag = component ?? (multiline ? "textarea" : "input");
   const sharedClassName = `rounded-2xl border border-slate-200 px-4 py-2 focus:border-zona-purple focus:outline-none ${
     multiline ? "min-h-[120px]" : ""
@@ -19,20 +19,23 @@ export default function FormField({ label, multiline, className, component, chil
 
   let control: ReactNode;
   if (tag === "textarea") {
-    control = <textarea {...props} className={sharedClassName} />;
+    control = <textarea {...props} required={required} className={sharedClassName} />;
   } else if (tag === "select") {
     control = (
-      <select {...props} className={sharedClassName}>
+      <select {...props} required={required} className={sharedClassName}>
         {children}
       </select>
     );
   } else {
-    control = <input {...props} className={sharedClassName} />;
+    control = <input {...props} required={required} className={sharedClassName} />;
   }
 
   return (
     <label className="flex flex-col gap-1 text-sm text-slate-700">
-      <span className="text-xs font-semibold text-slate-600">{label}</span>
+      <span className="text-xs font-semibold text-slate-600">
+        {label}
+        {required && <span className="ml-1 text-red-500">*</span>}
+      </span>
       {control}
     </label>
   );

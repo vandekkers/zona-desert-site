@@ -7,6 +7,7 @@ interface Props {
 }
 
 export function ListingCardGrid({ listing }: Props) {
+  const displayTitle = listing.address || listing.title;
   return (
     <Link
       href={`/listings/${listing.slug}`}
@@ -15,23 +16,21 @@ export function ListingCardGrid({ listing }: Props) {
       <div className="relative h-48 w-full overflow-hidden rounded-t-2xl">
         <Image
           src={listing.thumbnailUrl || "/hero-bg.png"}
-          alt={listing.title}
+          alt={displayTitle}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="object-cover"
         />
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-          {listing.tags.slice(0, 2).map((tag) => (
-            <span key={tag} className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700">
-              {tag}
-            </span>
-          ))}
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-900">
+            {listing.marketStatus === "on-market" ? "On-Market" : "Off-Market"}
+          </span>
         </div>
       </div>
       <div className="space-y-3 p-5">
         <div>
           <p className="text-xs font-semibold text-zona-purple">{listing.city}, {listing.state}</p>
-          <p className="text-lg font-semibold text-slate-900">{listing.title}</p>
+          <p className="text-lg font-semibold text-slate-900">{displayTitle}</p>
         </div>
         <div>
           <p className="text-xs font-semibold text-slate-500">Asking:</p>

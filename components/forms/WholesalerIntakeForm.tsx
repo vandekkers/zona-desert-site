@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
-import { submitWholesalerIntake } from "@/lib/api";
+import { FormEvent, useMemo, useState } from "react";
+import { createPublicWholesaler } from "@/lib/publicApi";
 import { WholesalerIntakePayload } from "@/lib/types";
+import { COUNTIES_BY_STATE, US_STATES } from "@/data/counties-by-state";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
+import MultiSelect from "./MultiSelect";
 
 const wholesalerTypes = [
   { label: "Dispo", value: "dispo" },
@@ -13,49 +15,98 @@ const wholesalerTypes = [
   { label: "Both", value: "both" }
 ];
 
-const marketConfig: Record<string, string[]> = {
-  AZ: ["Maricopa", "Pima", "Pinal"],
-  NV: ["Clark", "Washoe"],
-  TX: ["Dallas", "Tarrant", "Travis", "Bexar", "Harris"],
-  FL: ["Orange", "Hillsborough", "Duval", "Broward", "Miami-Dade"],
-  GA: ["Fulton", "Gwinnett", "Cobb"],
-  NC: ["Mecklenburg", "Wake", "Durham"]
-};
-
 export default function WholesalerIntakeForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [countiesByState, setCountiesByState] = useState<Record<string, string[]>>({});
   const [wholesalerType, setWholesalerType] = useState("dispo");
   const [showModal, setShowModal] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function toggleState(state: string) {
-    setSelectedStates((prev) => {
-      if (prev.includes(state)) {
-        const updated = prev.filter((item) => item !== state);
-        setCountiesByState((current) => {
-          const next = { ...current };
-          delete next[state];
-          return next;
-        });
-        return updated;
-      }
-      setCountiesByState((current) => ({ ...current, [state]: ["All Counties"] }));
-      return [...prev, state];
+  function handleStateSelection(values: string[]) {
+    setSelectedStates(values);
+    setCountiesByState((current) => {
+      const next: Record<string, string[]> = {};
+      values.forEach((state) => {
+        next[state] = current[state] ?? [];
+      });
+      return next;
     });
   }
 
-  function handleCountyChange(state: string, values: string[]) {
-    if (values.includes("All Counties")) {
-      setCountiesByState((prev) => ({ ...prev, [state]: ["All Counties"] }));
-      return;
-    }
-    setCountiesByState((prev) => ({ ...prev, [state]: values }));
+  function handleCountySelection(values: string[]) {
+    const grouped = values.reduce<Record<string, string[]>>((acc, value) => {
+      const [state, countyIdentifier] = value.split("::");
+      if (!state) return acc;
+      if (countyIdentifier === "ALL") {
+        acc[state] = ["All Counties"];
+        return acc;
+      }
+      if (acc[state]?.includes("All Counties")) {
+        return acc;
+      }
+      acc[state] = acc[state] ? [...acc[state], countyIdentifier] : [countyIdentifier];
+      return acc;
+    }, {});
+
+    setCountiesByState(() => {
+      const next: Record<string, string[]> = {};
+      selectedStates.forEach((state) => {
+        const selections = grouped[state];
+        if (!selections) {
+          next[state] = [];
+          return;
+        }
+        if (selections.includes("All Counties")) {
+          next[state] = ["All Counties"];
+        } else {
+          next[state] = selections;
+        }
+      });
+      return next;
+    });
   }
+
+  const countyOptions = useMemo(() => {
+    return selectedStates.flatMap((state) => {
+      const counties = COUNTIES_BY_STATE[state] ?? [];
+      return [
+        { value: `${state}::ALL`, label: `${state} • All Counties` },
+        ...counties.map((county) => ({ value: `${state}::${county}`, label: `${state} • ${county}` }))
+      ];
+    });
+  }, [selectedStates]);
+
+  const countySelection = useMemo(() => {
+    return selectedStates.flatMap((state) => {
+      const counties = countiesByState[state];
+      if (!counties || !counties.length) {
+        return [];
+      }
+      if (counties.includes("All Counties")) {
+        return [`${state}::ALL`];
+      }
+      return counties.map((county) => `${state}::${county}`);
+    });
+  }, [countiesByState, selectedStates]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    if (!selectedStates.length) {
+      setFormError("Select at least one state you cover.");
+      return;
+    }
+    setFormError(null);
+    const normalizedCounties = selectedStates.reduce<Record<string, string[]>>((acc, state) => {
+      const selections = countiesByState[state];
+      if (!selections || !selections.length) {
+        acc[state] = ["All Counties"];
+      } else {
+        acc[state] = selections;
+      }
+      return acc;
+    }, {});
     const payload: WholesalerIntakePayload = {
       name: getValue(formData, "name"),
       email: getValue(formData, "email"),
@@ -63,15 +114,14 @@ export default function WholesalerIntakeForm() {
       company: getOptionalValue(formData, "company"),
       wholesalerType,
       states: selectedStates,
-      countiesByState,
-      dealsPerMonth: getValue(formData, "dealsPerMonth"),
-      averageAssignmentFee: getOptionalValue(formData, "averageAssignmentFee"),
+      countiesByState: normalizedCounties,
+      dealsPerMonth: getOptionalValue(formData, "dealsPerMonth"),
       notes: getOptionalValue(formData, "notes")
     };
 
     try {
       setStatus("loading");
-      await submitWholesalerIntake(payload);
+      await createPublicWholesaler(payload);
       setStatus("success");
       event.currentTarget.reset();
       setSelectedStates([]);
@@ -92,8 +142,7 @@ export default function WholesalerIntakeForm() {
           <FormField label="Email" name="email" type="email" required />
           <FormField label="Phone" name="phone" type="tel" />
           <FormField label="Company" name="company" />
-          <FormField label="Deals Per Month" name="dealsPerMonth" required />
-          <FormField label="Typical Assignment Fee" name="averageAssignmentFee" />
+          <FormField label="Deals Per Month" name="dealsPerMonth" />
           <FormField
             label="Notes"
             name="notes"
@@ -109,6 +158,7 @@ export default function WholesalerIntakeForm() {
             component="select"
             value={wholesalerType}
             onChange={(event) => setWholesalerType(event.target.value)}
+            required
           >
             {wholesalerTypes.map((type) => (
               <option key={type.value} value={type.value}>
@@ -118,53 +168,29 @@ export default function WholesalerIntakeForm() {
           </FormField>
         </div>
 
-        <div className="space-y-3">
-          <p className="text-xs font-semibold text-slate-600">States You Cover</p>
-          <div className="flex flex-wrap gap-2">
-            {Object.keys(marketConfig).map((state) => (
-              <button
-                type="button"
-                key={state}
-                onClick={() => toggleState(state)}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-                  selectedStates.includes(state)
-                    ? "border-zona-purple bg-zona-purple text-white"
-                    : "border-slate-200 text-slate-600"
-                }`}
-              >
-                {state}
-              </button>
-            ))}
-          </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <MultiSelect
+            label="States You Cover"
+            placeholder="Select states"
+            options={US_STATES.map((state) => ({ value: state.code, label: state.name }))}
+            value={selectedStates}
+            onChange={handleStateSelection}
+            helperText="Search and select every state where you actively wholesale."
+            required
+          />
+          <MultiSelect
+            label="Counties"
+            placeholder={selectedStates.length ? "Select counties" : "Select states first"}
+            options={countyOptions}
+            value={countySelection}
+            onChange={handleCountySelection}
+            helperText="Select “All Counties” to cover an entire state."
+            disabled={!selectedStates.length}
+            emptyText={selectedStates.length ? "No counties match your search." : "Pick one or more states first."}
+          />
         </div>
-
-        {selectedStates.length > 0 && (
-          <div className="space-y-4">
-            {selectedStates.map((state) => (
-              <div key={state}>
-                <p className="text-xs font-semibold text-slate-600">Counties In {state}</p>
-                <select
-                  multiple
-                  className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-2 focus:border-zona-purple focus:outline-none"
-                  value={countiesByState[state] || []}
-                  onChange={(event) =>
-                    handleCountyChange(
-                      state,
-                      Array.from(event.target.selectedOptions).map((option) => option.value)
-                    )
-                  }
-                >
-                  <option value="All Counties">All Counties</option>
-                  {marketConfig[state].map((county) => (
-                    <option key={county} value={county}>
-                      {county}
-                    </option>
-                  ))}
-                </select>
-                <p className="mt-1 text-xs text-slate-500">Hold Cmd/Ctrl to select multiple counties.</p>
-              </div>
-            ))}
-          </div>
+        {formError && (
+          <p className="rounded-2xl bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">{formError}</p>
         )}
 
         <p className="text-sm font-semibold text-slate-600">

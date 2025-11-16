@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { submitAgentIntake } from "@/lib/api";
+import { createPublicAgent } from "@/lib/publicApi";
 import { AgentIntakePayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
@@ -27,8 +27,8 @@ export default function AgentIntakeForm() {
     const payload: AgentIntakePayload = {
       name: getValue(formData, "name"),
       email: getValue(formData, "email"),
-      phone: getOptionalValue(formData, "phone"),
-      brokerage: getValue(formData, "brokerage"),
+      phone: getValue(formData, "phone"),
+      brokerage: getOptionalValue(formData, "brokerage"),
       markets: getValue(formData, "markets"),
       partnershipFocus: selectedPartnerships,
       listingTypes: selectedListingTypes,
@@ -37,7 +37,7 @@ export default function AgentIntakeForm() {
 
     try {
       setStatus("loading");
-      await submitAgentIntake(payload);
+      await createPublicAgent(payload);
       setStatus("success");
       event.currentTarget.reset();
       setSelectedListingTypes([]);
@@ -57,8 +57,8 @@ export default function AgentIntakeForm() {
       <div className="grid gap-4 md:grid-cols-2">
         <FormField label="Name" name="name" required />
         <FormField label="Email" name="email" type="email" required />
-        <FormField label="Phone" name="phone" type="tel" />
-        <FormField label="Brokerage" name="brokerage" required />
+        <FormField label="Phone" name="phone" type="tel" required />
+        <FormField label="Brokerage" name="brokerage" />
         <FormField label="Primary Markets" name="markets" required />
         <FormField
           label="Additional Notes"

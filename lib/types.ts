@@ -1,6 +1,8 @@
 export interface ListingCard {
   id: string;
   slug: string;
+  address?: string;
+  zip?: string;
   title: string;
   city: string;
   state: string;
@@ -11,6 +13,7 @@ export interface ListingCard {
   tags: string[];
   thumbnailUrl: string;
   strategy?: string;
+  marketStatus: "on-market" | "off-market";
 }
 
 export interface ListingDetail extends ListingCard {
@@ -73,23 +76,26 @@ export interface SellerLeadPayload {
   state: string;
   zip: string;
   propertyType: string;
-  beds?: string;
-  baths?: string;
-  condition?: string;
-  timeline?: string;
-  financingSituation?: string;
-  sellerType: "property-owner" | "real-estate-agent" | "wholesaler";
+  beds: string;
+  baths: string;
+  condition: string;
+  timeline: string;
+  financingSituation: string;
+  sellerType: "property-owner" | "real-estate-agent" | "wholesaler" | "other";
   name: string;
   email: string;
-  phone?: string;
+  phone: string;
   heardAbout?: string;
 }
 
 export interface BuyerIntakePayload {
   name: string;
   email: string;
-  phone?: string;
+  phone: string;
+  state: string;
+  county: string;
   states: string[];
+  countiesByState: Record<string, string[]>;
   marketsDetail?: string;
   budgetMin?: string;
   budgetMax?: string;
@@ -101,8 +107,8 @@ export interface BuyerIntakePayload {
 export interface AgentIntakePayload {
   name: string;
   email: string;
-  phone?: string;
-  brokerage: string;
+  phone: string;
+  brokerage?: string;
   markets: string;
   partnershipFocus: string[];
   listingTypes: string[];
@@ -117,7 +123,6 @@ export interface WholesalerIntakePayload {
   wholesalerType: string;
   states: string[];
   countiesByState: Record<string, string[]>;
-  dealsPerMonth: string;
-  averageAssignmentFee?: string;
+  dealsPerMonth?: string;
   notes?: string;
 }

@@ -37,7 +37,7 @@ export default function ListingFilters({ defaultValues = {} }: ListingFiltersPro
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selectedTags, setSelectedTags] = useState<string[]>(defaultValues.tags || []);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setSelectedTags(defaultValues.tags || []);
@@ -68,28 +68,32 @@ export default function ListingFilters({ defaultValues = {} }: ListingFiltersPro
   function handleReset() {
     router.push("/listings");
     setSelectedTags([]);
-    setIsMobileOpen(false);
+    setIsOpen(false);
   }
 
-  const mobileVisible = isMobileOpen ? "block" : "hidden";
-
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white/70 p-4 backdrop-blur md:p-6">
-      <button
-        type="button"
-        onClick={() => setIsMobileOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 md:hidden"
-        aria-expanded={isMobileOpen}
+    <div className="relative">
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-zona-purple hover:text-zona-purple"
+          aria-expanded={isOpen}
+        >
+          Filter Listings
+          <span className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
+            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M5 7l5 6 5-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } absolute left-0 right-0 z-30 mt-3 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-xl backdrop-blur md:right-auto md:max-w-5xl`}
       >
-        Filter Listings
-        <span className={`transition-transform ${isMobileOpen ? "rotate-180" : ""}`}>
-          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M5 7l5 6 5-6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-      </button>
-      <div className={`${mobileVisible} md:block`}>
-        <form onSubmit={handleSubmit} className="space-y-6 pt-4 md:pt-0">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <div className="flex flex-col gap-1">
               <label htmlFor="q" className="text-xs font-semibold text-slate-600">
