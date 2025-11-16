@@ -45,10 +45,11 @@ export async function GET(request: Request, { params }: { params: { slug: string
   doc.end();
 
   const buffer = await bufferPromise;
+  const arrayBuffer = Uint8Array.from(buffer).buffer;
   const url = new URL(request.url);
   const download = url.searchParams.get("download") === "1";
 
-  return new NextResponse(buffer, {
+  return new NextResponse(arrayBuffer, {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",

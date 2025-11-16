@@ -13,6 +13,7 @@ export const mockListings: ListingCard[] = [
     estRent: 6200,
     capRate: 7.8,
     arv: 1150000,
+    marketStatus: "off-market",
     tags: ["value-add", "luxury", "sfh"],
     thumbnailUrl: "/hero-bg.png",
     strategy: "Value-Add"
@@ -29,6 +30,7 @@ export const mockListings: ListingCard[] = [
     estRent: 9400,
     capRate: 8.2,
     arv: 1525000,
+    marketStatus: "off-market",
     tags: ["turnkey", "student", "portfolio"],
     thumbnailUrl: "/hero-bg.png",
     strategy: "Turnkey"
@@ -45,6 +47,7 @@ export const mockListings: ListingCard[] = [
     estRent: 7200,
     capRate: 9.1,
     arv: 880000,
+    marketStatus: "off-market",
     tags: ["brrrr", "short-term"],
     thumbnailUrl: "/hero-bg.png",
     strategy: "STR"
