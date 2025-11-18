@@ -14,7 +14,14 @@ export class PublicApiError extends Error {
   }
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const rawApiBase =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_BASE ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API ||
+  "http://localhost:8000";
+
+const API_BASE_URL = rawApiBase.replace(/\/+$/, "");
 
 type PublicBuyerCreatePayload = {
   name: string;
