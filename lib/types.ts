@@ -78,6 +78,7 @@ export interface SellerLeadPayload {
   propertyType: string;
   beds: string;
   baths: string;
+   sqft: string;
   condition: string;
   timeline: string;
   financingSituation: string;
