@@ -31,7 +31,8 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget; // capture before any async work to avoid pooled event nulls
+    const formData = new FormData(form);
     const payload: SellerLeadPayload = {
       address: getValue(formData, "address"),
       city: getValue(formData, "city"),
@@ -72,7 +73,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       }
       await createPublicSeller(payload);
       setStatus("success");
-      event.currentTarget.reset();
+      form.reset();
       setModalType(sellerType);
       setSelectedSellerType(defaultSellerType);
     } catch (error) {
