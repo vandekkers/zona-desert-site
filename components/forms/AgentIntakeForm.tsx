@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { createPublicAgent } from "@/lib/publicApi";
+import { createPublicAgent, PublicApiError } from "@/lib/publicApi";
 import { AgentIntakePayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
@@ -18,6 +18,7 @@ const listingTypeOptions = ["Private-Market", "On-Market", "Creative Finance Fri
 
 export default function AgentIntakeForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedPartnerships, setSelectedPartnerships] = useState<string[]>([]);
   const [selectedListingTypes, setSelectedListingTypes] = useState<string[]>([]);
 
@@ -37,6 +38,7 @@ export default function AgentIntakeForm() {
 
     try {
       setStatus("loading");
+      setErrorMessage(null);
       await createPublicAgent(payload);
       setStatus("success");
       event.currentTarget.reset();
@@ -44,6 +46,12 @@ export default function AgentIntakeForm() {
       setSelectedPartnerships([]);
     } catch (error) {
       console.error(error);
+      const apiError = error as PublicApiError;
+      if (apiError.status === 409) {
+        setErrorMessage("Looks like this agent already exists.");
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
       setStatus("error");
     }
   }
@@ -117,7 +125,7 @@ export default function AgentIntakeForm() {
       </button>
 
       {status === "success" && <p className="text-sm text-green-600">Thanks! Our partnerships team will reach out soon.</p>}
-      {status === "error" && <p className="text-sm text-red-600">Something went wrong. Please try again.</p>}
+      {status === "error" && errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
     </form>
   );
 }
