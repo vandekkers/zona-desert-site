@@ -24,7 +24,8 @@ export default function AgentIntakeForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget; // capture before async to avoid pooled event nulls
+    const formData = new FormData(form);
     const payload: AgentIntakePayload = {
       name: getValue(formData, "name"),
       email: getValue(formData, "email"),
@@ -41,7 +42,7 @@ export default function AgentIntakeForm() {
       setErrorMessage(null);
       await createPublicAgent(payload);
       setStatus("success");
-      event.currentTarget.reset();
+      form.reset();
       setSelectedListingTypes([]);
       setSelectedPartnerships([]);
     } catch (error) {
