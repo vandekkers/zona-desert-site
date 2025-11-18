@@ -17,6 +17,7 @@ const wholesalerTypes = [
 
 export default function WholesalerIntakeForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [countiesByState, setCountiesByState] = useState<Record<string, string[]>>({});
   const [wholesalerType, setWholesalerType] = useState("dispo");
@@ -92,7 +93,8 @@ export default function WholesalerIntakeForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget; // capture before async
+    const formData = new FormData(form);
     if (!selectedStates.length) {
       setFormError("Select at least one state you cover.");
       return;
@@ -121,9 +123,11 @@ export default function WholesalerIntakeForm() {
 
     try {
       setStatus("loading");
+      setStatusMessage(null);
       await createPublicWholesaler(payload);
       setStatus("success");
-      event.currentTarget.reset();
+      setStatusMessage("Welcome to the team! We’ve got your info. Questions? Email info@zonadesert.com.");
+      form.reset();
       setSelectedStates([]);
       setCountiesByState({});
       setWholesalerType("dispo");
@@ -131,6 +135,7 @@ export default function WholesalerIntakeForm() {
     } catch (error) {
       console.error(error);
       setStatus("error");
+      setStatusMessage("Something went wrong. Please try again.");
     }
   }
 
@@ -205,7 +210,9 @@ export default function WholesalerIntakeForm() {
           {status === "loading" ? "Submitting..." : "Partner With Zona"}
         </button>
 
-        {status === "error" && <p className="text-sm text-red-600">Something went wrong. Please try again.</p>}
+        {statusMessage && (
+          <p className={`text-sm ${status === "success" ? "text-green-600" : "text-red-600"}`}>{statusMessage}</p>
+        )}
       </form>
 
       {showModal && (
