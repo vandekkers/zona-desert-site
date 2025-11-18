@@ -49,7 +49,8 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       name: getValue(formData, "name"),
       email: getValue(formData, "email"),
       phone: getValue(formData, "phone"),
-      heardAbout: getOptionalValue(formData, "heardAbout")
+      heardAbout: getOptionalValue(formData, "heardAbout"),
+      notes: getOptionalValue(formData, "notes")
     };
 
     try {
@@ -147,6 +148,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
             ))}
           </FormField>
           <FormField label="How Did You Hear About Us?" name="heardAbout" />
+          <FormField label="Notes" name="notes" component="textarea" placeholder="Anything else we should know?" />
         </div>
 
         <button

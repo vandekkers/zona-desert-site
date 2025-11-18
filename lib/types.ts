@@ -87,6 +87,7 @@ export interface SellerLeadPayload {
   email: string;
   phone: string;
   heardAbout?: string;
+  notes?: string;
 }
 
 export interface BuyerIntakePayload {
