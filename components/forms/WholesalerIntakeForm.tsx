@@ -145,7 +145,7 @@ export default function WholesalerIntakeForm() {
         <div className="grid gap-4 md:grid-cols-2">
           <FormField label="Name" name="name" required />
           <FormField label="Email" name="email" type="email" required />
-          <FormField label="Phone" name="phone" type="tel" />
+          <FormField label="Phone" name="phone" type="tel" required />
           <FormField label="Company" name="company" />
           <FormField label="Deals Per Month" name="dealsPerMonth" />
           <FormField
