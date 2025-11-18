@@ -41,6 +41,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       propertyType: getValue(formData, "propertyType"),
       beds: getValue(formData, "beds"),
       baths: getValue(formData, "baths"),
+      sqft: getValue(formData, "sqft"),
       condition: getValue(formData, "condition"),
       timeline: getValue(formData, "timeline"),
       financingSituation: getValue(formData, "financingSituation"),
@@ -101,6 +102,7 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
           </FormField>
           <FormField label="Beds" name="beds" required />
           <FormField label="Baths" name="baths" required />
+          <FormField label="Sqft" name="sqft" required />
           <FormField label="Condition" name="condition" component="select" defaultValue="" required>
             <option value="">Select Condition</option>
             {conditionOptions.map((option) => (
