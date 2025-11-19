@@ -166,24 +166,41 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 px-4">
           <div className="w-full max-w-md rounded-3xl bg-white p-6 text-center shadow-xl">
             <h3 className="text-2xl font-semibold text-slate-900">Thanks For Submitting</h3>
-            <p className="mt-3 text-sm text-slate-600">
-              {modalType === "wholesaler" &&
-                "Your deal is in review. We will reach out shortly with next steps."}
-              {modalType === "real-estate-agent" &&
-                "Your submission is being routed to our partnerships desk for review."}
-              {modalType === "property-owner" &&
-                "Our acquisitions team received your info and will follow up with numbers."}
-            </p>
-            {modalType !== "property-owner" && (
-              <Link
-                href={modalType === "wholesaler" ? "/wholesalers/apply" : "/agents/apply"}
-                className="mt-4 inline-flex w-full justify-center rounded-full bg-zona-purple px-4 py-2 text-sm font-semibold text-white"
-              >
-                {modalType === "wholesaler" ? "Join Wholesaler Partnership Program" : "Join Agent Partnership Program"}
-              </Link>
+            {modalType === "property-owner" && (
+              <p className="mt-3 text-sm text-slate-600">
+                We’re reviewing your submission. Expect an offer in the next 12-24 hours.
+              </p>
             )}
             {modalType === "wholesaler" && (
-              <p className="mt-2 text-xs text-slate-500">Keep an eye on your inbox for a confirmation email.</p>
+              <>
+                <p className="mt-3 text-sm text-slate-600">
+                  We’re reviewing your submission. Expect an offer in the next 12-24 hours.
+                </p>
+                <Link
+                  href="/wholesalers/apply"
+                  className="mt-4 inline-flex w-full justify-center rounded-full bg-zona-purple px-4 py-2 text-sm font-semibold text-white"
+                >
+                  Join the Wholesaler Relations Program
+                </Link>
+              </>
+            )}
+            {modalType === "real-estate-agent" && (
+              <>
+                <p className="mt-3 text-sm text-slate-600">
+                  We’re reviewing your submission. Expect an offer in the next 12-24 hours.
+                </p>
+                <Link
+                  href="/agents/apply"
+                  className="mt-4 inline-flex w-full justify-center rounded-full bg-zona-purple px-4 py-2 text-sm font-semibold text-white"
+                >
+                  Join the Agent Partnership Program
+                </Link>
+              </>
+            )}
+            {modalType === "other" && (
+              <p className="mt-3 text-sm text-slate-600">
+                We’re reviewing your submission. Expect an offer in the next 12-24 hours.
+              </p>
             )}
             <button
               onClick={() => {
