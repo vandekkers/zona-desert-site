@@ -33,10 +33,15 @@ export async function POST(req: NextRequest) {
     };
 
     const target = process.env.CONSENT_LOG_ENDPOINT;
+    const token = process.env.CONSENT_LOG_TOKEN;
+
     if (target) {
       await fetch(target, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { "X-Consent-Log-Token": token } : {})
+        },
         body: JSON.stringify(enriched)
       });
     } else {
