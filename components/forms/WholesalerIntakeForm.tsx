@@ -213,6 +213,17 @@ export default function WholesalerIntakeForm() {
         {statusMessage && (
           <p className={`text-sm ${status === "success" ? "text-green-600" : "text-red-600"}`}>{statusMessage}</p>
         )}
+
+        <div className="space-y-2 text-xs text-slate-500">
+          <p>
+            <span className="font-semibold">By submitting</span>, you agree to the{" "}
+            <Link href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</Link> and{" "}
+            <Link href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</Link>, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding wholesale opportunities, submissions, and related updates. Reply STOP to opt out.
+          </p>
+          <p className="text-slate-400">
+            You represent that you have the legal right to submit any properties or information provided. Participation does not guarantee acceptance of any deal or partnership.
+          </p>
+        </div>
       </form>
 
       {showModal && (
