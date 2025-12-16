@@ -33,7 +33,7 @@ export function useCookieConsent() {
 const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReject: () => void; onManage: () => void; }) => {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 text-white shadow-2xl">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
         <div>
           <p className="text-sm font-semibold text-white">Cookie Notice</p>
           <p className="mt-1 text-sm text-white/80">We use essential cookies to run our site. We&apos;d also like to use analytics and marketing cookies to improve your experience. Manage your preferences anytime.</p>
@@ -42,10 +42,24 @@ const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReje
             <Link href="/cookie-policy" className="underline underline-offset-4">Cookie Policy</Link>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center md:gap-3">
-          <button onClick={onReject} className="rounded-full border border-white/30 px-3 py-2 text-xs font-semibold transition hover:border-white">Reject Non-Essential</button>
-          <button onClick={onManage} className="rounded-full border border-white/30 px-3 py-2 text-xs font-semibold transition hover:border-white">Manage Preferences</button>
-          <button onClick={onAccept} className="rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-900 transition hover:bg-slate-200">Accept All</button>
+        <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center md:justify-end md:gap-6">
+          {[
+            { label: "Reject Non-Essential", onClick: onReject, kind: "ghost" },
+            { label: "Manage Preferences", onClick: onManage, kind: "ghost" },
+            { label: "Accept All", onClick: onAccept, kind: "solid" }
+          ].map(({ label, onClick, kind }) => (
+            <button
+              key={label}
+              onClick={onClick}
+              className={`w-[170px] whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
+                kind === "solid"
+                  ? "border-white/40 bg-white text-slate-900 hover:bg-slate-200 hover:border-white"
+                  : "border-white/40 text-white hover:border-white"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
     </div>
