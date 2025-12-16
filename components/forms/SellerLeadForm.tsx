@@ -159,6 +159,17 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
           {status === "loading" ? "Submitting..." : "Request Your Offer"}
         </button>
 
+        <div className="space-y-2 text-xs text-slate-500">
+          <p>
+            <span className="font-semibold">By submitting this form</span>, you agree to the{" "}
+            <Link href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</Link> and{" "}
+            <Link href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</Link>, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding your property and related updates. Consent is not a condition of purchase. Reply STOP to opt out.
+          </p>
+          <p className="text-slate-400">
+            Submitting this form does not create a binding agreement. Any offer is subject to verification, inspection, and execution of a written purchase agreement.
+          </p>
+        </div>
+
         {status === "error" && <p className="text-sm text-red-600">Something went wrong. Please try again.</p>}
       </form>
 
