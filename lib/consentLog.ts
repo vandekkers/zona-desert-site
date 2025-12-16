@@ -29,7 +29,7 @@ export function extractUtmParams(): Partial<ConsentLogPayload> {
   if (typeof window === "undefined") return {};
   const params = new URLSearchParams(window.location.search);
   const entries: Partial<ConsentLogPayload> = {};
-  const keys: (keyof ConsentLogPayload)[] = [
+  const keys: Array<"utm_source" | "utm_medium" | "utm_campaign" | "utm_content" | "utm_term"> = [
     "utm_source",
     "utm_medium",
     "utm_campaign",
@@ -39,7 +39,7 @@ export function extractUtmParams(): Partial<ConsentLogPayload> {
   keys.forEach((key) => {
     const val = params.get(key.replace("utm_", "utm_"));
     if (val) {
-      entries[key] = val as ConsentLogPayload[typeof key];
+      entries[key] = val;
     }
   });
   return entries;
