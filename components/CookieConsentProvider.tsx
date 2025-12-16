@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
-import { CONSENT_VERSION, ConsentCookie, getConsent, getDefaultConsent, resetConsent, setConsent } from "@/lib/cookies/consent";
+import { CONSENT_VERSION, ConsentCookie, getConsent, getDefaultConsent, hasConsent, resetConsent, setConsent } from "@/lib/cookies/consent";
 import Link from "next/link";
 
 import { Analytics } from "@vercel/analytics/react";
@@ -139,8 +139,9 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
   };
 
   useEffect(() => {
-    const stored = getConsent();
-    const userHasConsent = !!stored && stored.consent_version === CONSENT_VERSION && !!stored.updated_at;
+    const rawHasConsent = hasConsent();
+    const stored = rawHasConsent ? getConsent() : getDefaultConsent();
+    const userHasConsent = rawHasConsent && stored.consent_version === CONSENT_VERSION && !!stored.updated_at;
     setConsentState(stored);
     setHasUserConsent(userHasConsent);
     setBannerOpen(!userHasConsent);
