@@ -33,6 +33,11 @@ export default function Footer() {
                   Terms &amp; Conditions
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy" className="transition hover:text-white hover:underline hover:underline-offset-4">
+                  Privacy Notice
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -69,9 +74,14 @@ export default function Footer() {
       </div>
       <div className="bg-slate-900 py-4 text-xs text-white/60">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 md:flex-row">
-          <Link href="/terms" className="transition hover:text-white hover:underline hover:underline-offset-4">
-            Terms &amp; Conditions
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="transition hover:text-white hover:underline hover:underline-offset-4">
+              Terms &amp; Conditions
+            </Link>
+            <Link href="/privacy" className="transition hover:text-white hover:underline hover:underline-offset-4">
+              Privacy Notice
+            </Link>
+          </div>
           <div className="text-center md:text-right">© {new Date().getFullYear()} Zona Desert. All rights reserved.</div>
         </div>
       </div>
