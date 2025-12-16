@@ -12,12 +12,12 @@ export default function TermsPage() {
 
           <section className="mt-6 space-y-5 text-slate-700 leading-relaxed">
             <p>
-              These Terms and Conditions ("Terms") govern your access to and use of the websites, applications, APIs,
-              services, software, and platforms provided by Zona Desert Property Solutions LLC ("Zona Desert Property
-              Solutions", "we", "us", or "our"), including but not limited to the Zona Desert Property Solutions
-              Marketplace, Contract Generation Services, Transaction Management Tools, and Electronic Signing Services
-              (collectively, the "Services"). By using our Services, you agree to be bound by these Terms. If you do not
-              agree with these Terms, you may not use or access our Services.
+            These Terms and Conditions (&quot;Terms&quot;) govern your access to and use of the websites, applications, APIs,
+            services, software, and platforms provided by Zona Desert Property Solutions LLC (&quot;Zona Desert Property
+            Solutions&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), including but not limited to the Zona Desert Property Solutions
+            Marketplace, Contract Generation Services, Transaction Management Tools, and Electronic Signing Services
+            (collectively, the &quot;Services&quot;). By using our Services, you agree to be bound by these Terms. If you do not
+            agree with these Terms, you may not use or access our Services.
             </p>
 
             <h2 className="text-xl font-semibold text-slate-900">1. Eligibility and Acceptance</h2>
