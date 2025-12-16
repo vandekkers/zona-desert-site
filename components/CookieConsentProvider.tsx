@@ -42,7 +42,7 @@ const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReje
             <Link href="/cookie-policy" className="underline underline-offset-4">Cookie Policy</Link>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center md:justify-end md:gap-6">
+        <div className="flex w-full flex-col gap-3 md:ml-auto md:w-auto md:flex-row md:items-center md:justify-end md:gap-6">
           {[
             { label: "Reject Non-Essential", onClick: onReject, kind: "ghost" },
             { label: "Manage Preferences", onClick: onManage, kind: "ghost" },
