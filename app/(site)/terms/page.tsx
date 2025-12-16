@@ -5,6 +5,10 @@ export default function TermsPage() {
         <div className="rounded-2xl bg-white p-8 shadow-xl">
           <h1 className="text-3xl font-bold text-slate-900">Terms &amp; Conditions</h1>
           <p className="mt-2 text-sm text-slate-500">Effective Date: [Insert Date] • Last Updated: [Insert Date]</p>
+          <p className="mt-4 text-slate-700">
+            Thank you for choosing Zona Desert Property Solutions LLC. These terms reflect our commitment to a clear,
+            fair, and compliant signing experience across our marketplace, contract generation, and transaction tools.
+          </p>
 
           <section className="mt-6 space-y-5 text-slate-700 leading-relaxed">
             <p>
