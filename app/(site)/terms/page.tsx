@@ -4,7 +4,7 @@ export default function TermsPage() {
       <div className="mx-auto max-w-5xl px-4 py-16">
         <div className="rounded-2xl bg-white p-8 shadow-xl">
           <h1 className="text-3xl font-bold text-slate-900">Terms &amp; Conditions</h1>
-          <p className="mt-2 text-sm text-slate-500">Effective Date: [Insert Date] • Last Updated: [Insert Date]</p>
+          <p className="mt-2 text-sm text-slate-500">Effective Date: 12/15/2025 • Last Updated: 12/15/2025</p>
           <p className="mt-4 text-slate-700">
             Thank you for choosing Zona Desert Property Solutions LLC. These terms reflect our commitment to a clear,
             fair, and compliant signing experience across our marketplace, contract generation, and transaction tools.
@@ -147,16 +147,6 @@ export default function TermsPage() {
               <span className="block">Email: support@zonadesert.com</span>
               <span className="block">Address: [Insert Legal Address]</span>
             </p>
-
-            <div className="mt-6 rounded-lg bg-slate-50 p-4 text-sm text-slate-600">
-              <p className="font-semibold">Recommended Next Steps (optional):</p>
-              <ul className="list-disc space-y-1 pl-6">
-                <li>E-Signature Consent page (DocuSign-style, pre-sign)</li>
-                <li>AI / Automation Disclosure</li>
-                <li>SMS &amp; Email Communication Consent</li>
-                <li>Short click-through acceptance text for forms</li>
-              </ul>
-            </div>
           </section>
         </div>
       </div>
