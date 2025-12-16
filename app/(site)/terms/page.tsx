@@ -144,8 +144,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-slate-900">Contact Information</h2>
             <p className="space-y-1">
               <span className="block">Zona Desert Property Solutions LLC</span>
-              <span className="block">Email: support@zonadesert.com</span>
-              <span className="block">Address: [Insert Legal Address]</span>
+              <span className="block">Email: info@zonadesert.com</span>
             </p>
           </section>
         </div>
