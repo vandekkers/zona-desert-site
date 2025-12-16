@@ -127,6 +127,17 @@ export default function AgentIntakeForm() {
 
       {status === "success" && <p className="text-sm text-green-600">Thanks! Our partnerships team will reach out soon.</p>}
       {status === "error" && errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
+
+      <div className="space-y-2 text-xs text-slate-500">
+        <p>
+          <span className="font-semibold">By submitting this form</span>, you agree to the{" "}
+          <a href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</a> and{" "}
+          <a href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</a>, and consent to receive communications from Zona Desert Property Solutions LLC via call, text, and email, including automated messages, related to agent partnerships, listings, and opportunities. Reply STOP to opt out.
+        </p>
+        <p className="text-slate-400">
+          Submitting this form does not create an agency, brokerage, or fiduciary relationship unless separately agreed to in writing.
+        </p>
+      </div>
     </form>
   );
 }
