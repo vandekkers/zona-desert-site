@@ -42,10 +42,10 @@ const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReje
             <Link href="/cookie-policy" className="underline underline-offset-4">Cookie Policy</Link>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center md:gap-3">
-          <button onClick={onReject} className="rounded-full border border-white/30 px-3 py-2 text-xs font-semibold transition hover:border-white">Reject Non-Essential</button>
-          <button onClick={onManage} className="rounded-full border border-white/30 px-3 py-2 text-xs font-semibold transition hover:border-white">Manage Preferences</button>
-          <button onClick={onAccept} className="rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-900 transition hover:bg-slate-200">Accept All</button>
+        <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center md:justify-end md:gap-4">
+          <button onClick={onReject} className="rounded-full border border-white/30 px-4 py-2 text-sm font-semibold transition hover:border-white">Reject Non-Essential</button>
+          <button onClick={onManage} className="rounded-full border border-white/30 px-4 py-2 text-sm font-semibold transition hover:border-white">Manage Preferences</button>
+          <button onClick={onAccept} className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">Accept All</button>
         </div>
       </div>
     </div>
