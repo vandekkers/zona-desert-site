@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useCookieConsent } from "@/components/CookieConsentProvider";
 
 export default function Footer() {
+  const { openModal } = useCookieConsent();
+
   return (
     <footer className="border-t border-slate-900 bg-slate-950 text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 text-sm text-white/80 md:flex-row md:justify-between">
@@ -29,6 +34,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/cookie-policy" className="transition hover:text-white hover:underline hover:underline-offset-4">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="transition hover:text-white hover:underline hover:underline-offset-4">
                   Terms &amp; Conditions
                 </Link>
@@ -37,6 +47,15 @@ export default function Footer() {
                 <Link href="/privacy" className="transition hover:text-white hover:underline hover:underline-offset-4">
                   Privacy Notice
                 </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={openModal}
+                  className="transition hover:text-white hover:underline hover:underline-offset-4"
+                >
+                  Cookie Settings
+                </button>
               </li>
             </ul>
           </div>
@@ -81,6 +100,16 @@ export default function Footer() {
             <Link href="/privacy" className="transition hover:text-white hover:underline hover:underline-offset-4">
               Privacy Notice
             </Link>
+            <Link href="/cookie-policy" className="transition hover:text-white hover:underline hover:underline-offset-4">
+              Cookie Policy
+            </Link>
+            <button
+              type="button"
+              onClick={openModal}
+              className="transition hover:text-white hover:underline hover:underline-offset-4"
+            >
+              Cookie Settings
+            </button>
           </div>
           <div className="text-center md:text-right">© {new Date().getFullYear()} Zona Desert. All rights reserved.</div>
         </div>

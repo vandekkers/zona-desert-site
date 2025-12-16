@@ -71,11 +71,14 @@ export default function PrivacyPage() {
               <h2 className="text-xl font-semibold text-slate-900">4. Cookies and Similar Technologies</h2>
               <p>We use cookies, web beacons, and similar technologies to collect usage information and enhance your experience.</p>
               <ul className="list-disc space-y-2 pl-6">
-                <li>Essential cookies: required for basic functionality.</li>
-                <li>Analytics cookies: for performance tracking.</li>
-                <li>Optional cookies: for marketing and personalization (where consented).</li>
+                <li><span className="font-semibold">Essential</span>: required for security and core functionality. Always on.</li>
+                <li><span className="font-semibold">Analytics</span>: help us understand usage and improve the experience (opt-in).</li>
+                <li><span className="font-semibold">Marketing</span>: support personalization/remarketing (opt-in).</li>
               </ul>
-              <p>You can manage cookies through your browser settings. Disabling cookies may affect Service functionality.</p>
+              <p>
+                You can set or change preferences anytime via the cookie banner or the “Cookie Settings” link in the footer, or adjust browser settings (disabling cookies may affect functionality).
+                See our <a href="/cookie-policy" className="text-indigo-600 underline">Cookie Policy</a> for details.
+              </p>
             </div>
 
             <div className="space-y-2">
