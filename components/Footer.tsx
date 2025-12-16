@@ -28,6 +28,11 @@ export default function Footer() {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link href="/terms" className="transition hover:text-white hover:underline hover:underline-offset-4">
+                  Terms &amp; Conditions
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -62,8 +67,13 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="bg-slate-900 py-4 text-center text-xs text-white/60">
-        © {new Date().getFullYear()} Zona Desert. All rights reserved.
+      <div className="bg-slate-900 py-4 text-xs text-white/60">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 md:flex-row">
+          <Link href="/terms" className="transition hover:text-white hover:underline hover:underline-offset-4">
+            Terms &amp; Conditions
+          </Link>
+          <div className="text-center md:text-right">© {new Date().getFullYear()} Zona Desert. All rights reserved.</div>
+        </div>
       </div>
     </footer>
   );
