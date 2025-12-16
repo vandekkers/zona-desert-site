@@ -33,7 +33,7 @@ export function useCookieConsent() {
 const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReject: () => void; onManage: () => void; }) => {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 text-white shadow-2xl">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:gap-6 md:justify-start">
+      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-sm font-semibold text-white">Cookie Notice</p>
           <p className="mt-1 text-sm text-white/80">We use essential cookies to run our site. We&apos;d also like to use analytics and marketing cookies to improve your experience. Manage your preferences anytime.</p>
@@ -42,7 +42,7 @@ const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReje
             <Link href="/cookie-policy" className="underline underline-offset-4">Cookie Policy</Link>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-3 md:ml-6 md:w-auto md:flex-row md:items-center md:gap-5">
+        <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center md:justify-end md:gap-5">
           {[
             { label: "Reject Non-Essential", onClick: onReject, kind: "ghost" },
             { label: "Manage Preferences", onClick: onManage, kind: "ghost" },
