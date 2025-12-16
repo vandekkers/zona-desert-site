@@ -51,10 +51,10 @@ const Banner = ({ onAccept, onReject, onManage }: { onAccept: () => void; onReje
             <button
               key={label}
               onClick={onClick}
-              className={`w-[160px] whitespace-nowrap rounded-full border px-4 py-2 text-center text-sm font-semibold transition ${
+              className={`w-[150px] rounded-full border px-4 py-2 text-sm font-semibold transition ${
                 kind === "solid"
-                  ? "border-white/40 bg-white text-slate-900 hover:bg-slate-200 hover:border-white"
-                  : "border-white/40 text-white hover:border-white"
+                  ? "border-white/30 bg-white text-slate-900 hover:bg-slate-200 hover:border-white"
+                  : "border-white/30 text-white hover:border-white"
               }`}
             >
               {label}
