@@ -8,6 +8,7 @@ import { COUNTIES_BY_STATE, US_STATES } from "@/data/counties-by-state";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
 import MultiSelect from "./MultiSelect";
+import { extractUtmParams, logConsentSubmission } from "@/lib/consentLog";
 
 const wholesalerTypes = [
   { label: "Dispo", value: "dispo" },
@@ -95,6 +96,8 @@ export default function WholesalerIntakeForm() {
     event.preventDefault();
     const form = event.currentTarget; // capture before async
     const formData = new FormData(form);
+    const pageUrl = typeof window !== "undefined" ? window.location.href : undefined;
+    const utms = extractUtmParams();
     if (!selectedStates.length) {
       setFormError("Select at least one state you cover.");
       return;
@@ -132,6 +135,17 @@ export default function WholesalerIntakeForm() {
       setCountiesByState({});
       setWholesalerType("dispo");
       setShowModal(true);
+      logConsentSubmission({
+        form_type: "wholesaler",
+        consent_version: "v1",
+        consent_text:
+          "By submitting, you agree to the Terms and Conditions and Privacy Notice, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding wholesale opportunities, submissions, and related updates. Reply STOP to opt out.",
+        marketing_opt_in: true,
+        page_url: pageUrl,
+        email: payload.email,
+        phone: payload.phone || undefined,
+        ...utms
+      });
     } catch (error) {
       console.error(error);
       setStatus("error");

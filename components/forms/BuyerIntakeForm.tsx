@@ -7,6 +7,7 @@ import { PublicApiError, createPublicBuyer } from "@/lib/publicApi";
 import FormField from "./FormField";
 import MultiSelect from "./MultiSelect";
 import { getOptionalValue, getValue } from "./formUtils";
+import { extractUtmParams, logConsentSubmission } from "@/lib/consentLog";
 
 const strategyOptions = [
   "Any",
@@ -49,6 +50,8 @@ export default function BuyerIntakeForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const pageUrl = typeof window !== "undefined" ? window.location.href : undefined;
+    const utms = extractUtmParams();
     if (!selectedStates.length) {
       setFormError("Select at least one state of interest.");
       return;
@@ -103,6 +106,17 @@ export default function BuyerIntakeForm() {
       setSelectedStates([]);
       setCountiesByState({});
       setSelectedStrategies([]);
+      logConsentSubmission({
+        form_type: "buyer",
+        consent_version: "v1",
+        consent_text:
+          "By submitting, you agree to the Terms and Conditions and Privacy Notice, and consent to receive marketing communications, including property alerts, via text message, phone call, and email from Zona Desert Property Solutions LLC. Message and data rates may apply. Reply STOP to opt out.",
+        marketing_opt_in: true,
+        page_url: pageUrl,
+        email: payload.email,
+        phone: payload.phone,
+        ...utms
+      });
     } catch (error) {
       console.error(error);
       const statusCode =

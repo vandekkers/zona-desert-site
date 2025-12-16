@@ -5,6 +5,7 @@ import { createPublicAgent, PublicApiError } from "@/lib/publicApi";
 import { AgentIntakePayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
+import { extractUtmParams, logConsentSubmission } from "@/lib/consentLog";
 
 const partnershipOptions = [
   "Refer Buyers",
@@ -24,6 +25,8 @@ export default function AgentIntakeForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const pageUrl = typeof window !== "undefined" ? window.location.href : undefined;
+    const utms = extractUtmParams();
     const form = event.currentTarget; // capture before async to avoid pooled event nulls
     const formData = new FormData(form);
     const payload: AgentIntakePayload = {
@@ -45,6 +48,17 @@ export default function AgentIntakeForm() {
       form.reset();
       setSelectedListingTypes([]);
       setSelectedPartnerships([]);
+      logConsentSubmission({
+        form_type: "agent",
+        consent_version: "v1",
+        consent_text:
+          "By submitting this form, you agree to the Terms and Conditions and Privacy Notice, and consent to receive communications from Zona Desert Property Solutions LLC via call, text, and email, including automated messages, related to agent partnerships, listings, and opportunities. Reply STOP to opt out.",
+        marketing_opt_in: true,
+        page_url: pageUrl,
+        email: payload.email,
+        phone: payload.phone,
+        ...utms
+      });
     } catch (error) {
       console.error(error);
       const apiError = error as PublicApiError;

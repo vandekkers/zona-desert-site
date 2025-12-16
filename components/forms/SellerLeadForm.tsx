@@ -7,6 +7,7 @@ import { SellerLeadPayload } from "@/lib/types";
 import FormField from "./FormField";
 import { getOptionalValue, getValue } from "./formUtils";
 import { checkExistingAgent, checkExistingWholesaler } from "@/lib/placeholders";
+import { extractUtmParams, logConsentSubmission } from "@/lib/consentLog";
 
 const propertyTypes = ["Single Family", "Small Multifamily", "Large Multifamily", "Townhome", "Land", "Portfolio", "Other"];
 const conditionOptions = ["Turnkey", "Light Updates", "Heavy Rehab", "Fire/Structural"];
@@ -33,6 +34,8 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
     event.preventDefault();
     const form = event.currentTarget; // capture before any async work to avoid pooled event nulls
     const formData = new FormData(form);
+    const pageUrl = typeof window !== "undefined" ? window.location.href : undefined;
+    const utms = extractUtmParams();
     const payload: SellerLeadPayload = {
       address: getValue(formData, "address"),
       city: getValue(formData, "city"),
@@ -78,6 +81,17 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       form.reset();
       setModalType(sellerType);
       setSelectedSellerType(defaultSellerType);
+      logConsentSubmission({
+        form_type: "sell",
+        consent_version: "v1",
+        consent_text:
+          "By submitting this form, you agree to the Terms and Conditions and Privacy Notice, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding your property and related updates. Consent is not a condition of purchase. Reply STOP to opt out.",
+        marketing_opt_in: true,
+        page_url: pageUrl,
+        email: payload.email,
+        phone: payload.phone,
+        ...utms
+      });
     } catch (error) {
       console.error(error);
       setStatus("error");
