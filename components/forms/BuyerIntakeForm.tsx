@@ -308,6 +308,17 @@ export default function BuyerIntakeForm() {
         {status === "loading" ? "Submitting..." : "Join Buyers List"}
       </button>
 
+      <div className="space-y-2 text-xs text-slate-500">
+        <p>
+          <span className="font-semibold">By submitting</span>, you agree to the{" "}
+          <a href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</a> and{" "}
+          <a href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</a>, and consent to receive marketing communications, including property alerts, via text message, phone call, and email from Zona Desert Property Solutions LLC. Message and data rates may apply. Reply STOP to opt out.
+        </p>
+        <p className="text-slate-400">
+          Listings, pricing, and estimates are informational and may change at any time. You are responsible for independent due diligence. Nothing provided constitutes legal, tax, or financial advice.
+        </p>
+      </div>
+
       {status === "success" && successMessage && (
         <p className="text-sm text-green-600">{successMessage}</p>
       )}
