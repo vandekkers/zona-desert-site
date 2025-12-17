@@ -19,7 +19,7 @@ const rawApiBase =
   process.env.NEXT_PUBLIC_API_BASE ||
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   process.env.NEXT_PUBLIC_API ||
-  "http://localhost:8000";
+  "https://api.zonadesert.com";
 
 const API_BASE_URL = rawApiBase.replace(/\/+$/, "");
 
