@@ -21,21 +21,27 @@ export default function ComingSoonPage() {
   return (
     <main
       data-zona-gate="1"
-      className="min-h-screen w-full bg-[#4A1988] text-white flex flex-col items-center justify-between px-6 py-16"
+      className="min-h-screen w-full text-white flex flex-col items-center justify-between px-6 py-16"
+      style={{
+        backgroundImage: "url(/brand/desert-site-wall-background.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div className="flex-1 flex flex-col items-center justify-center w-full">
-        <div className="flex flex-col items-center gap-12 sm:gap-16 text-center">
+        <div className="flex flex-col items-center text-center">
           <Image
-            src="/zona-logo-mark.png"
+            src="/brand/zona-logo-secondary-light.png"
             alt="Zona Desert Property Solutions"
-            width={300}
-            height={200}
+            width={400}
+            height={267}
             priority
-            className="w-auto h-auto max-w-[70vw] sm:max-w-[360px]"
+            className="w-auto h-auto max-w-[80vw] sm:max-w-[400px] mb-12"
           />
 
           <h1
-            className="text-3xl sm:text-4xl font-semibold text-white tracking-tight"
+            className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-16"
             style={{ fontFamily: "var(--font-sora), system-ui, sans-serif" }}
           >
             Coming soon...
