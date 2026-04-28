@@ -10,6 +10,7 @@ const BYPASS_PREFIXES = [
   "/robots.txt",
   "/sitemap.xml",
   "/zona-",
+  "/brand",
   "/logo.png"
 ];
 

@@ -21,7 +21,7 @@ export default function ComingSoonPage() {
   return (
     <main
       data-zona-gate="1"
-      className="min-h-screen w-full text-white flex flex-col items-center justify-between px-6 py-16"
+      className="min-h-screen w-full bg-[#4A1988] text-white flex flex-col items-center justify-between px-6 py-16"
       style={{
         backgroundImage: "url(/brand/desert-site-wall-background.png)",
         backgroundSize: "cover",
