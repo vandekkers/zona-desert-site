@@ -25,7 +25,7 @@ export default function ComingSoonPage() {
       style={{
         backgroundImage: "url(/brand/desert-site-wall-background.png)",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "65% center",
         backgroundRepeat: "no-repeat",
       }}
     >
@@ -34,25 +34,32 @@ export default function ComingSoonPage() {
           <Image
             src="/brand/zona-logo-secondary-light.png"
             alt="Zona Desert Property Solutions"
-            width={400}
-            height={267}
+            width={480}
+            height={320}
             priority
-            className="w-auto h-auto max-w-[80vw] sm:max-w-[400px] mb-12"
+            className="w-auto h-auto max-w-[88vw] sm:max-w-[480px] mt-8 mb-6"
           />
 
           <h1
-            className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-16"
+            className="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3"
             style={{ fontFamily: "var(--font-sora), system-ui, sans-serif" }}
           >
             Coming soon...
           </h1>
+
+          <p
+            className="text-base sm:text-lg text-white/85 mb-16"
+            style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", fontWeight: 300 }}
+          >
+            Something <span style={{ fontWeight: 600 }}>extraordinary</span> is on the horizon.
+          </p>
 
           <div
             className="flex flex-col items-center gap-6"
             style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
           >
             <p className="text-sm text-white/70">Follow us</p>
-            <div className="flex items-start gap-10">
+            <div className="flex items-stretch gap-8">
               <a
                 href={FACEBOOK_URL}
                 target="_blank"
@@ -74,6 +81,10 @@ export default function ComingSoonPage() {
                   {SOCIAL_HANDLE}
                 </span>
               </a>
+              <div
+                aria-hidden="true"
+                className="self-stretch w-px bg-white/25"
+              />
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
@@ -105,7 +116,7 @@ export default function ComingSoonPage() {
         className="text-white/40 hover:text-white/70 text-sm transition-colors mt-16"
         style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
-        Owner login →
+        Access code →
       </Link>
     </main>
   );
