@@ -242,12 +242,34 @@ padding: 14px 16px; border-radius: 0 8px 8px 0;
 
 ## 6. LOGO USAGE
 
-- Desert mountain/peak mark — purple gradient body, orange-to-amber sun at peak
-- Always with Zona Desert wordmark in Sora SemiBold, Navy `#0E172A`
-- On dark backgrounds (admin nav): full-color mark + white wordmark
-- Minimum height: 32px for the mark
-- Never recolor, stretch, or distort
-- Never on busy or patterned backgrounds
+### 6.1 Asset Inventory
+
+All logo assets live in `public/brand/` in each repo. The complete asset library is identical across zona-admin, zona-partners, and zona-desert-site so any platform can present any variant.
+
+| Filename | Dimensions | When to use |
+|----------|------------|-------------|
+| `zona-logo-icon.png` | 1536×1024 | Compact spaces. Mountain mark only — no wordmark. Favicons, app icons, small UI badges, single-character avatars. |
+| `zona-logo-primary-dark.png` | 1536×1024 | Standard lockup (mark + Zona Desert wordmark) on LIGHT backgrounds. Default choice for white/off-white surfaces. Wordmark navy `#0E172A`. |
+| `zona-logo-primary-light.png` | 1536×1024 | Standard lockup on DARK backgrounds. Wordmark white. Use on purple-deep `#4A1988`, navy `#0E172A`, or photographic dark surfaces. |
+| `zona-logo-secondary-dark.png` | 1536×1024 | Alternate lockup on LIGHT backgrounds. Use when primary lockup competes with adjacent UI or needs different proportions. |
+| `zona-logo-secondary-light.png` | 1536×1024 | Alternate lockup on DARK backgrounds. Used on the public site coming-soon wall. |
+
+### 6.2 Background Imagery
+
+| Filename | Dimensions | When to use |
+|----------|------------|-------------|
+| `desert-site-wall-background.png` | 1672×941 | Hero/landing/coming-soon contexts on `zonadesert.com`. Full-bleed, `background-size: cover`. Pair with `zona-logo-secondary-light.png` and white text. |
+
+### 6.3 Usage Rules
+
+- All assets are 1536×1024 (3:2 aspect). Render with `width={N} height={Math.round(N * 2/3)}` to preserve ratio. Squashing is a brand violation.
+- Light variants on dark backgrounds. Dark variants on light backgrounds. Never invert.
+- Mountain mark minimum height: **32px**. Below this, use `zona-logo-icon.png` cropped tighter.
+- Never recolor any element of the logo.
+- Never stretch or distort.
+- Never place on busy or low-contrast backgrounds without an overlay.
+- Never combine the wordmark from one variant with the mark from another.
+- All assets ship with transparent backgrounds. Do NOT re-encode without preserving alpha.
 
 ---
 
