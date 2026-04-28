@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 const FACEBOOK_URL = "https://www.facebook.com/share/1J4m5omk6L/?mibextid=wwXIfr";
 const INSTAGRAM_URL =
   "https://www.instagram.com/zona.desert?igsh=MXNkbTNzM205bGg0MQ%3D%3D&utm_source=qr";
+const SOCIAL_HANDLE = "@zona.desert";
 
 const FACEBOOK_PATH =
   "M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z";
@@ -19,70 +21,86 @@ export default function ComingSoonPage() {
   return (
     <main
       data-zona-gate="1"
-      className="min-h-screen w-full bg-[#F1F2EF] text-[#0E172A] flex flex-col items-center justify-center px-6 py-16"
+      className="min-h-screen w-full bg-[#4A1988] text-white flex flex-col items-center justify-between px-6 py-16"
     >
-      <div className="flex flex-col items-center gap-10 sm:gap-12 text-center">
-        <Image
-          src="/zona-wordmark.png"
-          alt="Zona Desert Property Solutions"
-          width={420}
-          height={108}
-          priority
-          className="w-auto h-auto max-w-[80vw] sm:max-w-[420px]"
-        />
+      <div className="flex-1 flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center gap-12 sm:gap-16 text-center">
+          <Image
+            src="/zona-logo-mark.png"
+            alt="Zona Desert Property Solutions"
+            width={300}
+            height={200}
+            priority
+            className="w-auto h-auto max-w-[70vw] sm:max-w-[360px]"
+          />
 
-        <h1
-          className="text-3xl sm:text-4xl font-semibold text-[#0E172A] tracking-tight"
-          style={{ fontFamily: "var(--font-sora), system-ui, sans-serif" }}
-        >
-          Coming soon...
-        </h1>
+          <h1
+            className="text-3xl sm:text-4xl font-semibold text-white tracking-tight"
+            style={{ fontFamily: "var(--font-sora), system-ui, sans-serif" }}
+          >
+            Coming soon...
+          </h1>
 
-        <div
-          className="flex flex-col items-center gap-4"
-          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
-        >
-          <p className="text-sm text-[#0E172A]/70">Follow us</p>
-          <div className="flex items-center gap-6 text-[#0E172A]/70">
-            <a
-              href={FACEBOOK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="transition-colors hover:text-[#4A1988]"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="32"
-                height="32"
-                fill="currentColor"
-                aria-hidden="true"
-                role="img"
+          <div
+            className="flex flex-col items-center gap-6"
+            style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+          >
+            <p className="text-sm text-white/70">Follow us</p>
+            <div className="flex items-start gap-10">
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Facebook — ${SOCIAL_HANDLE}`}
+                className="group flex flex-col items-center gap-2 text-white transition-colors hover:text-white/70"
               >
-                <path d={FACEBOOK_PATH} />
-              </svg>
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="transition-colors hover:text-[#4A1988]"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="32"
-                height="32"
-                fill="currentColor"
-                aria-hidden="true"
-                role="img"
+                <svg
+                  viewBox="0 0 24 24"
+                  width="32"
+                  height="32"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  role="img"
+                >
+                  <path d={FACEBOOK_PATH} />
+                </svg>
+                <span className="text-sm text-white/70 group-hover:text-white/90 transition-colors">
+                  {SOCIAL_HANDLE}
+                </span>
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Instagram — ${SOCIAL_HANDLE}`}
+                className="group flex flex-col items-center gap-2 text-white transition-colors hover:text-white/70"
               >
-                <path d={INSTAGRAM_PATH} />
-              </svg>
-            </a>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="32"
+                  height="32"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  role="img"
+                >
+                  <path d={INSTAGRAM_PATH} />
+                </svg>
+                <span className="text-sm text-white/70 group-hover:text-white/90 transition-colors">
+                  {SOCIAL_HANDLE}
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <Link
+        href="/__owner-access"
+        className="text-white/40 hover:text-white/70 text-sm transition-colors mt-16"
+        style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+      >
+        Owner login →
+      </Link>
     </main>
   );
 }
