@@ -13,3 +13,11 @@ body {
 main {
   @apply flex-1;
 }
+
+/* Suppress the global cookie consent banner on owner-gate routes (/coming-soon, /__owner-access).
+   Pages opt in via a [data-zona-gate="1"] attribute on their root element. The banner is rendered
+   as a sibling of page content inside <body>, so :has() lets us scope without modifying
+   the protected CookieConsentProvider component. */
+body:has([data-zona-gate="1"]) > .fixed.bottom-0.left-0.right-0.z-40 {
+  display: none !important;
+}

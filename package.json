@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-owner-secrets": "node scripts/generate-owner-secrets.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
