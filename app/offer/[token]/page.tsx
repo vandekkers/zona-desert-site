@@ -6,6 +6,7 @@ import { LayerWhyZona } from "@/components/portal/LayerWhyZona";
 import { LayerCompEvidence } from "@/components/portal/LayerCompEvidence";
 import { LayerPropertyProfile } from "@/components/portal/LayerPropertyProfile";
 import { LayerScoreBreakdown } from "@/components/portal/LayerScoreBreakdown";
+import { StickyActionBar } from "@/components/portal/StickyActionBar";
 import { TerminalState } from "@/components/portal/TerminalState";
 
 // Token-gated content must never be indexed. Robots noindex/nofollow per
@@ -38,7 +39,7 @@ export default async function OfferPage({ params }: { params: { token: string } 
         <OfferHero offer={offer} />
         <div
           data-zona-gate="1"
-          className="bg-zona-off-white pb-16"
+          className="bg-zona-off-white pb-32 sm:pb-24"
         >
           <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 sm:px-6">
             <LayerWhyZona />
@@ -50,6 +51,10 @@ export default async function OfferPage({ params }: { params: { token: string } 
             <LayerScoreBreakdown bucketScores={offer.offer?.bucket_scores ?? []} />
           </div>
         </div>
+        <StickyActionBar
+          token={params.token}
+          targetOffer={offer.offer?.target_offer ?? "0"}
+        />
       </>
     );
   }
