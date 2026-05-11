@@ -10,9 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         zona: {
-          purple: "#6366F1",
-          midnight: "#0F172A",
-          sand: "#F5F0E1"
+          "purple-deep": "#4A1988",
+          "purple-mid": "#7025B6",
+          purple: "#7025B6",
+          orange: "#FE642D",
+          amber: "#FEA91E",
+          navy: "#0E172A",
+          "off-white": "#F1F2EF"
         }
       }
     }

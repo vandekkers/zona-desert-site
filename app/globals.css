@@ -4,6 +4,12 @@
 
 :root {
   color-scheme: light;
+  --color-purple-deep: #4A1988;
+  --color-purple-mid: #7025B6;
+  --color-orange: #FE642D;
+  --color-amber: #FEA91E;
+  --color-navy: #0E172A;
+  --color-off-white: #F1F2EF;
 }
 
 body {

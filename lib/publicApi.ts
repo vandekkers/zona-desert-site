@@ -1,6 +1,7 @@
 import {
   AgentIntakePayload,
   BuyerIntakePayload,
+  PublicOfferResponse,
   SellerLeadPayload,
   WholesalerIntakePayload
 } from "./types";
@@ -294,5 +295,25 @@ export async function createPublicWholesaler(formValues: WholesalerIntakePayload
     throw new PublicApiError(message, res.status);
   }
 
+  return res.json();
+}
+
+// ---------------------------------------------------------------------------
+// Public Offer Portal (Phase 4.5.g)
+//
+// Fetches GET /offers/{token} from the seller-facing public endpoint.
+// Server Component caller — cache: "no-store" because token state can
+// change between requests (JIT expiration at the backend). 404 returns
+// null so the caller can dispatch to Next.js notFound().
+// ---------------------------------------------------------------------------
+
+export async function fetchPublicOffer(token: string): Promise<PublicOfferResponse | null> {
+  const res = await fetch(`${API_BASE_URL}/offers/${encodeURIComponent(token)}`, {
+    cache: "no-store"
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new PublicApiError(`Failed to fetch offer: ${res.status}`, res.status);
+  }
   return res.json();
 }
