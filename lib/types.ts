@@ -128,3 +128,58 @@ export interface WholesalerIntakePayload {
   dealsPerMonth?: string;
   notes?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Public Offer Portal types (Phase 4.5.g)
+//
+// Mirror of backend Pydantic schemas in zona-admin at
+// apps/api/app/schemas/public_offer.py per Scar #24. Decimal columns on the
+// backend serialize as JSON strings via Pydantic V2 — typed `string | null`
+// on the wire. The portal UI handles string→number coercion at the
+// presentation boundary.
+// ---------------------------------------------------------------------------
+
+export type PublicOfferStatus = "active" | "expired" | "accepted" | "countered" | "revoked";
+
+export interface PublicOfferAmount {
+  target_offer: string;
+  bucket_scores: Array<Record<string, unknown>>;
+}
+
+export interface PublicPropertyFacts {
+  year_built: number | null;
+  bedrooms: number | null;
+  bathrooms: string | null;
+  sqft: number | null;
+  lot_size: string | null;
+  repair_level: string | null;
+}
+
+export interface PublicComp {
+  street_block: string;
+  sold_price: string | null;
+  sale_date: string | null;
+  beds: number | null;
+  baths: number | null;
+  sqft: number | null;
+  distance_miles: number | null;
+  sale_type: string | null;
+}
+
+export interface PublicExitStrategy {
+  arv_estimate_low: string | null;
+  arv_estimate_high: string | null;
+  estimated_rental_monthly: string | null;
+}
+
+export interface PublicOfferResponse {
+  status: PublicOfferStatus;
+  expires_at: string;
+  offer: PublicOfferAmount | null;
+  property_facts: PublicPropertyFacts | null;
+  comps: PublicComp[] | null;
+  exit_strategy: PublicExitStrategy | null;
+  accepted_at: string | null;
+  countered_at: string | null;
+  counter_amount: string | null;
+}
