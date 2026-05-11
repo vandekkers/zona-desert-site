@@ -3,20 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { PublicOfferResponse } from "@/lib/types";
+import { formatCurrency } from "@/lib/portalFormatters";
 
 interface Props {
   offer: PublicOfferResponse;
-}
-
-function formatCurrency(amount: string | null | undefined): string {
-  if (!amount) return "—";
-  const num = Number(amount);
-  if (!Number.isFinite(num)) return "—";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0
-  }).format(num);
 }
 
 interface Remaining {
@@ -65,11 +55,6 @@ export function OfferHero({ offer }: Props) {
   }, [offer.expires_at]);
 
   const targetOffer = offer.offer?.target_offer ?? null;
-  // Phase 4.5.g foundation: backend doesn't yet expose property address on
-  // the public response. Property address surfaces with Layer 4 work in
-  // 4.5.h. Today the hero shows the headline + countdown only.
-  // (Per Rule 10.21: prompt asserted address in Layer 1; surfacing as drift
-  // because PublicOfferResponse contract has no address field.)
 
   return (
     <main
@@ -103,6 +88,12 @@ export function OfferHero({ offer }: Props) {
               style={{ fontFamily: "var(--font-sora)", fontWeight: 600 }}
             >
               {formatCurrency(targetOffer)}
+            </p>
+            <p
+              className="pt-2 text-lg text-zona-navy md:text-2xl"
+              style={{ fontFamily: "var(--font-sora)", fontWeight: 600 }}
+            >
+              {offer.property_address}
             </p>
           </div>
 

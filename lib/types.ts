@@ -141,9 +141,15 @@ export interface WholesalerIntakePayload {
 
 export type PublicOfferStatus = "active" | "expired" | "accepted" | "countered" | "revoked";
 
+export interface PublicBucketScore {
+  category: string;
+  score: number;
+  max_points: number;
+}
+
 export interface PublicOfferAmount {
   target_offer: string;
-  bucket_scores: Array<Record<string, unknown>>;
+  bucket_scores: PublicBucketScore[];
 }
 
 export interface PublicPropertyFacts {
@@ -175,6 +181,7 @@ export interface PublicExitStrategy {
 export interface PublicOfferResponse {
   status: PublicOfferStatus;
   expires_at: string;
+  property_address: string;
   offer: PublicOfferAmount | null;
   property_facts: PublicPropertyFacts | null;
   comps: PublicComp[] | null;
