@@ -1,6 +1,11 @@
 import {
+  AcceptRequest,
+  AcceptResponse,
   AgentIntakePayload,
   BuyerIntakePayload,
+  ContactResponse,
+  CounterRequest,
+  CounterResponse,
   PublicOfferResponse,
   SellerLeadPayload,
   WholesalerIntakePayload
@@ -314,6 +319,79 @@ export async function fetchPublicOffer(token: string): Promise<PublicOfferRespon
   if (res.status === 404) return null;
   if (!res.ok) {
     throw new PublicApiError(`Failed to fetch offer: ${res.status}`, res.status);
+  }
+  return res.json();
+}
+
+// ---------------------------------------------------------------------------
+// Public Offer Portal actions (Phase 4.5.i)
+//
+// POST /offers/{token}/{accept,counter,contact}. Token URL-encoded per PR #12
+// Drift #3. Backend returns 400 with structured {detail: string} on every
+// failure mode (state conflict / identity mismatch / phone missing).
+// Pydantic 422 returns {detail: [{loc, msg, type}]} — extractDetail handles
+// both shapes. Network errors throw PublicApiError with a generic message
+// so callers can surface a retry-friendly UI hint.
+// ---------------------------------------------------------------------------
+
+async function extractDetail(res: Response, fallback: string): Promise<string> {
+  try {
+    const data = await res.json();
+    if (data && typeof data.detail === "string") return data.detail;
+    if (Array.isArray(data?.detail) && data.detail.length > 0) {
+      const first = data.detail[0];
+      if (first && typeof first.msg === "string") return first.msg;
+    }
+  } catch {
+    // fall through to fallback
+  }
+  return fallback;
+}
+
+export async function acceptOffer(
+  token: string,
+  payload: AcceptRequest
+): Promise<AcceptResponse> {
+  const res = await fetch(`${API_BASE_URL}/offers/${encodeURIComponent(token)}/accept`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    cache: "no-store",
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const message = await extractDetail(res, `Failed to accept offer: ${res.status}`);
+    throw new PublicApiError(message, res.status);
+  }
+  return res.json();
+}
+
+export async function counterOffer(
+  token: string,
+  payload: CounterRequest
+): Promise<CounterResponse> {
+  const res = await fetch(`${API_BASE_URL}/offers/${encodeURIComponent(token)}/counter`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    cache: "no-store",
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const message = await extractDetail(res, `Failed to submit counter: ${res.status}`);
+    throw new PublicApiError(message, res.status);
+  }
+  return res.json();
+}
+
+export async function contactZona(token: string): Promise<ContactResponse> {
+  const res = await fetch(`${API_BASE_URL}/offers/${encodeURIComponent(token)}/contact`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    cache: "no-store",
+    body: "{}"
+  });
+  if (!res.ok) {
+    const message = await extractDetail(res, `Failed to request contact: ${res.status}`);
+    throw new PublicApiError(message, res.status);
   }
   return res.json();
 }

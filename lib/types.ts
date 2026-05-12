@@ -190,3 +190,51 @@ export interface PublicOfferResponse {
   countered_at: string | null;
   counter_amount: string | null;
 }
+
+// ---------------------------------------------------------------------------
+// Public Offer Portal action types (Phase 4.5.i)
+//
+// Mirror of backend Pydantic schemas in zona-admin at
+// apps/api/app/schemas/offer_actions.py per Scar #24. Backend serializes
+// Decimal as JSON strings via Pydantic V2 default — counter_amount typed
+// `string` on the wire (matches engine surface).
+// ---------------------------------------------------------------------------
+
+export interface AcceptRequest {
+  identity_check_name: string;
+  identity_check_phone_last4: string;
+}
+
+export interface AcceptResponse {
+  status: "accepted";
+  accepted_at: string;
+  message: string;
+}
+
+export interface CounterRequest {
+  identity_check_name: string;
+  identity_check_phone_last4: string;
+  counter_amount: string;
+  counter_notes?: string | null;
+}
+
+export interface CounterResponse {
+  status: "countered";
+  countered_at: string;
+  counter_amount: string;
+  message: string;
+}
+
+// Empty body; backend has model_config = ConfigDict(extra="forbid").
+export type ContactRequest = Record<string, never>;
+
+// Backend ships 4 fields (Scar #24/§18.2 catch — prompt mentioned only
+// zona_phone; full backend contract has all four per
+// apps/api/app/schemas/offer_actions.py:122-133). UI consumes
+// zona_phone today; remaining fields preserved for future use.
+export interface ContactResponse {
+  zona_phone: string;
+  zona_email: string;
+  property_address: string;
+  token_status: PublicOfferStatus;
+}
