@@ -145,6 +145,12 @@ type PublicSellerCreatePayload = {
   property_type?: string | null;
   financing_situation?: string | null;
   seller_type?: string | null;
+  // Phase 5.compliance.a — SMS consent capture (10DLC).
+  // snake_case keys mirror the backend SellerLeadPayload schema.
+  sms_consent?: boolean;
+  consent_version?: string;
+  consent_text?: string;
+  page_url?: string;
 };
 
 export async function createPublicSeller(formValues: SellerLeadPayload) {
@@ -163,7 +169,11 @@ export async function createPublicSeller(formValues: SellerLeadPayload) {
     how_heard: formValues.heardAbout || null,
     property_type: formValues.propertyType || null,
     financing_situation: formValues.financingSituation || null,
-    seller_type: formValues.sellerType || null
+    seller_type: formValues.sellerType || null,
+    sms_consent: formValues.smsConsent ?? false,
+    consent_version: formValues.consentVersion,
+    consent_text: formValues.consentText,
+    page_url: formValues.pageUrl
   };
 
   const res = await fetch(`${API_BASE_URL}/public/sellers`, {

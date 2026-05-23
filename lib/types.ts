@@ -88,6 +88,11 @@ export interface SellerLeadPayload {
   phone: string;
   heardAbout?: string;
   notes?: string;
+  // Phase 5.compliance.a — SMS consent capture (10DLC).
+  smsConsent?: boolean;
+  consentVersion?: string;
+  consentText?: string;
+  pageUrl?: string;
 }
 
 export interface BuyerIntakePayload {

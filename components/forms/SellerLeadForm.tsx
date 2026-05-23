@@ -15,6 +15,13 @@ const timelineOptions = ["Ready Now", "30 Days", "60-90 Days", "Flexible"];
 const financingOptions = ["Free And Clear", "Mortgage In Place", "Creative Finance Friendly", "Behind On Payments", "Other"];
 const sellerTypes: SellerLeadPayload["sellerType"][] = ["property-owner", "real-estate-agent", "wholesaler", "other"];
 
+// Phase 5.compliance.a — SMS consent capture (10DLC). The exact text below
+// is what the seller agrees to and is what we send to the backend for the
+// ConsentAuditLog row (carrier audit defensibility). Single source of truth.
+const CONSENT_VERSION = "2026-05-v1";
+const SMS_CONSENT_TEXT =
+  "By submitting, I agree to receive SMS messages from Zona Desert about my property offer and transaction. Msg & data rates may apply. Msg frequency varies. Reply STOP to opt out, HELP for help.";
+
 interface SellerLeadFormProps {
   defaultSellerType?: SellerLeadPayload["sellerType"];
 }
@@ -25,6 +32,9 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
     useState<SellerLeadPayload["sellerType"]>(defaultSellerType);
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null);
   const [modalType, setModalType] = useState<SellerLeadPayload["sellerType"] | null>(null);
+  // Phase 5.compliance.a — SMS consent required to submit (10DLC).
+  const [smsConsent, setSmsConsent] = useState<boolean>(false);
+  const [consentError, setConsentError] = useState<string | null>(null);
 
   useEffect(() => {
     setSelectedSellerType(defaultSellerType);
@@ -33,6 +43,13 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget; // capture before any async work to avoid pooled event nulls
+    // Belt + suspenders: native `required` on the checkbox stops most cases,
+    // but a JS-side guard surfaces a clearer inline message if anything else.
+    if (!smsConsent) {
+      setConsentError("Please agree to receive SMS messages before submitting.");
+      return;
+    }
+    setConsentError(null);
     const formData = new FormData(form);
     const pageUrl = typeof window !== "undefined" ? window.location.href : undefined;
     const utms = extractUtmParams();
@@ -53,7 +70,11 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       email: getValue(formData, "email"),
       phone: getValue(formData, "phone"),
       heardAbout: getOptionalValue(formData, "heardAbout"),
-      notes: getOptionalValue(formData, "notes")
+      notes: getOptionalValue(formData, "notes"),
+      smsConsent: true,
+      consentVersion: CONSENT_VERSION,
+      consentText: SMS_CONSENT_TEXT,
+      pageUrl
     };
 
     try {
@@ -79,13 +100,17 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
       await createPublicSeller(payload);
       setStatus("success");
       form.reset();
+      setSmsConsent(false);
       setModalType(sellerType);
       setSelectedSellerType(defaultSellerType);
+      // Parallel best-effort consent log via the internal Next.js sink.
+      // The backend now also writes a same-transaction ConsentAuditLog row
+      // from /public/sellers (Phase 5.compliance.a) — this call is kept as
+      // a defense-in-depth audit path; harmless if it fires twice.
       logConsentSubmission({
         form_type: "sell",
-        consent_version: "v1",
-        consent_text:
-          "By submitting this form, you agree to the Terms and Conditions and Privacy Notice, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding your property and related updates. Consent is not a condition of purchase. Reply STOP to opt out.",
+        consent_version: CONSENT_VERSION,
+        consent_text: SMS_CONSENT_TEXT,
         marketing_opt_in: true,
         page_url: pageUrl,
         email: payload.email,
@@ -165,6 +190,34 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
           <FormField label="Notes" name="notes" component="textarea" placeholder="Anything else we should know?" />
         </div>
 
+        <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <label className="flex items-start gap-3 text-sm text-slate-700">
+            <input
+              type="checkbox"
+              name="smsConsent"
+              checked={smsConsent}
+              onChange={(event) => {
+                setSmsConsent(event.target.checked);
+                if (event.target.checked) {
+                  setConsentError(null);
+                }
+              }}
+              required
+              aria-required="true"
+              aria-describedby="sms-consent-text"
+              className="mt-1 h-4 w-4 rounded border-slate-300 text-zona-purple focus:ring-zona-purple"
+            />
+            <span id="sms-consent-text" className="text-xs leading-relaxed text-slate-600">
+              <span className="font-semibold text-slate-800">SMS Consent (required):</span> {SMS_CONSENT_TEXT}
+              {" "}See our{" "}
+              <Link href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</Link>{" "}
+              and{" "}
+              <Link href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</Link>.
+            </span>
+          </label>
+          {consentError && <p className="text-xs font-semibold text-red-600">{consentError}</p>}
+        </div>
+
         <button
           type="submit"
           disabled={status === "loading"}
@@ -174,13 +227,8 @@ export default function SellerLeadForm({ defaultSellerType = "property-owner" }:
         </button>
 
         <div className="space-y-2 text-xs text-slate-500">
-          <p>
-            <span className="font-semibold">By submitting this form</span>, you agree to the{" "}
-            <Link href="/terms" className="text-zona-purple underline underline-offset-2">Terms and Conditions</Link> and{" "}
-            <Link href="/privacy" className="text-zona-purple underline underline-offset-2">Privacy Notice</Link>, and authorize Zona Desert Property Solutions LLC to contact you via call, text, and email, including automated technology, regarding your property and related updates. Consent is not a condition of purchase. Reply STOP to opt out.
-          </p>
           <p className="text-slate-400">
-            Submitting this form does not create a binding agreement. Any offer is subject to verification, inspection, and execution of a written purchase agreement.
+            Submitting this form does not create a binding agreement. Any offer is subject to verification, inspection, and execution of a written purchase agreement. Consent is not a condition of purchase.
           </p>
         </div>
 
