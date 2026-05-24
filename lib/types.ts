@@ -243,3 +243,80 @@ export interface ContactResponse {
   property_address: string;
   token_status: PublicOfferStatus;
 }
+
+// ---------------------------------------------------------------------------
+// Public Listing Detail (Phase 5.5.a)
+//
+// Mirror of backend Pydantic schemas in zona-admin at
+// apps/api/app/schemas/public_listing.py per Scar #24 pre-write recon.
+// COEXISTS with the existing mock-data `ListingCard`/`ListingDetail`
+// types above — those are consumed by lib/api.ts's mock-fallback path
+// for local dev without API_BASE; this namespace targets the real
+// backend Public Listing endpoint only.
+//
+// PublicListingDetail is a REDUCED DTO. Internal-only fields
+// (reserve_price, sold_price, winning_buyer_id, property_profile_id,
+// offer_engine_run_id) are stripped at the backend schema layer per
+// AGENTS.md §10.9 + §10.10 and guarded by a backend privacy regression
+// test (apps/api/tests/api/test_public_listings.py).
+// ---------------------------------------------------------------------------
+
+export interface PublicListingFinancials {
+  estimated_rent: number | null;
+  taxes: number | null;
+  insurance: number | null;
+  hoa: number | null;
+  other_expenses: number | null;
+}
+
+export interface PublicSellerFinanceTerms {
+  down_payment: number | null;
+  interest_rate: number | null;
+  term_months: number | null;
+  notes: string | null;
+}
+
+export interface PublicListingStructure {
+  cash_price: number | null;
+  seller_finance: PublicSellerFinanceTerms | null;
+}
+
+export interface PublicListingCard {
+  id: number;
+  slug: string | null;
+  title: string;
+  status: string;
+  city: string | null;
+  state: string | null;
+  price: number | null;
+  est_rent: number | null;
+  cap_rate: number | null;
+  tags: string[];
+  thumbnail_url: string | null;
+  beds: number | null;
+  baths: number | null;
+  sqft: number | null;
+  lot_size: number | null;
+}
+
+export interface PublicListingDetail extends PublicListingCard {
+  description: string | null;
+  photos: string[];
+  highlights: string[];
+  financials: PublicListingFinancials;
+  structure: PublicListingStructure;
+  // Phase 5.2.api additive public-safe fields.
+  street_address: string | null;
+  starting_bid: number | null;
+  buy_now_price: number | null;
+  exit_strategies: string[];
+  rehab_level: string | null;
+  bidding_closes_at: string | null;
+}
+
+export interface PublicListingCollection {
+  items: PublicListingCard[];
+  total: number;
+  page: number;
+  page_size: number;
+}

@@ -6,6 +6,7 @@ import {
   ContactResponse,
   CounterRequest,
   CounterResponse,
+  PublicListingDetail,
   PublicOfferResponse,
   SellerLeadPayload,
   WholesalerIntakePayload
@@ -402,6 +403,30 @@ export async function contactZona(token: string): Promise<ContactResponse> {
   if (!res.ok) {
     const message = await extractDetail(res, `Failed to request contact: ${res.status}`);
     throw new PublicApiError(message, res.status);
+  }
+  return res.json();
+}
+
+// ---------------------------------------------------------------------------
+// Public Listing Detail (Phase 5.5.a)
+//
+// Fetches GET /public/listings/{slug} from the public marketplace
+// endpoint. Server Component caller — cache: "no-store" because
+// listing status can change between requests (e.g. a published
+// ACTIVE listing transitions to SOLD). 404 returns null so the
+// caller can dispatch to Next.js notFound().
+// ---------------------------------------------------------------------------
+
+export async function fetchPublicListing(
+  slug: string
+): Promise<PublicListingDetail | null> {
+  const res = await fetch(
+    `${API_BASE_URL}/public/listings/${encodeURIComponent(slug)}`,
+    { cache: "no-store" }
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new PublicApiError(`Failed to fetch listing: ${res.status}`, res.status);
   }
   return res.json();
 }
