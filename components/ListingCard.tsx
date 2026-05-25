@@ -6,11 +6,30 @@ interface Props {
   listing: ListingCard;
 }
 
+// Phase 5.5.a — slug-ify state + city for the nested URL segments.
+// Backend listing slug is globally unique; state + city are SEO /
+// readability only (the detail route fetches by slug alone). Slugify
+// is lowercase + non-alphanumeric → "-" + collapse dupes + trim "-".
+function slugifySegment(value: string | null | undefined): string {
+  if (!value) return "unknown";
+  const cleaned = value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return cleaned || "unknown";
+}
+
+export function buildListingDetailHref(listing: ListingCard): string {
+  const stateSlug = slugifySegment(listing.state);
+  const citySlug = slugifySegment(listing.city);
+  return `/listings/${stateSlug}/${citySlug}/${listing.slug}`;
+}
+
 export function ListingCardGrid({ listing }: Props) {
   const displayTitle = listing.address || listing.title;
   return (
     <Link
-      href={`/listings/${listing.slug}`}
+      href={buildListingDetailHref(listing)}
       className="rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg"
     >
       <div className="relative h-48 w-full overflow-hidden rounded-t-2xl">
