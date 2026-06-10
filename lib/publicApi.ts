@@ -9,7 +9,10 @@ import {
   PublicListingDetail,
   PublicOfferResponse,
   SellerLeadPayload,
-  WholesalerIntakePayload
+  WholesalerIntakePayload,
+  ZonaAgentChatErrorKind,
+  ZonaAgentChatMessage,
+  ZonaAgentChatReply
 } from "./types";
 
 export class PublicApiError extends Error {
@@ -429,4 +432,71 @@ export async function fetchPublicListing(
     throw new PublicApiError(`Failed to fetch listing: ${res.status}`, res.status);
   }
   return res.json();
+}
+
+// ---------------------------------------------------------------------------
+// Zona Agent public listing chat (Phase 5.5.c)
+//
+// POST /public/listings/{slug}/chat — stateless, client-held history.
+// Backend caps: ≤12 messages, ≤1,000 chars per message, ≤8,000 total
+// (Pydantic schema layer). Per-IP rate limit 10/min (PR #200 limiter).
+//
+// Error classification: ZonaAgentChatError carries a typed ``kind`` the
+// widget reads to render state-specific copy. 503 → offline, 502 →
+// unavailable, 429 → rate_limited. Backend never returns raw 500;
+// network/parse failures bubble up as kind="network".
+// ---------------------------------------------------------------------------
+
+export class ZonaAgentChatError extends Error {
+  kind: ZonaAgentChatErrorKind;
+  status?: number;
+
+  constructor(kind: ZonaAgentChatErrorKind, message: string, status?: number) {
+    super(message);
+    this.kind = kind;
+    this.status = status;
+  }
+}
+
+function classifyChatStatus(status: number): ZonaAgentChatErrorKind {
+  if (status === 503) return "offline";
+  if (status === 502) return "unavailable";
+  if (status === 429) return "rate_limited";
+  if (status === 404) return "not_found";
+  if (status === 422) return "validation";
+  return "unavailable";
+}
+
+export async function sendListingChat(
+  slug: string,
+  messages: ZonaAgentChatMessage[]
+): Promise<ZonaAgentChatReply> {
+  let res: Response;
+  try {
+    res = await fetch(
+      `${API_BASE_URL}/public/listings/${encodeURIComponent(slug)}/chat`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+        body: JSON.stringify({ messages })
+      }
+    );
+  } catch (err) {
+    throw new ZonaAgentChatError("network", err instanceof Error ? err.message : "network");
+  }
+
+  if (!res.ok) {
+    throw new ZonaAgentChatError(
+      classifyChatStatus(res.status),
+      `chat request failed: ${res.status}`,
+      res.status
+    );
+  }
+
+  try {
+    return (await res.json()) as ZonaAgentChatReply;
+  } catch {
+    throw new ZonaAgentChatError("unavailable", "malformed reply", res.status);
+  }
 }

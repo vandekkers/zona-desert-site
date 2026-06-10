@@ -1,4 +1,5 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -8,6 +9,14 @@ import ListingTabs from "@/components/listings/ListingTabs";
 import OverviewPanel from "@/components/listings/OverviewPanel";
 import { fetchPublicListing } from "@/lib/publicApi";
 import type { PublicListingDetail } from "@/lib/types";
+
+// Phase 5.5.c — Zona Agent chat widget mounts as a client-only island.
+// Dynamic import with ssr:false keeps the SSR HTML free of the chat and
+// blocked by it. Widget failure NEVER breaks the listing page.
+const ZonaAgentChat = dynamic(() => import("@/components/ZonaAgentChat"), {
+  ssr: false
+});
+
 
 // Phase 5.5.b — Public Listing 3-Tab Interface.
 //
@@ -162,6 +171,7 @@ export default async function PublicListingDetailPage({ params }: PageProps) {
         bidBuy={<BidBuyPanel listing={listing} />}
         dealData={<DealDataPanel listing={listing} />}
       />
+      <ZonaAgentChat slug={params.slug} listingLabel={addressLine} />
     </div>
   );
 }
