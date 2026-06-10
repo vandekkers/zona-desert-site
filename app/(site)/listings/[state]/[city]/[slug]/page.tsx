@@ -1,10 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 import { fetchPublicListing } from "@/lib/publicApi";
 import type { PublicListingDetail } from "@/lib/types";
+
+// Phase 5.5.c — Zona Agent chat widget mounts as a client-only island.
+// Dynamic import with ssr:false keeps the SSR HTML free of the chat
+// bundle so marketing surfaces (status, hero, pricing) are never
+// blocked by it. Widget failure NEVER breaks the listing page.
+const ZonaAgentChat = dynamic(() => import("@/components/ZonaAgentChat"), {
+  ssr: false
+});
 
 // Phase 5.5.a — Public Listing Foundation.
 //
@@ -181,6 +190,8 @@ export default async function PublicListingDetailPage({ params }: PageProps) {
           <p className="mt-4 whitespace-pre-line text-slate-600">{listing.description}</p>
         </div>
       ) : null}
+
+      <ZonaAgentChat slug={params.slug} listingLabel={addressLine} />
     </div>
   );
 }

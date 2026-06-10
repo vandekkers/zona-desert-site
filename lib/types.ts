@@ -320,3 +320,43 @@ export interface PublicListingCollection {
   page: number;
   page_size: number;
 }
+
+// ---------------------------------------------------------------------------
+// Zona Agent public listing chat (Phase 5.5.c)
+//
+// Stateless V1 — client holds full conversation history in component
+// state and sends it with each POST to /public/listings/{slug}/chat.
+// snake_case keys mirror the backend schemas at
+// apps/api/app/schemas/public_chat.py per Scar #24 pre-write recon.
+//
+// Caps enforced server-side via Pydantic (≤12 messages, ≤1,000 chars
+// per message, ≤8,000 total). The frontend mirrors the per-message
+// cap to surface the limit early in the textarea UX.
+// ---------------------------------------------------------------------------
+
+export type ZonaAgentChatRole = "user" | "assistant";
+
+export interface ZonaAgentChatMessage {
+  role: ZonaAgentChatRole;
+  content: string;
+}
+
+export interface ZonaAgentChatRequest {
+  messages: ZonaAgentChatMessage[];
+}
+
+export interface ZonaAgentChatReply {
+  reply: string;
+}
+
+// Frontend-only error class returned to the widget so it can render
+// state-specific copy (offline / overloaded / unavailable). The backend
+// surfaces 503/502/429 detail strings verbatim; the widget maps these
+// to friendly messages.
+export type ZonaAgentChatErrorKind =
+  | "offline"        // 503 agent_offline — no provider configured
+  | "unavailable"    // 502 agent_unavailable — upstream provider error
+  | "rate_limited"   // 429 — too many requests for this IP
+  | "not_found"      // 404 — listing not visible
+  | "validation"     // 422 — schema cap violation
+  | "network";       // fetch failed locally
