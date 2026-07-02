@@ -20,16 +20,19 @@ find every trace.
 (JSON files cannot carry code comments; `deals-config.json` and `_SCHEMA.json`
 carry a `$comment` breakaway note inside their data instead of a `//` marker.)
 
-## Restore these two lines in `middleware.ts`
+## Restore the marked lines in `middleware.ts`
 
-Both are marked with `// BREAKAWAY: deals board`:
+All are marked with `// BREAKAWAY: deals board`:
 
 1. **Delete** the `"/deals",` entry from `BYPASS_PREFIXES`.
-2. **Restore** the non-owner rewrite target from `"/deals"` back to
-   `"/coming-soon"`:
+2. **Restore** the non-owner target from `"/deals"` back to `"/coming-soon"`,
+   and the response from `redirect` back to `rewrite` (the wall should not
+   change the URL):
 
 ```ts
 url.pathname = "/coming-soon";
+url.search = "";
+return NextResponse.rewrite(url);
 ```
 
 (`/deal-desk` needs no middleware change — it was never bypassed; deleting

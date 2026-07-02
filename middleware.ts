@@ -33,7 +33,9 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   url.pathname = "/deals"; // BREAKAWAY: deals board — restore to "/coming-soon" at platform launch
   url.search = "";
-  return NextResponse.rewrite(url);
+  // BREAKAWAY: deals board — redirect (not rewrite) so zonadesert.com lands on
+  // /deals in the URL bar; restore to NextResponse.rewrite(url) at platform launch
+  return NextResponse.redirect(url);
 }
 
 export const config = {
