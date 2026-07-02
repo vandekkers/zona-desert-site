@@ -1,0 +1,60 @@
+{
+  "id": "10147-lanark-st",
+  "status": "available",
+  "strategy": ["rental", "flip"],
+  "address": "10147 Lanark St",
+  "city": "Detroit",
+  "state": "MI",
+  "zip": "48224",
+  "price": 58000,
+  "arv": 90000,
+  "estRehab": 8000,
+  "beds": 3,
+  "baths": 1,
+  "sqft": 907,
+  "lotSqft": 4356,
+  "yearBuilt": 1949,
+  "propertyType": "Single Family — frame/siding",
+  "description": "Renovated 3-bed that's live on the MLS at $79,900 right now — take it here at $58,000 OBO, about 27% below list. Updated top to bottom: LVP flooring, fresh paint, updated kitchen, newer appliances, new windows, LP siding, clean basement. Zillow rents it at $1,447/month, so the yield works at ask, and nearby renovated sales run $90k–$130k for the resale exit. Remaining work is punch-out items only, estimated under $8k.",
+  "highlights": [
+    "On the MLS at $79,900 — yours at $58k OBO",
+    "Renovated: LVP, new windows, appliances, LP siding",
+    "Zillow rent est. $1,447/mo — double-digit cap at ask",
+    "Punch-out only — est. rehab $0–8k"
+  ],
+  "photos": [
+    "/deals/10147-lanark-st/1.jpg",
+    "/deals/10147-lanark-st/2.jpg",
+    "/deals/10147-lanark-st/3.jpg",
+    "/deals/10147-lanark-st/4.jpg",
+    "/deals/10147-lanark-st/5.jpg",
+    "/deals/10147-lanark-st/6.jpg",
+    "/deals/10147-lanark-st/7.jpg",
+    "/deals/10147-lanark-st/8.jpg",
+    "/deals/10147-lanark-st/9.jpg",
+    "/deals/10147-lanark-st/10.jpg",
+    "/deals/10147-lanark-st/11.jpg",
+    "/deals/10147-lanark-st/12.jpg",
+    "/deals/10147-lanark-st/13.jpg",
+    "/deals/10147-lanark-st/14.jpg",
+    "/deals/10147-lanark-st/15.jpg"
+  ],
+  "rental": {
+    "monthlyRent": 1447,
+    "taxesAnnual": 1350,
+    "insuranceAnnual": 1080,
+    "section8": true
+  },
+  "terms": {
+    "closeMethod": "Assignment"
+  },
+  "comps": [
+    { "address": "10470 Merlin St", "price": 76500, "note": "Sold — 3/1, 1,011 sqft, nearby renovated support" },
+    { "address": "9366 Sanilac St", "price": 81500, "note": "Sold — 3/1, 901 sqft, near-identical size" },
+    { "address": "6304 Bluehill St", "price": 99000, "note": "Sold — 3/1, 1,088 sqft" },
+    { "address": "10704 Duprey St", "price": 104000, "note": "Sold — 3/1, 845 sqft, renovated smaller home" },
+    { "address": "10593 Marne St", "price": 109000, "note": "Sold — 3/1, 995 sqft, renovated upside support" },
+    { "address": "10761 Worden St", "price": 130000, "note": "Sold — 3/2, 1,078 sqft, upper-end renovated" }
+  ],
+  "featured": true
+}
