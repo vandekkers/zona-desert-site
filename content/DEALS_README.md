@@ -21,8 +21,8 @@ about 2 minutes later. No terminal, no deploys, no asking anyone.
    - `status`: `"available"`, `"pending"`, or `"sold"`
    - `price`, `arv`, `estRehab`, `estRent`: plain numbers — `129000`, not
      `"$129,000"`
-   - `closeBy` and `featured` are optional — delete those lines if you don't
-     need them.
+   - `closeBy`, `featured`, `propertyType`, and `occupancy` are optional —
+     delete those lines if you don't need them.
 5. Scroll down, write a short commit message ("add lakepointe deal"), click
    **Commit changes**.
 6. Wait ~2 minutes. Refresh zonadesert.com/deals. Done.

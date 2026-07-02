@@ -31,6 +31,8 @@ export interface Deal {
   photos: string[];
   closeBy?: string;
   featured?: boolean;
+  propertyType?: string;
+  occupancy?: string;
 }
 
 export interface DealsConfig {
@@ -92,4 +94,31 @@ export function formatCloseBy(closeBy: string): string {
   const date = new Date(`${closeBy}T00:00:00`);
   if (Number.isNaN(date.getTime())) return closeBy;
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+// Investor math for the deal panel. Shares are % of ARV so the
+// price/rehab/spread bar always sums to ~100 when the spread is positive.
+export function dealMath(deal: Deal) {
+  const allIn = deal.price + deal.estRehab;
+  const spread = deal.arv - allIn;
+  const shareOfArv = (part: number) =>
+    deal.arv > 0 ? Math.max(0, Math.min(100, Math.round((part / deal.arv) * 100))) : 0;
+  return {
+    allIn,
+    spread,
+    priceShare: shareOfArv(deal.price),
+    rehabShare: shareOfArv(deal.estRehab),
+    spreadShare: shareOfArv(spread),
+    pricePerSqft: deal.sqft > 0 ? Math.round(deal.price / deal.sqft) : null,
+    arvPerSqft: deal.sqft > 0 ? Math.round(deal.arv / deal.sqft) : null,
+    // Monthly rent as % of price — the "1% rule" number, one decimal.
+    rentToPrice: deal.price > 0 ? Math.round((deal.estRent / deal.price) * 1000) / 10 : null
+  };
+}
+
+export function googleMapsHref(deal: Deal): string {
+  const query = encodeURIComponent(
+    `${deal.address}, ${deal.city}, ${deal.state} ${deal.zip}`
+  );
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }

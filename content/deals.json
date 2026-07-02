@@ -21,7 +21,9 @@
       "highlights": "list of short bullet strings",
       "photos": "list of image paths — either /deals/<id>/1.jpg (uploaded to public/deals/<id>/) or full https:// URLs",
       "closeBy": "OPTIONAL — close-by date as YYYY-MM-DD, shown as urgency on available deals",
-      "featured": "OPTIONAL — true to pin the deal to the front of the board"
+      "featured": "OPTIONAL — true to pin the deal to the front of the board",
+      "propertyType": "OPTIONAL — e.g. Single Family, Duplex, shown in Property facts",
+      "occupancy": "OPTIONAL — e.g. Vacant, or Tenant occupied — $950/mo, shown in Property facts"
     }
   },
   {
@@ -54,7 +56,9 @@
       "https://picsum.photos/seed/zona-three-mile-4/1200/800"
     ],
     "closeBy": "2026-07-15",
-    "featured": true
+    "featured": true,
+    "propertyType": "Single Family",
+    "occupancy": "Vacant at close"
   },
   {
     "id": "8830-piedmont-st",
@@ -83,7 +87,9 @@
       "https://picsum.photos/seed/zona-piedmont-1/1200/800",
       "https://picsum.photos/seed/zona-piedmont-2/1200/800",
       "https://picsum.photos/seed/zona-piedmont-3/1200/800"
-    ]
+    ],
+    "propertyType": "Single Family",
+    "occupancy": "Vacant"
   },
   {
     "id": "6244-audubon-rd",
@@ -111,6 +117,8 @@
       "https://picsum.photos/seed/zona-audubon-1/1200/800",
       "https://picsum.photos/seed/zona-audubon-2/1200/800",
       "https://picsum.photos/seed/zona-audubon-3/1200/800"
-    ]
+    ],
+    "propertyType": "Single Family — Colonial",
+    "occupancy": "Vacant"
   }
 ]
