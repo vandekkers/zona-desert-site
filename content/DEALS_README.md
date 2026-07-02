@@ -12,13 +12,36 @@ ways to do it, easiest first.
    as always, 90-day cookie).
 2. Go to **`zonadesert.com/deal-desk`** — visitors without your login just get
    bounced to the public board, so this page is yours alone.
-3. Fill in the form. Cap rate, NOI, cash flow, and spread compute live as you
-   type, so you can sanity-check the deal before it ships.
-4. Click **Commit deal on GitHub** — GitHub opens with the file name and
-   contents already filled in. Scroll down, click **Commit changes**. Done.
+3. **Add:** fill in the form. Cap rate, NOI, cash flow, and spread compute
+   live as you type. Hit **Publish to the board**.
+4. **Edit / delete:** the "On the board now" list at the top shows every live
+   deal — **Edit** loads it into the form (change anything, hit *Save
+   changes*), **Delete** removes it after a confirmation. Changing the address
+   while editing creates a NEW listing (the desk warns you); delete the old
+   one from the list.
 5. If you used local photo paths, click **Upload photos** and drag the images
    into `public/deals/<deal-id>/` (name them `1.jpg`, `2.jpg`, … — the first
    one is the cover).
+
+Everything the desk publishes is a real GitHub commit under your account, so
+the repo history stays the audit log.
+
+### One-time setup for one-click publishing (GITHUB_DEALS_TOKEN)
+
+The desk commits through GitHub's API using a token. Until the token exists,
+the desk falls back to "open GitHub with everything pre-filled" buttons.
+
+1. Go to **github.com → Settings → Developer settings → Personal access
+   tokens → Fine-grained tokens → Generate new token**.
+2. Name: `zona-deal-desk`. Expiration: 1 year (calendar a renewal).
+3. **Repository access:** Only select repositories → `zona-desert-site`.
+4. **Permissions → Repository permissions → Contents: Read and write.**
+   Nothing else.
+5. Generate, copy the token (starts with `github_pat_`).
+6. In **Vercel → zona-desert-site → Settings → Environment Variables**, add
+   `GITHUB_DEALS_TOKEN` = the token, **Production** scope. Save.
+7. Redeploy (Deployments → ⋯ → Redeploy). The desk's publish button goes
+   live on the next load.
 
 ## Way 2 — Ask an AI to write the deal
 
