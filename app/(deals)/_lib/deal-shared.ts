@@ -300,6 +300,43 @@ export function financedScenario(deal: Deal, rental: RentalMath): FinancedScenar
   };
 }
 
+// Lightweight mirror of content/deals/_SCHEMA.json. Used by the deal-desk
+// form for instant feedback AND by the /api/deals-admin gateway as the
+// server-side contract before anything is committed to GitHub.
+export function validateDeal(candidate: unknown): string[] {
+  const errors: string[] = [];
+  if (typeof candidate !== "object" || candidate === null) return ["Not a JSON object."];
+  const d = candidate as Record<string, unknown>;
+  const requireString = (key: string) => {
+    if (typeof d[key] !== "string" || (d[key] as string).length === 0)
+      errors.push(`"${key}" is required (text).`);
+  };
+  const requireNumber = (key: string, min = 0) => {
+    if (typeof d[key] !== "number" || (d[key] as number) < min)
+      errors.push(`"${key}" is required (number ≥ ${min}).`);
+  };
+  ["id", "address", "city", "state", "zip", "description"].forEach(requireString);
+  ["arv", "estRehab", "beds", "baths", "lotSqft", "yearBuilt"].forEach((k) => requireNumber(k));
+  ["price", "sqft"].forEach((k) => {
+    if (typeof d[k] !== "number" || (d[k] as number) <= 0)
+      errors.push(`"${k}" is required (number > 0).`);
+  });
+  if (typeof d.id === "string" && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(d.id))
+    errors.push('"id" must be lowercase letters/numbers with hyphens (e.g. 123-main-st).');
+  if (typeof d.state === "string" && !/^[A-Z]{2}$/.test(d.state))
+    errors.push('"state" must be a 2-letter code like MI.');
+  if (typeof d.zip === "string" && !/^\d{5}$/.test(d.zip)) errors.push('"zip" must be 5 digits.');
+  if (!["available", "pending", "sold"].includes(d.status as string))
+    errors.push('"status" must be available, pending, or sold.');
+  if (!Array.isArray(d.photos) || d.photos.length === 0)
+    errors.push('"photos" needs at least one path or URL.');
+  if (!Array.isArray(d.highlights)) errors.push('"highlights" must be a list of strings.');
+  const rental = d.rental as Record<string, unknown> | undefined;
+  if (rental && (typeof rental.monthlyRent !== "number" || rental.monthlyRent <= 0))
+    errors.push('"rental.monthlyRent" must be a number > 0 when a rental block is present.');
+  return errors;
+}
+
 export function googleMapsHref(deal: Deal): string {
   const query = encodeURIComponent(
     `${deal.address}, ${deal.city}, ${deal.state} ${deal.zip}`

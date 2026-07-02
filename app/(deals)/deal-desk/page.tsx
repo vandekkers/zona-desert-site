@@ -7,7 +7,7 @@
 
 import type { Metadata } from "next";
 import { DealDeskForm } from "../_components/DealDeskForm";
-import { getDealsConfig, sora } from "../_lib/deals";
+import { getDeals, getDealsConfig, sora } from "../_lib/deals";
 
 export const metadata: Metadata = {
   title: "Deal Desk | Zona Desert",
@@ -16,6 +16,10 @@ export const metadata: Metadata = {
 
 export default function DealDeskPage() {
   const config = getDealsConfig();
+  const deals = getDeals();
+  // Baked in at build time — setting the env var + redeploying flips it,
+  // and every gateway commit triggers a rebuild anyway.
+  const gatewayReady = Boolean(process.env.GITHUB_DEALS_TOKEN);
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
       <p className="text-xs uppercase tracking-[0.35em] text-zona-purple-mid">Owner tools</p>
@@ -28,7 +32,7 @@ export default function DealDeskPage() {
         Photos upload separately to <code className="rounded bg-white px-1.5 py-0.5 text-xs">public/deals/&lt;id&gt;/</code>.
       </p>
       <div className="mt-8">
-        <DealDeskForm config={config} />
+        <DealDeskForm config={config} deals={deals} gatewayReady={gatewayReady} />
       </div>
     </div>
   );

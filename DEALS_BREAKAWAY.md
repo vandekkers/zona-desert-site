@@ -10,7 +10,7 @@ find every trace.
 
 | Path | What it is |
 |---|---|
-| `app/(deals)/` | The whole route group: board, deal pages, `/deal-desk`, layout, components, math lib |
+| `app/(deals)/` | The whole route group: board, deal pages, `/deal-desk`, the `/api/deals-admin` GitHub gateway, layout, components, math lib |
 | `content/deals/` | One JSON file per deal, plus `_SCHEMA.json` and `_TEMPLATE.json` |
 | `content/deals-config.json` | Phone / email / headline / repo config |
 | `content/DEALS_README.md` | The founder's plain-English instructions |
@@ -19,6 +19,12 @@ find every trace.
 
 (JSON files cannot carry code comments; `deals-config.json` and `_SCHEMA.json`
 carry a `$comment` breakaway note inside their data instead of a `//` marker.)
+
+## Also remove from Vercel
+
+- The `GITHUB_DEALS_TOKEN` environment variable (Production scope) — the
+  deal-desk publishing gateway's GitHub credential. Revoke the fine-grained
+  PAT itself at github.com → Settings → Developer settings while you're at it.
 
 ## Restore the marked lines in `middleware.ts`
 
