@@ -1,0 +1,116 @@
+[
+  {
+    "$comment": "SCHEMA CHEAT-SHEET — this first block is documentation only; the site ignores it. To add a deal, copy a real deal below, paste it after this block, and edit the values. See content/DEALS_README.md for step-by-step instructions. BREAKAWAY: deals board — remove at platform launch.",
+    "$fields": {
+      "id": "unique-url-slug, lowercase with hyphens, usually the street address (becomes zonadesert.com/deals/<id>)",
+      "status": "one of: available | pending | sold",
+      "address": "street address, e.g. 4123 Three Mile Dr",
+      "city": "city name",
+      "state": "2-letter state code",
+      "zip": "5-digit zip as a string",
+      "price": "asking price in dollars, plain number, no commas or $",
+      "arv": "after-repair value in dollars",
+      "estRehab": "estimated rehab budget in dollars",
+      "estRent": "estimated monthly rent in dollars",
+      "beds": "number of bedrooms",
+      "baths": "number of bathrooms (1.5 is fine)",
+      "sqft": "interior square footage",
+      "lotSqft": "lot size in square feet",
+      "yearBuilt": "4-digit year",
+      "description": "2-4 sentences selling the deal",
+      "highlights": "list of short bullet strings",
+      "photos": "list of image paths — either /deals/<id>/1.jpg (uploaded to public/deals/<id>/) or full https:// URLs",
+      "closeBy": "OPTIONAL — close-by date as YYYY-MM-DD, shown as urgency on available deals",
+      "featured": "OPTIONAL — true to pin the deal to the front of the board"
+    }
+  },
+  {
+    "id": "4123-three-mile-dr",
+    "status": "available",
+    "address": "4123 Three Mile Dr",
+    "city": "Detroit",
+    "state": "MI",
+    "zip": "48224",
+    "price": 129000,
+    "arv": 185000,
+    "estRehab": 25000,
+    "estRent": 1650,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 1480,
+    "lotSqft": 4800,
+    "yearBuilt": 1949,
+    "description": "Solid brick bungalow in East English Village, one of Detroit's steadiest rental pockets. Roof and furnace are newer; the rehab is cosmetic — paint, floors, kitchen refresh. Rents in this corridor support $1,600+ with strong tenant demand year round.",
+    "highlights": [
+      "Brick construction, newer roof and furnace",
+      "Cosmetic rehab only — no structural work",
+      "East English Village rental comps at $1,600–$1,750/mo",
+      "Clean title, vacant at close"
+    ],
+    "photos": [
+      "https://picsum.photos/seed/zona-three-mile-1/1200/800",
+      "https://picsum.photos/seed/zona-three-mile-2/1200/800",
+      "https://picsum.photos/seed/zona-three-mile-3/1200/800",
+      "https://picsum.photos/seed/zona-three-mile-4/1200/800"
+    ],
+    "closeBy": "2026-07-15",
+    "featured": true
+  },
+  {
+    "id": "8830-piedmont-st",
+    "status": "pending",
+    "address": "8830 Piedmont St",
+    "city": "Detroit",
+    "state": "MI",
+    "zip": "48228",
+    "price": 72500,
+    "arv": 118000,
+    "estRehab": 32000,
+    "estRent": 1250,
+    "beds": 3,
+    "baths": 1,
+    "sqft": 1102,
+    "lotSqft": 4356,
+    "yearBuilt": 1942,
+    "description": "Warrendale three-bed priced under comps for a fast close. Full interior rehab, but the bones are right — dry basement, straight roofline, original hardwoods under carpet. Section 8 demand in this zip keeps vacancy near zero.",
+    "highlights": [
+      "Under-market entry for the block",
+      "Original hardwoods throughout",
+      "Strong Section 8 demand in 48228",
+      "Dry basement, straight roofline"
+    ],
+    "photos": [
+      "https://picsum.photos/seed/zona-piedmont-1/1200/800",
+      "https://picsum.photos/seed/zona-piedmont-2/1200/800",
+      "https://picsum.photos/seed/zona-piedmont-3/1200/800"
+    ]
+  },
+  {
+    "id": "6244-audubon-rd",
+    "status": "sold",
+    "address": "6244 Audubon Rd",
+    "city": "Detroit",
+    "state": "MI",
+    "zip": "48224",
+    "price": 95000,
+    "arv": 160000,
+    "estRehab": 40000,
+    "estRent": 1450,
+    "beds": 4,
+    "baths": 2,
+    "sqft": 1720,
+    "lotSqft": 5200,
+    "yearBuilt": 1937,
+    "description": "Four-bed colonial that moved in under a week. Buyer is running a full gut to the studs with an ARV north of $160k on recent comps. Kept here as a track-record example of the kind of inventory that comes through this board.",
+    "highlights": [
+      "Sold in 6 days",
+      "Four beds — rare for the block",
+      "ARV backed by two active flips on the street"
+    ],
+    "photos": [
+      "https://picsum.photos/seed/zona-audubon-1/1200/800",
+      "https://picsum.photos/seed/zona-audubon-2/1200/800",
+      "https://picsum.photos/seed/zona-audubon-3/1200/800"
+    ]
+  }
+]

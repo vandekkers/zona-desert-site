@@ -5,6 +5,7 @@ const BYPASS_PREFIXES = [
   "/__owner-access",
   "/api/__owner-access",
   "/coming-soon",
+  "/deals", // BREAKAWAY: deals board — remove at platform launch
   "/_next",
   "/favicon.ico",
   "/robots.txt",
@@ -30,7 +31,7 @@ export async function middleware(req: NextRequest) {
   if (ok) return NextResponse.next();
 
   const url = req.nextUrl.clone();
-  url.pathname = "/coming-soon";
+  url.pathname = "/deals"; // BREAKAWAY: deals board — restore to "/coming-soon" at platform launch
   url.search = "";
   return NextResponse.rewrite(url);
 }
