@@ -1,0 +1,46 @@
+{
+  "id": "123-example-st",
+  "status": "available",
+  "strategy": ["rental", "flip"],
+  "address": "123 Example St",
+  "city": "Detroit",
+  "state": "MI",
+  "zip": "48224",
+  "price": 100000,
+  "arv": 150000,
+  "estRehab": 20000,
+  "beds": 3,
+  "baths": 1,
+  "sqft": 1200,
+  "lotSqft": 4500,
+  "yearBuilt": 1950,
+  "propertyType": "Single Family",
+  "occupancy": "Vacant",
+  "description": "Two to four sentences selling the deal. What is it, why the numbers work, why it will move fast.",
+  "highlights": [
+    "Short punchy bullet",
+    "Another one",
+    "Three or four is plenty"
+  ],
+  "photos": [
+    "/deals/123-example-st/1.jpg",
+    "/deals/123-example-st/2.jpg"
+  ],
+  "rental": {
+    "monthlyRent": 1300,
+    "taxesAnnual": 1800,
+    "insuranceAnnual": 1200,
+    "hoaMonthly": 0,
+    "section8": false
+  },
+  "terms": {
+    "emd": 2000,
+    "closeMethod": "Assignment",
+    "access": "By appointment"
+  },
+  "comps": [
+    { "address": "130 Example St", "price": 152000, "note": "Sold Jun 2026" }
+  ],
+  "closeBy": "2026-08-01",
+  "featured": false
+}

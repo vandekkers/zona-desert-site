@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Machine-readable contract for deal files at content/deals/<id>.json. AI agents and tools: generate one file per deal that validates against this schema, name it <id>.json, and open a PR (or hand the JSON to the owner, who commits it via /deal-desk). Files starting with _ are ignored by the site. BREAKAWAY: deals board — remove at platform launch.",
+  "title": "Zona Desert deal",
+  "type": "object",
+  "required": [
+    "id", "status", "address", "city", "state", "zip", "price", "arv",
+    "estRehab", "beds", "baths", "sqft", "lotSqft", "yearBuilt",
+    "description", "highlights", "photos"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "URL slug, must match the filename (<id>.json). Usually the street address, lowercase, hyphenated."
+    },
+    "status": { "enum": ["available", "pending", "sold"] },
+    "strategy": {
+      "type": "array",
+      "items": { "enum": ["rental", "flip"] },
+      "minItems": 1,
+      "description": "Which analyses to show. Defaults to rental+flip when a rental block exists, else flip."
+    },
+    "address": { "type": "string", "minLength": 1 },
+    "city": { "type": "string", "minLength": 1 },
+    "state": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "zip": { "type": "string", "pattern": "^[0-9]{5}$" },
+    "price": { "type": "number", "exclusiveMinimum": 0, "description": "Asking price, USD" },
+    "arv": { "type": "number", "minimum": 0, "description": "After-repair value, USD" },
+    "estRehab": { "type": "number", "minimum": 0, "description": "Estimated rehab budget, USD" },
+    "beds": { "type": "number", "minimum": 0 },
+    "baths": { "type": "number", "minimum": 0 },
+    "sqft": { "type": "number", "exclusiveMinimum": 0 },
+    "lotSqft": { "type": "number", "minimum": 0 },
+    "yearBuilt": { "type": "integer", "minimum": 1800, "maximum": 2100 },
+    "propertyType": { "type": "string", "description": "e.g. Single Family, Duplex, Fourplex" },
+    "occupancy": { "type": "string", "description": "e.g. Vacant, Tenant occupied — $950/mo" },
+    "description": { "type": "string", "minLength": 1, "description": "2–4 sentences selling the deal" },
+    "highlights": { "type": "array", "items": { "type": "string" }, "description": "Short bullet strings" },
+    "photos": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Site-relative paths (/deals/<id>/1.jpg, uploaded to public/deals/<id>/) or full https URLs"
+    },
+    "rental": {
+      "type": "object",
+      "required": ["monthlyRent"],
+      "additionalProperties": false,
+      "description": "Provide for rent-ready deals; enables NOI / cap rate / cash-flow analysis.",
+      "properties": {
+        "monthlyRent": { "type": "number", "exclusiveMinimum": 0, "description": "Market or actual rent, USD/month" },
+        "otherIncomeMonthly": { "type": "number", "minimum": 0 },
+        "taxesAnnual": { "type": "number", "minimum": 0 },
+        "insuranceAnnual": { "type": "number", "minimum": 0 },
+        "hoaMonthly": { "type": "number", "minimum": 0 },
+        "utilitiesMonthly": { "type": "number", "minimum": 0, "description": "Owner-paid utilities" },
+        "managementPct": { "type": "number", "minimum": 0, "maximum": 100, "description": "Default 10 if omitted (shown as est.)" },
+        "maintenancePct": { "type": "number", "minimum": 0, "maximum": 100, "description": "Default 10 if omitted (shown as est.)" },
+        "vacancyPct": { "type": "number", "minimum": 0, "maximum": 100, "description": "Default 8 if omitted (shown as est.)" },
+        "currentlyRented": { "type": "boolean" },
+        "leaseEnds": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "section8": { "type": "boolean" }
+      }
+    },
+    "financing": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Overrides for the financed-scenario assumptions (defaults: 25% down, 7.5%, 30yr, 2% closing).",
+      "properties": {
+        "downPct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "ratePct": { "type": "number", "minimum": 0, "maximum": 30 },
+        "termYears": { "type": "integer", "minimum": 1, "maximum": 40 },
+        "closingPct": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "terms": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Wholesale deal terms shown in the Deal terms card.",
+      "properties": {
+        "emd": { "type": "number", "minimum": 0, "description": "Earnest money deposit, USD" },
+        "closeMethod": { "type": "string", "description": "e.g. Assignment, Double close" },
+        "access": { "type": "string", "description": "e.g. Lockbox — text for code, By appointment" },
+        "titleCompany": { "type": "string" }
+      }
+    },
+    "comps": {
+      "type": "array",
+      "description": "Recent comparable sales backing the ARV.",
+      "items": {
+        "type": "object",
+        "required": ["address", "price"],
+        "additionalProperties": false,
+        "properties": {
+          "address": { "type": "string" },
+          "price": { "type": "number", "exclusiveMinimum": 0 },
+          "note": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "closeBy": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "featured": { "type": "boolean" }
+  }
+}

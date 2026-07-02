@@ -1,68 +1,64 @@
-# How to add, edit, or remove a deal (no code needed)
+# How deals get on the board (no code needed)
 
 <!-- BREAKAWAY: deals board — remove at platform launch -->
 
-Everything on zonadesert.com/deals comes from **one file**: `content/deals.json`.
-You edit it on the GitHub website, hit commit, and the live site updates itself
-about 2 minutes later. No terminal, no deploys, no asking anyone.
+Every deal on zonadesert.com/deals is **one JSON file** in `content/deals/`.
+Add a file → commit → the site rebuilds itself in ~2 minutes. There are three
+ways to do it, easiest first.
 
-## Add a deal
+## Way 1 — The deal desk (recommended)
 
-1. Go to the repo on github.com → open `content/deals.json` → click the
-   **pencil icon** (Edit this file).
-2. The first block in the file (the one full of `$comment` and `$fields`) is a
-   cheat-sheet, not a deal. **Leave it alone.**
-3. Copy an existing deal — everything from its opening `{` to its closing `}` —
-   and paste it right below the cheat-sheet block. Add a comma after the `}` you
-   pasted if another deal follows it.
-4. Edit the values:
-   - `id`: lowercase street address with hyphens, like `"1409-lakepointe-st"`.
-     This becomes the link: zonadesert.com/deals/1409-lakepointe-st
-   - `status`: `"available"`, `"pending"`, or `"sold"`
-   - `price`, `arv`, `estRehab`, `estRent`: plain numbers — `129000`, not
-     `"$129,000"`
-   - `closeBy`, `featured`, `propertyType`, and `occupancy` are optional —
-     delete those lines if you don't need them.
-5. Scroll down, write a short commit message ("add lakepointe deal"), click
-   **Commit changes**.
-6. Wait ~2 minutes. Refresh zonadesert.com/deals. Done.
+1. Make sure you're logged in at `zonadesert.com/__owner-access` (same login
+   as always, 90-day cookie).
+2. Go to **`zonadesert.com/deal-desk`** — visitors without your login just get
+   bounced to the public board, so this page is yours alone.
+3. Fill in the form. Cap rate, NOI, cash flow, and spread compute live as you
+   type, so you can sanity-check the deal before it ships.
+4. Click **Commit deal on GitHub** — GitHub opens with the file name and
+   contents already filled in. Scroll down, click **Commit changes**. Done.
+5. If you used local photo paths, click **Upload photos** and drag the images
+   into `public/deals/<deal-id>/` (name them `1.jpg`, `2.jpg`, … — the first
+   one is the cover).
 
-**Careful with commas.** Every deal is separated by a comma, but there is NO
-comma after the last one. If the site doesn't update, 9 times out of 10 it's a
-missing or extra comma — GitHub's editor shows a red squiggle where the
-problem is.
+## Way 2 — Ask an AI to write the deal
 
-## Add photos
+The schema at **`content/deals/_SCHEMA.json`** is a machine-readable contract.
+Paste it into any AI assistant (Claude, ChatGPT, whatever) along with your raw
+deal notes — MLS sheet, text thread, voice-memo transcript — and say:
 
-Two options:
+> "Produce one JSON object that validates against this schema for the
+> following property: …"
 
-**Option A — paste image links (fastest).** If the photos are already online
-somewhere, paste the full `https://...` links straight into the deal's
-`"photos"` list.
+Then paste the result into the **Paste JSON (AI)** tab on `/deal-desk`. It
+validates instantly, shows you the computed numbers, and gives you the same
+one-click GitHub commit. AI agents with repo access can go further and open a
+pull request adding `content/deals/<id>.json` directly — the file format is
+the whole integration surface.
 
-**Option B — upload to the repo.**
-1. On github.com, navigate to `public/deals/` → **Add file → Upload files**.
-2. Before uploading, GitHub asks for the folder: type the deal id as a new
-   folder name (e.g. `public/deals/1409-lakepointe-st/`).
-3. Name the files `1.jpg`, `2.jpg`, `3.jpg`... (first one is the cover photo).
-4. Commit, then reference them in the JSON like
-   `"/deals/1409-lakepointe-st/1.jpg"`.
+## Way 3 — Edit on GitHub by hand
 
-Phone photos are fine. Keep them under ~2 MB each so the page stays fast.
+Copy `content/deals/_TEMPLATE.json`, rename it to your deal id
+(e.g. `1409-lakepointe-st.json`), edit the values, commit. Since every deal
+is its own file, you can't break other deals with a stray comma anymore.
 
-## Mark a deal pending or sold
+## Field cheat-sheet
 
-Edit the deal's `"status"` line. Pending and sold deals automatically drop
-below available ones; sold deals grey out. Keeping a couple of sold deals on
-the board is good marketing — it shows the pipeline is real.
+- `id` — lowercase-hyphenated street address; becomes the link
+  (`zonadesert.com/deals/<id>`) and must match the filename.
+- `status` — `available`, `pending`, or `sold`. Pending/sold sort below
+  available; sold greys out. Keeping a few solds visible is good marketing.
+- `strategy` — `["rental"]`, `["flip"]`, or both; controls which analysis
+  tabs buyers see.
+- `rental` block — give it `monthlyRent` plus whatever real numbers you have
+  (`taxesAnnual`, `insuranceAnnual`, `hoaMonthly`…). Anything you leave out
+  is estimated with standard assumptions (8% vacancy, 10% management,
+  10% maintenance) and labeled "est." on the page.
+- `terms` block — EMD, close method, access. Wholesalers and agents look for
+  these first.
+- `comps` — a couple of recent sales backing your ARV. Optional but powerful.
+- Money fields are plain numbers: `129000`, never `"$129,000"`.
 
-## Change your phone number, email, or the headline
+## Changing your contact info or the headline
 
-Edit `content/deals-config.json` the same way. Phone format: `"+1"` plus the
-10 digits, like `"+13135550142"`. The Call/Text/Email buttons on every deal
-use these.
-
-## Remove a deal completely
-
-Delete its whole block from `{` to `}` (and fix the commas). Or just flip it
-to `"sold"` and keep the track record visible.
+Edit `content/deals-config.json` — phone (`+1` plus 10 digits), email, board
+headline/subhead. The Call/Text/Email/offer buttons on every deal use these.

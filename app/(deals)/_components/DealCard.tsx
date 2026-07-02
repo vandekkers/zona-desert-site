@@ -1,13 +1,43 @@
 // BREAKAWAY: deals board — remove at platform launch
 
 import Link from "next/link";
-import type { Deal } from "../_lib/deals";
-import { formatCloseBy, money } from "../_lib/deals";
+import type { Deal } from "../_lib/deal-shared";
+import {
+  dealStrategies,
+  flipMath,
+  formatCloseBy,
+  money,
+  moneyCompact,
+  rentalMath
+} from "../_lib/deal-shared";
 import { StatusBadge } from "./StatusBadge";
+
+// One headline metric per strategy so a pro can triage from the card alone.
+function metricLine(deal: Deal): string[] {
+  const strategies = dealStrategies(deal);
+  const parts: string[] = [];
+  if (strategies.includes("rental")) {
+    const rm = rentalMath(deal);
+    if (rm?.capRatePct !== null && rm?.capRatePct !== undefined) {
+      parts.push(`${rm.capRatePct}% cap`);
+    }
+    if (rm) parts.push(`${moneyCompact(rm.cashFlowMonthly)}/mo CF`);
+  }
+  if (strategies.includes("flip")) {
+    const fm = flipMath(deal);
+    parts.push(`${moneyCompact(fm.spread)} spread`);
+    if (fm.pctOfArv !== null && strategies.length === 1) {
+      parts.push(`${fm.pctOfArv}% of ARV`);
+    }
+  }
+  return parts.slice(0, 3);
+}
 
 export function DealCard({ deal }: { deal: Deal }) {
   const sold = deal.status === "sold";
   const cover = deal.photos[0];
+  const strategies = dealStrategies(deal);
+  const metrics = metricLine(deal);
 
   return (
     <Link
@@ -42,6 +72,16 @@ export function DealCard({ deal }: { deal: Deal }) {
             </span>
           )}
         </div>
+        <div className="absolute bottom-3 left-3 flex gap-2">
+          {strategies.map((strategy) => (
+            <span
+              key={strategy}
+              className="rounded-full bg-zona-navy/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white"
+            >
+              {strategy === "rental" ? "Rental" : "Flip"}
+            </span>
+          ))}
+        </div>
       </div>
       <div className="space-y-2 p-5">
         <p className="text-2xl font-bold text-zona-navy">{money(deal.price)}</p>
@@ -54,6 +94,9 @@ export function DealCard({ deal }: { deal: Deal }) {
         <p className="text-sm text-slate-600">
           {deal.beds} bd · {deal.baths} ba · {deal.sqft.toLocaleString("en-US")} sqft
         </p>
+        {metrics.length > 0 && (
+          <p className="text-sm font-semibold text-zona-purple-deep">{metrics.join(" · ")}</p>
+        )}
         {deal.closeBy && deal.status === "available" && (
           <p className="text-xs font-semibold text-zona-orange">
             Close by {formatCloseBy(deal.closeBy)}

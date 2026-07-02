@@ -37,7 +37,7 @@ export function ContactButtons({ deal, config, layout }: Props) {
     <div className={`flex gap-2 ${layout === "stack" ? "flex-col" : "flex-row"}`}>
       <a
         href={links.call}
-        className={`${base} bg-zona-purple-deep text-white hover:bg-zona-purple-mid`}
+        className={`${base} border border-zona-purple-deep text-zona-purple-deep hover:bg-zona-purple-deep/10`}
       >
         Call
       </a>
