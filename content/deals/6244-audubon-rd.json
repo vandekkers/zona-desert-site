@@ -1,0 +1,30 @@
+{
+  "id": "6244-audubon-rd",
+  "status": "sold",
+  "strategy": ["flip"],
+  "address": "6244 Audubon Rd",
+  "city": "Detroit",
+  "state": "MI",
+  "zip": "48224",
+  "price": 95000,
+  "arv": 160000,
+  "estRehab": 40000,
+  "beds": 4,
+  "baths": 2,
+  "sqft": 1720,
+  "lotSqft": 5200,
+  "yearBuilt": 1937,
+  "propertyType": "Single Family — Colonial",
+  "occupancy": "Vacant",
+  "description": "Four-bed colonial that moved in under a week. Buyer is running a full gut to the studs with an ARV north of $160k on recent comps. Kept here as a track-record example of the kind of inventory that comes through this board.",
+  "highlights": [
+    "Sold in 6 days",
+    "Four beds — rare for the block",
+    "ARV backed by two active flips on the street"
+  ],
+  "photos": [
+    "https://picsum.photos/seed/zona-audubon-1/1200/800",
+    "https://picsum.photos/seed/zona-audubon-2/1200/800",
+    "https://picsum.photos/seed/zona-audubon-3/1200/800"
+  ]
+}
