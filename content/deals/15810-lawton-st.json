@@ -1,0 +1,52 @@
+{
+  "id": "15810-lawton-st",
+  "status": "available",
+  "strategy": ["flip"],
+  "address": "15810 Lawton St",
+  "city": "Detroit",
+  "state": "MI",
+  "zip": "48238",
+  "price": 35000,
+  "arv": 125000,
+  "estRehab": 45000,
+  "beds": 3,
+  "baths": 1.5,
+  "sqft": 1176,
+  "lotSqft": 3049,
+  "yearBuilt": 1923,
+  "propertyType": "Single Family — 2-story frame",
+  "description": "As-is 3-bed, 1.5-bath two-story in Dexter-Fenkell, minutes from University of Detroit Mercy. The structure money is already spent — roof is about two years old and the electrical panel is new — so the ~$45k scope is straight cosmetics: kitchen, bath, ceilings/drywall, paint, refinish the hardwoods, furnace. All-in lands near $80k against a $125k ARV backed by three renovated sales within 0.3 miles, topped by the $140k Parkside flip 700 feet up the street. Clear title on a warranty deed, seller pays all back water, taxes ($2,448/yr), and blight at close — projected net around $32,500 after selling and holding costs.",
+  "highlights": [
+    "Roof ~2 yrs old + new electrical panel — structure money spent",
+    "All-in ~$80k — just 64% of ARV",
+    "Parkside comp sold $140k, 700 ft away",
+    "Clear title — seller pays all back charges at close"
+  ],
+  "photos": [
+    "/deals/15810-lawton-st/1.jpg",
+    "/deals/15810-lawton-st/2.jpg",
+    "/deals/15810-lawton-st/3.jpg",
+    "/deals/15810-lawton-st/4.jpg",
+    "/deals/15810-lawton-st/5.jpg",
+    "/deals/15810-lawton-st/6.jpg",
+    "/deals/15810-lawton-st/7.jpg",
+    "/deals/15810-lawton-st/8.jpg",
+    "/deals/15810-lawton-st/9.jpg",
+    "/deals/15810-lawton-st/10.jpg",
+    "/deals/15810-lawton-st/11.jpg",
+    "/deals/15810-lawton-st/12.jpg",
+    "/deals/15810-lawton-st/13.jpg",
+    "/deals/15810-lawton-st/14.jpg",
+    "/deals/15810-lawton-st/15.jpg",
+    "/deals/15810-lawton-st/16.jpg",
+    "/deals/15810-lawton-st/17.jpg"
+  ],
+  "terms": {
+    "closeMethod": "Assignment — proof of funds required"
+  },
+  "comps": [
+    { "address": "15904 Parkside St", "price": 140000, "note": "Sold 05/2026 — 3/1.5, 1,204 sqft, $116/sqft, same frame build, 700 ft away" },
+    { "address": "15476 Fairfield St", "price": 115000, "note": "Sold 06/2026 — 3/2, 1,059 sqft, $109/sqft" },
+    { "address": "15834 Baylis St", "price": 111500, "note": "Sold 08/2025 — 3/1, 1,065 sqft, $105/sqft" }
+  ]
+}
