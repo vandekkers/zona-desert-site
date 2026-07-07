@@ -18,8 +18,20 @@ interface Props {
 export function DealGallery({ photos, alt }: Props) {
   const [mobileIndex, setMobileIndex] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
+  // Portrait photos (common for phone walkthroughs) are letterboxed on a
+  // dark backdrop instead of being center-cropped into landscape frames —
+  // cropping made them look "zoomed in". Detected per image at load time.
+  const [portraits, setPortraits] = useState<Record<number, boolean>>({});
 
   const count = photos.length;
+
+  const markPortrait = (index: number, el: HTMLImageElement | null) => {
+    if (!el || !el.complete || el.naturalWidth === 0) return;
+    const isPortrait = el.naturalHeight > el.naturalWidth;
+    setPortraits((prev) => (prev[index] === isPortrait ? prev : { ...prev, [index]: isPortrait }));
+  };
+
+  const fitClass = (index: number) => (portraits[index] ? "object-contain" : "object-cover");
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -66,7 +78,7 @@ export function DealGallery({ photos, alt }: Props) {
           type="button"
           onClick={() => setLightbox(0)}
           aria-label={`Open photo 1 of ${count}`}
-          className={`group relative block h-full w-full ${
+          className={`group relative block h-full w-full bg-zona-navy ${
             sideSlots > 0 ? "col-span-2 row-span-2" : ""
           }`}
         >
@@ -74,7 +86,9 @@ export function DealGallery({ photos, alt }: Props) {
           <img
             src={photos[0]}
             alt={alt}
-            className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:brightness-95"
+            ref={(el) => markPortrait(0, el)}
+            onLoad={(e) => markPortrait(0, e.currentTarget)}
+            className={`absolute inset-0 h-full w-full transition duration-300 group-hover:brightness-95 ${fitClass(0)}`}
           />
         </button>
         {mosaicSide.map((photo, i) => {
@@ -113,13 +127,15 @@ export function DealGallery({ photos, alt }: Props) {
           type="button"
           onClick={() => setLightbox(mobileIndex)}
           aria-label={`Open photo ${mobileIndex + 1} of ${count}`}
-          className="relative block w-full overflow-hidden rounded-3xl bg-slate-100"
+          className="relative block w-full overflow-hidden rounded-3xl bg-zona-navy"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={photos[Math.min(mobileIndex, count - 1)]}
             alt={alt}
-            className="aspect-[16/10] w-full object-cover"
+            ref={(el) => markPortrait(Math.min(mobileIndex, count - 1), el)}
+            onLoad={(e) => markPortrait(Math.min(mobileIndex, count - 1), e.currentTarget)}
+            className={`aspect-[16/10] w-full ${fitClass(Math.min(mobileIndex, count - 1))}`}
           />
           <span className="absolute bottom-3 right-3 rounded-full bg-zona-navy/70 px-3 py-1 text-xs font-semibold text-white">
             {Math.min(mobileIndex, count - 1) + 1} / {count}
