@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Zona Desert",
+  description: "How Zona Desert Property Solutions collects, uses, and protects your information.",
   robots: { index: true, follow: true }
 };
 

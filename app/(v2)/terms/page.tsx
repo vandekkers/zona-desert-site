@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Zona Desert",
+  description: "The terms and conditions governing use of Zona Desert Property Solutions services and platforms.",
   robots: { index: true, follow: true }
 };
 

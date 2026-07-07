@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | Zona Desert",
+  description: "How Zona Desert Property Solutions uses cookies and similar technologies on this site.",
   robots: { index: true, follow: true }
 };
 
