@@ -1,31 +1,36 @@
 import type { Metadata } from "next";
-import { Sora, Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { CookieConsentProvider } from "@/components/CookieConsentProvider";
 
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["600"],
+// Sora is self-hosted per the Zona Desert design system (brand hierarchy
+// only); Inter carries all functional UI. Same CSS variable names the
+// whole codebase already references.
+const sora = localFont({
+  src: "./fonts/Sora-VariableFont_wght.ttf",
   variable: "--font-sora",
-  display: "swap"
+  display: "swap",
+  weight: "100 800"
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
   display: "swap"
 });
 
 export const metadata: Metadata = {
-  title: "Zona Desert | Investor-First Real Estate Marketplace",
-  description: "Curated private-market deals for buyers, investors, and creative finance pros nationwide."
+  title: "Zona Desert | Off-Market Real Estate For Serious Investors",
+  description:
+    "Private-market deals, underwritten and vetted. Sellers get a real cash offer in 24 hours. Investors get off-market inventory with the numbers already run."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
-      <body className="bg-gradient-to-b from-white to-slate-50">
+      <body className="font-body antialiased">
         <CookieConsentProvider>
           {children}
         </CookieConsentProvider>
