@@ -51,8 +51,8 @@ export default function LandingPage() {
   return (
     <div>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-[1200px] px-5 pb-10 pt-8 lg:px-8 lg:pt-12">
-        <div className="grid items-stretch gap-8 lg:grid-cols-[1.05fr_1fr]">
+      <section className="mx-auto w-full max-w-[1360px] px-5 pb-10 pt-8 lg:px-10 lg:pt-14">
+        <div className="grid items-stretch gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
           <div className="flex flex-col justify-center py-2 lg:py-6">
             <Eyebrow>Underwritten · On &amp; Off Market · Nationwide</Eyebrow>
             <h1 className="mb-5 font-display text-[42px] font-semibold leading-[1.04] tracking-[-0.025em] text-zona-navy sm:text-[54px] lg:text-[64px] lg:leading-[1.02]">
@@ -62,7 +62,7 @@ export default function LandingPage() {
               </em>{" "}
               For The Serious Investor.
             </h1>
-            <p className="mb-7 max-w-[480px] text-[17px] leading-relaxed text-slate-600 lg:text-lg">
+            <p className="mb-8 max-w-[560px] text-[17px] leading-relaxed text-slate-600 lg:text-lg">
               Vetted deals with the numbers already run — most off-market, all underwritten.
               Sellers get a real cash offer in 24 hours.
             </p>
@@ -121,7 +121,7 @@ export default function LandingPage() {
           {/* Hero photo — a portal to the board, not a listing */}
           <Link
             href="/deals"
-            className="group relative isolate block min-h-[420px] overflow-hidden rounded-[20px] bg-zona-navy shadow-hero-photo lg:min-h-[540px]"
+            className="group relative isolate block min-h-[440px] overflow-hidden rounded-[20px] bg-zona-navy shadow-hero-photo lg:min-h-[600px]"
           >
             <div
               className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
