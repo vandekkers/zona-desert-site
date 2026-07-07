@@ -344,6 +344,23 @@ export function googleMapsHref(deal: Deal): string {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+// Real board stats for the marketing site — computed from live deal data,
+// never hardcoded. Credibility over vanity numbers.
+export interface BoardStats {
+  live: number;
+  totalArv: number;
+  markets: number;
+}
+
+export function boardStats(deals: Deal[]): BoardStats {
+  const available = deals.filter((deal) => deal.status === "available");
+  return {
+    live: available.length,
+    totalArv: available.reduce((sum, deal) => sum + deal.arv, 0),
+    markets: new Set(deals.map((deal) => `${deal.city}, ${deal.state}`)).size
+  };
+}
+
 // Brand fonts are loaded once in the root layout as CSS variables; the
 // repo idiom applies them via inline style.
 export const sora = {

@@ -59,7 +59,7 @@ export function DownloadPhotosButton({ photos, dealId }: Props) {
       type="button"
       onClick={downloadAll}
       disabled={state === "working" || photos.length === 0}
-      className="flex w-full items-center justify-center rounded-full border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60"
+      className="flex w-full items-center justify-center rounded-[10px] border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60"
     >
       {label}
     </button>

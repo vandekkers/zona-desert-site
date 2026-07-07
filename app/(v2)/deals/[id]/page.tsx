@@ -36,7 +36,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { id: string } }): Metadata {
   const deal = getDeal(params.id);
   if (!deal) {
-    return { title: "Deal | Zona Deals", robots: { index: false, follow: false } };
+    return { title: "Deal | Zona Desert" };
   }
   const rm = rentalMath(deal);
   const fm = flipMath(deal);
@@ -50,11 +50,10 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   const title = `${deal.address}, ${deal.city} ${deal.state} — ${money(deal.price)}`;
   const description = `${deal.beds} bd · ${deal.baths} ba · ${deal.sqft.toLocaleString(
     "en-US"
-  )} sqft · ${numbers} · Off-market from Zona Desert Property Solutions.`;
+  )} sqft · ${numbers} · From Zona Desert Property Solutions.`;
   return {
-    title: `${title} | Zona Deals`,
+    title: `${title} | Zona Desert`,
     description,
-    robots: { index: false, follow: false },
     // Open Graph so texted/shared links unfurl with the photo + numbers.
     openGraph: {
       title,
@@ -411,7 +410,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
               {factChips.map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-slate-700"
+                  className="rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-card"
                 >
                   {chip}
                 </span>
@@ -555,7 +554,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
                 href={googleMapsHref(deal)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-fit items-center rounded-full border border-zona-purple-mid px-4 py-2 text-sm font-semibold text-zona-purple-mid transition hover:bg-zona-purple-mid/10"
+                className="inline-flex w-fit items-center rounded-[10px] border-2 border-zona-purple-mid px-4 py-2 text-sm font-semibold text-zona-purple-mid transition hover:bg-zona-purple-mid/10"
               >
                 Open in Google Maps →
               </a>
@@ -613,7 +612,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
           </div>
           <a
             href={`tel:${config.phone}`}
-            className="flex flex-1 items-center justify-center rounded-full border border-zona-purple-mid px-4 py-3 text-sm font-semibold text-zona-purple-mid"
+            className="flex flex-1 items-center justify-center rounded-[10px] border-2 border-zona-purple-mid px-4 py-3 text-sm font-semibold text-zona-purple-mid"
           >
             Call
           </a>
@@ -621,7 +620,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
             href={`sms:${config.phone}?&body=${encodeURIComponent(
               `Hi — I'm interested in ${deal.address}, ${deal.city}. Is it still available?`
             )}`}
-            className="flex flex-1 items-center justify-center rounded-full border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700"
+            className="flex flex-1 items-center justify-center rounded-[10px] border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700"
           >
             Text
           </a>

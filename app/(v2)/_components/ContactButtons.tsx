@@ -32,7 +32,7 @@ interface Props {
 export function ContactButtons({ deal, config, layout }: Props) {
   const links = contactLinks(deal, config);
   const base =
-    "flex flex-1 items-center justify-center rounded-full px-4 py-3 text-sm font-semibold transition";
+    "flex flex-1 items-center justify-center rounded-[10px] px-4 py-3 text-sm font-semibold transition";
   return (
     <div className={`flex gap-2 ${layout === "stack" ? "flex-col" : "flex-row"}`}>
       <a
