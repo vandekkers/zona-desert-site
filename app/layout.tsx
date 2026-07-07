@@ -22,9 +22,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zonadesert.com"),
   title: "Zona Desert | Off-Market Real Estate For Serious Investors",
   description:
-    "Private-market deals, underwritten and vetted. Sellers get a real cash offer in 24 hours. Investors get off-market inventory with the numbers already run."
+    "Private-market deals, underwritten and vetted. Sellers get a real cash offer in 24 hours. Investors get off-market inventory with the numbers already run.",
+  openGraph: {
+    siteName: "Zona Desert",
+    images: [{ url: "/brand-v2/hero-warm.jpg" }]
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
