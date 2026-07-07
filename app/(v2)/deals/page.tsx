@@ -1,52 +1,67 @@
-// BREAKAWAY: deals board — remove at platform launch
+// SITE V2 — the deal board, now a first-class page of the public site.
+// Fed by content/deals/*.json at build time; managed from /deal-desk.
 
 import type { Metadata } from "next";
-import { DealCard } from "../_components/DealCard";
-import { getDeals, getDealsConfig, sora } from "../_lib/deals";
+import { ListingCardV2 } from "../_components/ListingCardV2";
+import { PageIntro } from "../_components/PageIntro";
+import { boardStats, getDeals, getDealsConfig, moneyCompact } from "../_lib/deals";
 
 export const metadata: Metadata = {
-  title: "Off-Market Deals | Zona Desert Property Solutions",
+  title: "Live Deals | Zona Desert",
   description:
-    "Under-contract off-market properties from Zona Desert Property Solutions.",
-  robots: { index: false, follow: false }
+    "Off-market investment properties with full underwriting — cap rate, NOI, rehab budget, spread, comps, and terms on every listing."
 };
 
 export default function DealsBoardPage() {
   const deals = getDeals();
   const config = getDealsConfig();
-  const availableCount = deals.filter((deal) => deal.status === "available").length;
+  const stats = boardStats(deals);
 
   return (
-    <div>
-      <section className="bg-zona-navy text-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-14 md:py-20">
-          <p className="text-xs uppercase tracking-[0.35em] text-zona-amber md:text-sm">
-            Zona Desert Property Solutions
-          </p>
-          <h1 className="max-w-3xl text-3xl leading-tight md:text-5xl" style={sora}>
-            {config.headline}
-          </h1>
-          <p className="max-w-2xl text-base text-slate-300 md:text-lg">{config.subhead}</p>
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold">
-            <span className="h-2 w-2 rounded-full bg-zona-amber" aria-hidden />
-            {availableCount === 1 ? "1 deal available now" : `${availableCount} deals available now`}
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:py-14">
-        {deals.length === 0 ? (
-          <p className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
-            Nothing on the board right now — check back soon.
-          </p>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {deals.map((deal) => (
-              <DealCard key={deal.id} deal={deal} />
-            ))}
+    <div className="mx-auto w-full max-w-[1200px] px-5 py-14 lg:px-8 lg:py-20">
+      <div className="mb-10 flex flex-col gap-6 lg:mb-12 lg:flex-row lg:items-end lg:justify-between">
+        <PageIntro
+          eyebrow="The Board"
+          title={config.headline}
+          lede={config.subhead}
+        />
+        {stats.live > 0 && (
+          <div className="flex shrink-0 gap-8 border-t border-zona-navy/[0.08] pt-4 lg:border-none lg:pt-0">
+            <div>
+              <p className="font-display text-[26px] font-semibold leading-none text-zona-navy">
+                {stats.live}
+              </p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                Available Now
+              </p>
+            </div>
+            <div>
+              <p className="font-display text-[26px] font-semibold leading-none text-zona-navy">
+                {moneyCompact(stats.totalArv)}
+              </p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                Combined ARV
+              </p>
+            </div>
           </div>
         )}
-      </section>
+      </div>
+
+      {deals.length === 0 ? (
+        <p className="rounded-2xl border border-dashed border-zona-navy/20 bg-white p-10 text-center text-slate-500">
+          Nothing on the board right now — check back soon, or{" "}
+          <a href="/buyers" className="font-semibold text-zona-purple-mid">
+            join the buyers list
+          </a>{" "}
+          to hear first.
+        </p>
+      ) : (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {deals.map((deal) => (
+            <ListingCardV2 key={deal.id} deal={deal} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

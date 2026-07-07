@@ -58,7 +58,7 @@ export function OfferComposer({ deal, config }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full items-center justify-center rounded-full bg-zona-purple-deep px-4 py-3 text-sm font-semibold text-white transition hover:bg-zona-purple-mid"
+        className="flex w-full items-center justify-center rounded-[10px] bg-zona-purple-deep px-4 py-3 text-sm font-semibold text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover"
       >
         Submit an offer
       </button>
@@ -181,7 +181,7 @@ export function OfferComposer({ deal, config }: Props) {
                 <a
                   href={ready ? mailtoHref : undefined}
                   aria-disabled={!ready}
-                  className={`flex items-center justify-center rounded-full px-4 py-3 text-sm font-semibold transition ${
+                  className={`flex items-center justify-center rounded-[10px] px-4 py-3 text-sm font-semibold transition ${
                     ready
                       ? "bg-zona-purple-deep text-white hover:bg-zona-purple-mid"
                       : "cursor-not-allowed bg-slate-200 text-slate-400"
@@ -192,7 +192,7 @@ export function OfferComposer({ deal, config }: Props) {
                 <a
                   href={ready ? smsHref : undefined}
                   aria-disabled={!ready}
-                  className={`flex items-center justify-center rounded-full border px-4 py-3 text-sm font-semibold transition ${
+                  className={`flex items-center justify-center rounded-[10px] border px-4 py-3 text-sm font-semibold transition ${
                     ready
                       ? "border-zona-purple-mid text-zona-purple-mid hover:bg-zona-purple-mid/10"
                       : "cursor-not-allowed border-slate-200 text-slate-400"
