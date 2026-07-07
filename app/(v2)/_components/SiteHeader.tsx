@@ -1,8 +1,8 @@
 "use client";
 
-// SITE V2 — public site shell header. Sticky sand surface with blur,
-// horizontal brand lockup, live-deal pill (real count, passed from the
-// server layout), and the primary "Get An Offer" CTA.
+// SITE V2 — public site shell header. Three balanced zones: brand lockup
+// hard left, divided nav centered, live pill + the primary deal-board CTA
+// hard right. The site's first job is routing buyers to the board.
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,7 +11,9 @@ import { useState } from "react";
 const NAV_LINKS = [
   { href: "/deals", label: "Deals" },
   { href: "/sell", label: "Sell" },
-  { href: "/buyers", label: "For Investors" },
+  { href: "/buyers", label: "Buyers" },
+  { href: "/agents", label: "Agents" },
+  { href: "/wholesalers", label: "Wholesalers" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/about", label: "About" }
 ];
@@ -22,51 +24,55 @@ export function SiteHeader({ liveDeals }: { liveDeals: number }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zona-purple-deep/10 bg-zona-sand/85 backdrop-blur-[10px]">
-      <div className="mx-auto flex w-full max-w-[1200px] items-center gap-6 px-5 py-3.5 lg:gap-9 lg:px-8">
-        <Link href="/" aria-label="Zona Desert home" onClick={() => setOpen(false)}>
+      <div className="mx-auto grid w-full max-w-[1320px] grid-cols-[auto_1fr_auto] items-center gap-4 px-5 py-3.5 lg:px-10">
+        <Link href="/" aria-label="Zona Desert home" onClick={() => setOpen(false)} className="justify-self-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand-v2/logo-horizontal.png"
             alt="Zona Desert"
-            className="h-[30px] w-auto"
+            className="h-[32px] w-auto"
           />
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
-          {NAV_LINKS.map((link) => {
+        <nav className="hidden items-center justify-center justify-self-center xl:flex">
+          {NAV_LINKS.map((link, index) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors ${
-                  active ? "text-zona-purple-deep" : "text-slate-600 hover:text-zona-purple-deep"
-                }`}
-              >
-                {link.label}
-              </Link>
+              <span key={link.href} className="flex items-center">
+                {index > 0 && <span className="mx-3.5 h-3.5 w-px bg-zona-navy/10" aria-hidden />}
+                <Link
+                  href={link.href}
+                  className={`text-[15px] transition-colors ${
+                    active
+                      ? "font-semibold text-zona-purple-deep"
+                      : "font-medium text-zona-navy/70 hover:text-zona-purple-deep"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </span>
             );
           })}
         </nav>
 
-        <div className="ml-auto hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3.5 justify-self-end xl:flex">
           {liveDeals > 0 && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-green-800/10 px-2.5 py-1 text-[11.5px] font-semibold text-green-800">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500 shadow-[0_0_0_3px_rgba(34,197,94,0.25)]" />
-              {liveDeals} Live {liveDeals === 1 ? "Deal" : "Deals"}
+              {liveDeals} Live
             </span>
           )}
           <Link
-            href="/sell"
-            className="rounded-lg bg-zona-purple-deep px-[18px] py-[9px] text-sm font-medium text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover"
+            href="/deals"
+            className="rounded-lg bg-zona-purple-deep px-8 py-[10px] text-[15px] font-semibold text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover"
           >
-            Get An Offer
+            View Live Deals
           </Link>
         </div>
 
         <button
           type="button"
-          className="ml-auto rounded-lg p-2 text-zona-navy lg:hidden"
+          className="justify-self-end rounded-lg p-2 text-zona-navy xl:hidden"
           aria-label="Toggle navigation"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -82,24 +88,24 @@ export function SiteHeader({ liveDeals }: { liveDeals: number }) {
       </div>
 
       {open && (
-        <div className="border-t border-zona-purple-deep/10 bg-zona-sand px-5 py-4 lg:hidden">
+        <div className="border-t border-zona-purple-deep/10 bg-zona-sand px-5 py-4 xl:hidden">
           <div className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-[15px] font-medium text-slate-700"
+                className="text-[15px] font-medium text-zona-navy/80"
               >
                 {link.label}
               </Link>
             ))}
             <Link
-              href="/sell"
+              href="/deals"
               onClick={() => setOpen(false)}
-              className="rounded-lg bg-zona-purple-deep px-[18px] py-2.5 text-center text-sm font-medium text-white shadow-btn"
+              className="rounded-lg bg-zona-purple-deep px-8 py-2.5 text-center text-[15px] font-semibold text-white shadow-btn"
             >
-              Get An Offer
+              View Live Deals
             </Link>
           </div>
         </div>

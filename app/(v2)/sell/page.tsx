@@ -88,11 +88,15 @@ export default function SellPage() {
             ))}
           </ul>
           <p className="mt-8 text-[14px] text-slate-500">
-            Prefer to talk it through first? Call or text{" "}
+            Prefer to talk it through first?{" "}
             <a href={`tel:${contact.phone}`} className="font-semibold text-zona-purple-mid">
-              {contact.phone.replace("+1", "(").replace(/(\d{3})(\d{3})(\d{4})/, "$1) $2-$3")}
-            </a>
-            .
+              Call
+            </a>{" "}
+            or{" "}
+            <a href={`sms:${contact.phone}`} className="font-semibold text-zona-purple-mid">
+              text
+            </a>{" "}
+            us directly.
           </p>
         </div>
         <IntakeForm config={CONFIG} contact={contact} />

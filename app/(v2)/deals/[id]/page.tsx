@@ -50,7 +50,7 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   const title = `${deal.address}, ${deal.city} ${deal.state} — ${money(deal.price)}`;
   const description = `${deal.beds} bd · ${deal.baths} ba · ${deal.sqft.toLocaleString(
     "en-US"
-  )} sqft · ${numbers} · Off-market from Zona Desert Property Solutions.`;
+  )} sqft · ${numbers} · From Zona Desert Property Solutions.`;
   return {
     title: `${title} | Zona Desert`,
     description,

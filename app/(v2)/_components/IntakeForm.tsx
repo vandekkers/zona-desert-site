@@ -90,6 +90,25 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
       ...extractUtmParams()
     });
 
+    // Lead persistence — fire-and-forget so the lead exists even if the
+    // visitor never hits send in their mail app. Forwarded/stored by the
+    // self-contained /api/lead-log route.
+    const allFields: Record<string, string> = {};
+    for (const field of config.fields) {
+      const value = fieldValue(field);
+      if (value) allFields[field.name] = value;
+    }
+    fetch("/api/lead-log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        form_type: config.formType,
+        fields: allFields,
+        page_url: typeof window !== "undefined" ? window.location.href : undefined,
+        ...extractUtmParams()
+      })
+    }).catch(() => {});
+
     const lines = [
       config.title.toUpperCase(),
       "",

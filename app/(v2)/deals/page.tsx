@@ -9,7 +9,7 @@ import { boardStats, getDeals, getDealsConfig, moneyCompact } from "../_lib/deal
 export const metadata: Metadata = {
   title: "Live Deals | Zona Desert",
   description:
-    "Off-market investment properties with full underwriting — cap rate, NOI, rehab budget, spread, comps, and terms on every listing."
+    "Investment properties with full underwriting — cap rate, NOI, rehab budget, spread, comps, and terms on every listing. Most off-market, some on-market."
 };
 
 export default function DealsBoardPage() {

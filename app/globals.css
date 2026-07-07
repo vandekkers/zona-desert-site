@@ -27,3 +27,17 @@ main {
 body:has([data-zona-gate="1"]) > .fixed.bottom-0.left-0.right-0.z-40 {
   display: none !important;
 }
+
+/* SITE V2 — global interaction polish */
+::selection {
+  background: rgba(112, 37, 182, 0.16);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #7025B6;
+  outline-offset: 2px;
+}

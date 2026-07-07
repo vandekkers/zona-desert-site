@@ -6,6 +6,7 @@
 // visitor's own mail or messages app.
 
 import { useState } from "react";
+import { extractUtmParams } from "@/lib/consentLog";
 import type { DealsConfig } from "../_lib/deal-shared";
 
 const CONDITIONS = ["Needs Work", "Fair", "Good", "Excellent"] as const;
@@ -49,6 +50,29 @@ export function SellQuickStart({ config }: { config: DealsConfig }) {
     `Cash offer request — ${address.trim() || "my property"}`
   )}&body=${encodeURIComponent(body)}`;
   const smsHref = `sms:${config.phone}?&body=${encodeURIComponent(body)}`;
+
+  // Persist the lead via the self-contained /api/lead-log pipe as soon as
+  // the visitor completes the last step, independent of mail/SMS sending.
+  function logLead() {
+    fetch("/api/lead-log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        form_type: "quick-start",
+        fields: {
+          address: address.trim(),
+          beds: beds.trim(),
+          baths: baths.trim(),
+          sqft: sqft.trim(),
+          condition,
+          name: name.trim(),
+          phone: phone.trim()
+        },
+        page_url: typeof window !== "undefined" ? window.location.href : undefined,
+        ...extractUtmParams()
+      })
+    }).catch(() => {});
+  }
 
   return (
     <div className="rounded-[20px] border border-zona-navy/[0.06] bg-white p-6 shadow-card-float sm:p-7">
@@ -182,6 +206,7 @@ export function SellQuickStart({ config }: { config: DealsConfig }) {
             <a
               href={ready ? mailtoHref : undefined}
               aria-disabled={!ready}
+              onClick={ready ? logLead : undefined}
               className={`flex flex-1 items-center justify-center rounded-[10px] px-7 py-3.5 text-[15.5px] font-semibold transition ${
                 ready
                   ? "bg-zona-purple-deep text-white shadow-btn hover:bg-[#3D1570] hover:shadow-btn-hover"
@@ -194,6 +219,7 @@ export function SellQuickStart({ config }: { config: DealsConfig }) {
           <a
             href={ready ? smsHref : undefined}
             aria-disabled={!ready}
+            onClick={ready ? logLead : undefined}
             className={`block text-center text-[13px] font-medium ${
               ready ? "text-zona-purple-mid hover:text-zona-purple-deep" : "text-slate-400"
             }`}

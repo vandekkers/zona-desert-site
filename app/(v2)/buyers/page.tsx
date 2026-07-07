@@ -8,9 +8,9 @@ import { PageIntro } from "../_components/PageIntro";
 import { getDeals, getDealsConfig } from "../_lib/deals";
 
 export const metadata: Metadata = {
-  title: "For Investors | Zona Desert",
+  title: "For Buyers | Zona Desert",
   description:
-    "Join the buyers list. Vetted off-market deals with the underwriting already on the page — cap rate, NOI, rehab, comps, and terms."
+    "Join the buyers list. Vetted deals — most off-market — with the underwriting already on the page: cap rate, NOI, rehab, comps, and terms."
 };
 
 const CONFIG: IntakeConfig = {
@@ -71,7 +71,7 @@ export default function BuyersPage() {
       <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
         <div>
           <PageIntro
-            eyebrow="For Investors"
+            eyebrow="For Buyers"
             title="Deals With The Numbers Already Run."
             lede="Every listing on the board carries full underwriting — cap rate, NOI waterfall, rehab budget, spread, sold comps, and deal terms. Join the list and get first look before deals go wide."
           />
