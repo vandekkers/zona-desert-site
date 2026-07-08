@@ -592,7 +592,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
               </div>
             )}
             <div className="space-y-2">
-              <OfferComposer deal={deal} config={config} />
+              <OfferComposer deal={deal} />
               <ContactButtons deal={deal} config={config} layout="row" />
             </div>
             <div className="space-y-2 border-t border-slate-200 pt-4">
@@ -611,7 +611,7 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 p-3 backdrop-blur lg:hidden">
         <div className="mx-auto flex w-full max-w-6xl gap-2">
           <div className="flex-1">
-            <OfferComposer deal={deal} config={config} />
+            <OfferComposer deal={deal} />
           </div>
           <a
             href={`tel:${config.phone}`}

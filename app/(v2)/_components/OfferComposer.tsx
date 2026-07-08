@@ -7,15 +7,10 @@
 // side). No mail or SMS app is ever opened.
 
 import { useState } from "react";
-import type { Deal, DealsConfig } from "../_lib/deal-shared";
+import type { Deal } from "../_lib/deal-shared";
 import { money } from "../_lib/deal-shared";
 
-interface Props {
-  deal: Deal;
-  config: DealsConfig;
-}
-
-export function OfferComposer({ deal, config }: Props) {
+export function OfferComposer({ deal }: { deal: Deal }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
