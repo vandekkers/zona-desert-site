@@ -29,6 +29,8 @@ const CheckIcon = (
   </span>
 );
 
+const AUDIENCES = ["LANDLORDS", "FLIPPERS", "BRRRR INVESTORS", "SELLERS", "AGENTS", "WHOLESALERS"];
+
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <div
@@ -130,21 +132,34 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* AUDIENCE STRIP */}
+      {/* AUDIENCE STRIP — static centered on desktop, slow marquee on mobile */}
       <div className="border-y border-zona-navy/[0.06] bg-white">
-        <div className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-center gap-y-3 px-5 py-5 lg:px-8">
-          {["LANDLORDS", "FLIPPERS", "BRRRR INVESTORS", "SELLERS", "AGENTS", "WHOLESALERS"].map(
-            (audience, index) => (
-              <span key={audience} className="flex items-center">
-                {index > 0 && (
-                  <span className="mx-4 h-4 w-px bg-zona-navy/15 lg:mx-6" aria-hidden />
-                )}
+        {/* Desktop: centered single row with dividers */}
+        <div className="mx-auto hidden w-full max-w-[1200px] flex-wrap items-center justify-center gap-y-3 px-5 py-5 lg:flex lg:px-8">
+          {AUDIENCES.map((audience, index) => (
+            <span key={audience} className="flex items-center">
+              {index > 0 && <span className="mx-6 h-4 w-px bg-zona-navy/15" aria-hidden />}
+              <span className="whitespace-nowrap font-display text-base font-semibold tracking-[0.01em] text-zona-navy/40">
+                {audience}
+              </span>
+            </span>
+          ))}
+        </div>
+        {/* Mobile: continuous marquee, edge-faded, reduced-motion aware */}
+        <div
+          className="overflow-hidden py-5 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)] lg:hidden"
+          aria-hidden
+        >
+          <div className="zd-marquee flex w-max items-center">
+            {[...AUDIENCES, ...AUDIENCES].map((audience, index) => (
+              <span key={`${audience}-${index}`} className="flex items-center">
+                <span className="mx-5 h-4 w-px bg-zona-navy/15" />
                 <span className="whitespace-nowrap font-display text-base font-semibold tracking-[0.01em] text-zona-navy/40">
                   {audience}
                 </span>
               </span>
-            )
-          )}
+            ))}
+          </div>
         </div>
       </div>
 

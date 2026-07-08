@@ -41,3 +41,15 @@ textarea:focus-visible {
   outline: 2px solid #7025B6;
   outline-offset: 2px;
 }
+
+/* SITE V2 — mobile audience marquee */
+@keyframes zd-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.zd-marquee {
+  animation: zd-marquee 22s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .zd-marquee { animation: none; }
+}
