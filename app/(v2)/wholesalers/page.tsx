@@ -43,13 +43,13 @@ export default function WholesalersPage() {
           <PageIntro
             eyebrow="For Wholesalers"
             title="Bring The Contract. We Bring The Buyers."
-            lede="Straight JV splits, honest underwriting, and a buyer network that actually closes. If you're on the acquisitions side, we'll hand you dispo-ready inventory instead."
+            lede="Straight splits, honest numbers, buyers that close."
           />
           <ul className="mt-8 space-y-3 text-[15px] text-zona-navy">
             {[
-              ["Clean splits", "Terms agreed up front, in writing, before anything moves."],
-              ["Real buyers", "Investors who see full underwriting close faster and retrade less."],
-              ["Speed", "We tell you within a day whether your numbers work for our list."]
+              ["Clean splits", "Terms in writing before anything moves."],
+              ["Real buyers", "Vetted investors who close and don't retrade."],
+              ["Speed", "Yes or no within a day."]
             ].map(([title, body]) => (
               <li key={title} className="flex items-start gap-3">
                 <span className="mt-0.5 grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-green-800/10 text-green-800">

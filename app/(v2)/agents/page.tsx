@@ -47,13 +47,13 @@ export default function AgentsPage() {
           <PageIntro
             eyebrow="For Agents"
             title="Your Hardest Listings Are Our Favorite Deals."
-            lede="Expireds, heavy rehabs, creative-finance sellers, pocket listings — the inventory that doesn't fit the retail box fits ours. Partner with Zona and monetize the deals you'd otherwise walk away from."
+            lede="The listings that don't fit retail fit us. Monetize the deals you'd walk away from."
           />
           <ul className="mt-8 space-y-3 text-[15px] text-zona-navy">
             {[
-              ["Keep your commission", "Referral structures that respect your role in the deal."],
-              ["Fast answers", "We underwrite quickly and tell you straight whether it works."],
-              ["Protect your seller", "Off-market disposition without the price-cut spiral."]
+              ["Keep your commission", "Referral structures that respect your role."],
+              ["Fast answers", "Underwritten in a day, answered straight."],
+              ["Protect your seller", "Off-market exit, no price-cut spiral."]
             ].map(([title, body]) => (
               <li key={title} className="flex items-start gap-3">
                 <span className="mt-0.5 grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-green-800/10 text-green-800">

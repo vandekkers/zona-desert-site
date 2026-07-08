@@ -67,13 +67,13 @@ export default function SellPage() {
           <PageIntro
             eyebrow="For Sellers"
             title="A Real Cash Offer In 24 Hours."
-            lede="Tell us about the property once. A person — not an algorithm — reviews it, runs the numbers, and comes back with a real offer. No obligation, no credit pull, and we never list your property publicly."
+            lede="One form, one real review, one real offer — within 24 hours."
           />
           <ul className="mt-8 space-y-3 text-[15px] text-zona-navy">
             {[
-              ["Any condition", "Turnkey to fire-damaged — we buy on the numbers, not the paint."],
-              ["Any situation", "Inherited, tenant-occupied, behind on payments, or mid-divorce. We structure around it."],
-              ["Your timeline", "Fast closings available, or take the time you need. You pick the date."]
+              ["Any condition", "Turnkey to fire-damaged."],
+              ["Any situation", "Inherited, tenant-occupied, behind on payments — we structure around it."],
+              ["Your timeline", "You pick the closing date."]
             ].map(([title, body]) => (
               <li key={title} className="flex items-start gap-3">
                 <span className="mt-0.5 grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-green-800/10 text-green-800">

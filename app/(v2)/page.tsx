@@ -50,23 +50,33 @@ export default function LandingPage() {
 
   return (
     <div>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-[1360px] px-5 pb-10 pt-8 lg:px-10 lg:pt-14">
-        <div className="grid items-stretch gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
-          <div className="flex flex-col justify-center py-2 lg:py-6">
-            <Eyebrow>Underwritten · On &amp; Off Market · Nationwide</Eyebrow>
-            <h1 className="mb-5 font-display text-[42px] font-semibold leading-[1.04] tracking-[-0.025em] text-zona-navy sm:text-[54px] lg:text-[64px] lg:leading-[1.02]">
+      {/* ── HERO — full-bleed, Zillow-style immersive ───────── */}
+      <section className="relative isolate flex min-h-[82svh] w-full items-center overflow-hidden bg-zona-navy lg:min-h-[min(88svh,860px)]">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/brand-v2/hero-az.jpg)" }}
+        />
+        {/* Readability + brand tint: dark left-to-right wash, warm crown, navy floor */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,23,42,0.86)_0%,rgba(14,23,42,0.55)_45%,rgba(14,23,42,0.18)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(254,169,30,0.08)_0%,rgba(14,23,42,0)_35%,rgba(14,23,42,0.45)_100%)]" />
+
+        <div className="relative z-10 mx-auto w-full max-w-[1360px] px-5 py-16 lg:px-10 lg:py-20">
+          <div className="max-w-[680px]">
+            <div className="mb-4 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-zona-amber">
+              <span className="h-[1.5px] w-[18px] bg-zona-amber" />
+              Underwritten · On &amp; Off Market · Nationwide
+            </div>
+            <h1 className="mb-5 font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.025em] text-white sm:text-[52px] lg:text-[64px] lg:leading-[1.02]">
               Real Estate,{" "}
               <em className="bg-[linear-gradient(120deg,#FE642D_0%,#FEA91E_70%)] bg-clip-text not-italic text-transparent">
                 Reimagined
               </em>{" "}
               For The Serious Investor.
             </h1>
-            <p className="mb-8 max-w-[560px] text-[17px] leading-relaxed text-slate-600 lg:text-lg">
-              Vetted deals with the numbers already run — most off-market, all underwritten.
-              Sellers get a real cash offer in 24 hours.
+            <p className="mb-8 max-w-[440px] text-[16.5px] leading-relaxed text-white/80 lg:text-lg">
+              Vetted deals, numbers already run. Sellers get a real offer in 24 hours.
             </p>
-            <div className="mb-9 flex flex-wrap items-center gap-3">
+            <div className="mb-10 flex flex-wrap items-center gap-3">
               <Link
                 href="/deals"
                 className="inline-flex items-center gap-2.5 rounded-[10px] bg-zona-purple-deep px-8 py-4 text-[16.5px] font-semibold text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover"
@@ -76,78 +86,47 @@ export default function LandingPage() {
               </Link>
               <Link
                 href="/sell"
-                className="inline-flex items-center gap-2 rounded-[10px] px-6 py-4 text-[15.5px] font-semibold text-zona-navy transition hover:text-zona-purple-deep"
+                className="inline-flex items-center gap-2 rounded-[10px] border border-white/35 px-6 py-4 text-[15.5px] font-semibold text-white backdrop-blur-[2px] transition hover:bg-white/10"
               >
                 Sell Your Property →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-x-9 gap-y-4 border-t border-zona-navy/[0.08] pt-5">
+            <div className="grid max-w-[560px] grid-cols-2 gap-x-8 gap-y-5 border-t border-white/15 pt-6 sm:flex sm:flex-wrap sm:gap-x-10">
               <div className="flex flex-col gap-1">
-                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-zona-navy">
+                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-white">
                   {stats.live}
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                <span className="text-[11px] uppercase tracking-[0.07em] text-white/50">
                   Live Deals
                 </span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-zona-navy">
+                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-white">
                   {moneyCompact(stats.totalArv)}
-                  <span className="ml-0.5 text-sm text-zona-purple-mid">ARV</span>
+                  <span className="ml-0.5 text-sm text-zona-amber">ARV</span>
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                <span className="text-[11px] uppercase tracking-[0.07em] text-white/50">
                   On The Board
                 </span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-zona-navy">
-                  24<span className="ml-0.5 text-sm text-zona-purple-mid">hr</span>
+                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-white">
+                  24<span className="ml-0.5 text-sm text-zona-amber">hr</span>
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                <span className="text-[11px] uppercase tracking-[0.07em] text-white/50">
                   Offer Turnaround
                 </span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-zona-navy">
-                  100<span className="ml-0.5 text-sm text-zona-purple-mid">%</span>
+                <span className="font-display text-[26px] font-semibold leading-none tracking-[-0.015em] text-white">
+                  100<span className="ml-0.5 text-sm text-zona-amber">%</span>
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.07em] text-slate-400">
+                <span className="text-[11px] uppercase tracking-[0.07em] text-white/50">
                   Underwritten
                 </span>
               </div>
             </div>
           </div>
-
-          {/* Hero photo — a portal to the board, not a listing */}
-          <Link
-            href="/deals"
-            className="group relative isolate block min-h-[440px] overflow-hidden rounded-[20px] bg-zona-navy shadow-hero-photo lg:min-h-[600px]"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
-              style={{ backgroundImage: "url(/brand-v2/hero-az.jpg)" }}
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(254,169,30,0.10)_0%,rgba(74,25,136,0.14)_55%,rgba(14,23,42,0.6)_100%)]" />
-
-            <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[11.5px] font-semibold uppercase tracking-[0.05em] text-zona-navy backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-zona-orange" />
-              The Board Is Live
-            </span>
-
-            <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-4 rounded-[14px] bg-white/95 p-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur transition group-hover:bg-white sm:p-5">
-              <div>
-                <p className="font-display text-[17px] font-semibold leading-tight text-zona-navy">
-                  {stats.live} {stats.live === 1 ? "Deal" : "Deals"} Available Now
-                </p>
-                <p className="mt-0.5 text-[12.5px] text-slate-500">
-                  Cap rates, spreads, comps, and terms — on every listing.
-                </p>
-              </div>
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-zona-purple-deep text-white shadow-btn transition group-hover:bg-[#3D1570]">
-                {ArrowIcon}
-              </span>
-            </div>
-          </Link>
         </div>
       </section>
 

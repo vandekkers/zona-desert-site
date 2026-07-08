@@ -73,13 +73,13 @@ export default function BuyersPage() {
           <PageIntro
             eyebrow="For Buyers"
             title="Deals With The Numbers Already Run."
-            lede="Every listing on the board carries full underwriting — cap rate, NOI waterfall, rehab budget, spread, sold comps, and deal terms. Join the list and get first look before deals go wide."
+            lede="Cap rate, NOI, rehab, spread, and comps — on every listing. Join for first look."
           />
           <ul className="mt-8 space-y-3 text-[15px] text-zona-navy">
             {[
-              ["First look", "List members hear about inventory before anyone else."],
-              ["No mystery math", "Assumptions labeled on every metric. Verify everything — we make it easy."],
-              ["Move when ready", "Call, text, or submit an offer straight from any listing."]
+              ["First look", "Hear about deals before anyone else."],
+              ["No mystery math", "Every assumption labeled, everything verifiable."],
+              ["Move when ready", "Call, text, or submit an offer from the listing."]
             ].map(([title, body]) => (
               <li key={title} className="flex items-start gap-3">
                 <span className="mt-0.5 grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-green-800/10 text-green-800">
