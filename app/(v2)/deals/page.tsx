@@ -2,7 +2,7 @@
 // Fed by content/deals/*.json at build time; managed from /deal-desk.
 
 import type { Metadata } from "next";
-import { ListingCardV2 } from "../_components/ListingCardV2";
+import { DealsExplorer } from "../_components/DealsExplorer";
 import { PageIntro } from "../_components/PageIntro";
 import { boardStats, getDeals, getDealsConfig, moneyCompact } from "../_lib/deals";
 
@@ -56,11 +56,7 @@ export default function DealsBoardPage() {
           to hear first.
         </p>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {deals.map((deal) => (
-            <ListingCardV2 key={deal.id} deal={deal} />
-          ))}
-        </div>
+        <DealsExplorer deals={deals} />
       )}
     </div>
   );
