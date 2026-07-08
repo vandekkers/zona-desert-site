@@ -2,9 +2,9 @@
 
 // BREAKAWAY: deals board — remove at platform launch
 //
-// Zero-backend offer flow: a small form that composes a structured offer
-// and hands it to the buyer's own mail/SMS app via mailto:/sms:. Nothing
-// is stored or sent server-side — the board stays backend-free.
+// Offer form: submits a structured offer straight to Zona through the
+// /api/submit-form relay (captured in LEAD_LOG / forwarded to the admin
+// side). No mail or SMS app is ever opened.
 
 import { useState } from "react";
 import type { Deal, DealsConfig } from "../_lib/deal-shared";
@@ -28,27 +28,44 @@ export function OfferComposer({ deal, config }: Props) {
   const amountNumber = Number(amount.replace(/[^0-9.]/g, ""));
   const ready = name.trim().length > 0 && amountNumber > 0;
 
-  function offerBody(): string {
-    const lines = [
-      `OFFER — ${shortAddress}`,
-      "",
-      `Offer price: ${amountNumber > 0 ? money(amountNumber) : ""}`,
-      `Funding: ${funding}`,
-      `Buyer: ${name.trim()}`,
-      phone.trim() ? `Phone: ${phone.trim()}` : "",
-      closeDate ? `Target close: ${closeDate}` : "",
-      notes.trim() ? `Notes: ${notes.trim()}` : "",
-      "",
-      `Sent from the Zona Desert deal board (${deal.id})`
-    ];
-    return lines.filter((line) => line !== "").join("\n");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Submits the offer straight to Zona via the server relay — no mail or
+  // SMS app involvement.
+  async function submitOffer() {
+    if (!ready || sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: "offer",
+          fields: {
+            dealId: deal.id,
+            property: shortAddress,
+            askingPrice: String(deal.price),
+            offerPrice: String(amountNumber),
+            funding,
+            buyer: name.trim(),
+            phone: phone.trim(),
+            targetClose: closeDate,
+            notes: notes.trim()
+          },
+          page_url: typeof window !== "undefined" ? window.location.href : undefined
+        })
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSent(true);
+    } catch {
+      setError("Something went wrong sending your offer — please try again.");
+    } finally {
+      setSending(false);
+    }
   }
-
-  const mailtoHref = `mailto:${config.email}?subject=${encodeURIComponent(
-    `Offer ${amountNumber > 0 ? money(amountNumber) : ""} — ${shortAddress}`
-  )}&body=${encodeURIComponent(offerBody())}`;
-
-  const smsHref = `sms:${config.phone}?&body=${encodeURIComponent(offerBody())}`;
 
   const inputClass =
     "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-zona-purple-mid";
@@ -177,34 +194,39 @@ export function OfferComposer({ deal, config }: Props) {
                 />
               </label>
 
-              <div className="grid grid-cols-2 gap-3 pt-1">
-                <a
-                  href={ready ? mailtoHref : undefined}
-                  aria-disabled={!ready}
-                  className={`flex items-center justify-center rounded-[10px] px-4 py-3 text-sm font-semibold transition ${
-                    ready
-                      ? "bg-zona-purple-deep text-white hover:bg-zona-purple-mid"
-                      : "cursor-not-allowed bg-slate-200 text-slate-400"
-                  }`}
-                >
-                  Send by email
-                </a>
-                <a
-                  href={ready ? smsHref : undefined}
-                  aria-disabled={!ready}
-                  className={`flex items-center justify-center rounded-[10px] border px-4 py-3 text-sm font-semibold transition ${
-                    ready
-                      ? "border-zona-purple-mid text-zona-purple-mid hover:bg-zona-purple-mid/10"
-                      : "cursor-not-allowed border-slate-200 text-slate-400"
-                  }`}
-                >
-                  Send by text
-                </a>
-              </div>
-              <p className="text-xs text-slate-500">
-                Opens your own mail or messages app with the offer pre-written — nothing is
-                submitted until you hit send there. Name and offer price are required.
-              </p>
+              {sent ? (
+                <div className="rounded-xl bg-green-50 p-4 text-center">
+                  <p className="text-[15px] font-semibold text-green-800">
+                    Offer submitted — we&apos;ll confirm receipt shortly.
+                  </p>
+                  <p className="mt-1 text-[13px] text-green-800/80">
+                    Deals move fast; we review offers as they land.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    disabled={!ready || sending}
+                    onClick={submitOffer}
+                    className={`mt-1 flex w-full items-center justify-center rounded-[10px] px-4 py-3 text-sm font-semibold transition ${
+                      ready && !sending
+                        ? "bg-zona-purple-deep text-white shadow-btn hover:bg-[#3D1570] hover:shadow-btn-hover"
+                        : "cursor-not-allowed bg-slate-200 text-slate-400"
+                    }`}
+                  >
+                    {sending ? "Submitting…" : "Submit Offer"}
+                  </button>
+                  {error && (
+                    <p className="rounded-lg bg-red-50 px-3.5 py-2.5 text-[13px] font-semibold text-red-800">
+                      {error}
+                    </p>
+                  )}
+                  <p className="text-xs text-slate-500">
+                    Goes directly to our team — name and offer price are required.
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>

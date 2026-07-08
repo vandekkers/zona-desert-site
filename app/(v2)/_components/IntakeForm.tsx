@@ -39,6 +39,7 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
   const [chips, setChips] = useState<Record<string, string[]>>({});
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
   const set = (name: string, value: string) =>
@@ -90,47 +91,32 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
       ...extractUtmParams()
     });
 
-    // Lead persistence — fire-and-forget so the lead exists even if the
-    // visitor never hits send in their mail app. Forwarded/stored by the
-    // self-contained /api/lead-log route.
+    // Submit straight into the admin database via the server-side relay.
+    // No mail app, no SMS — the visitor stays on the page.
     const allFields: Record<string, string> = {};
     for (const field of config.fields) {
       const value = fieldValue(field);
       if (value) allFields[field.name] = value;
     }
-    fetch("/api/lead-log", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        form_type: config.formType,
-        fields: allFields,
-        page_url: typeof window !== "undefined" ? window.location.href : undefined,
-        ...extractUtmParams()
-      })
-    }).catch(() => {});
-
-    const lines = [
-      config.title.toUpperCase(),
-      "",
-      ...config.fields
-        .map((field) => {
-          const value = fieldValue(field);
-          return value ? `${field.label}: ${value}` : null;
+    setSending(true);
+    try {
+      const res = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: config.formType,
+          fields: allFields,
+          page_url: typeof window !== "undefined" ? window.location.href : undefined,
+          ...extractUtmParams()
         })
-        .filter((line): line is string => line !== null),
-      "",
-      `SMS consent: yes (${CONSENT_VERSION})`,
-      "Sent from zonadesert.com"
-    ];
-    const subjectValue = fieldValue(
-      config.fields.find((f) => f.name === config.subjectField) ?? config.fields[0]
-    );
-    const href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      `${config.subjectPrefix} — ${subjectValue || "new submission"}`
-    )}&body=${encodeURIComponent(lines.join("\n"))}`;
-
-    window.location.href = href;
-    setSent(true);
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSent(true);
+    } catch {
+      setError("Something went wrong sending your info — please try again in a moment.");
+    } finally {
+      setSending(false);
+    }
   }
 
   if (sent) {
@@ -141,13 +127,13 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </span>
-        <h3 className="font-display text-xl font-semibold text-zona-navy">Almost There</h3>
+        <h3 className="font-display text-xl font-semibold text-zona-navy">Got It — You&apos;re In</h3>
         <p className="mx-auto mt-2 max-w-[360px] text-[14.5px] leading-relaxed text-slate-600">
-          Your email app just opened with everything filled in — hit send and we&apos;ll take it
-          from there. Nothing arrives until you send it.
+          Your info went straight to our team. We review every submission personally and
+          we&apos;ll reach out shortly.
         </p>
         <p className="mt-4 text-[13px] text-slate-500">
-          Prefer to talk?{" "}
+          Need us sooner?{" "}
           <a href={`tel:${contact.phone}`} className="font-semibold text-zona-purple-mid">
             Call
           </a>{" "}
@@ -155,15 +141,8 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
           <a href={`sms:${contact.phone}`} className="font-semibold text-zona-purple-mid">
             text
           </a>{" "}
-          us directly.
+          anytime.
         </p>
-        <button
-          type="button"
-          onClick={() => setSent(false)}
-          className="mt-5 text-[13px] font-medium text-slate-400 underline decoration-dotted underline-offset-2"
-        >
-          Back to the form
-        </button>
       </div>
     );
   }
@@ -309,12 +288,13 @@ export function IntakeForm({ config, contact }: { config: IntakeConfig; contact:
       <button
         type="button"
         onClick={submit}
-        className="mt-5 w-full rounded-[10px] bg-zona-purple-deep px-7 py-3.5 text-[15.5px] font-semibold text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover"
+        disabled={sending}
+        className="mt-5 w-full rounded-[10px] bg-zona-purple-deep px-7 py-3.5 text-[15.5px] font-semibold text-white shadow-btn transition hover:bg-[#3D1570] hover:shadow-btn-hover disabled:cursor-wait disabled:opacity-70"
       >
-        {config.title}
+        {sending ? "Sending…" : config.title}
       </button>
       <p className="mt-3 text-center text-xs text-slate-400">
-        Opens your own email app with everything pre-filled — you review before anything sends.
+        Goes directly to our team — no email app, nothing to send yourself.
       </p>
     </div>
   );

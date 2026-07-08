@@ -26,52 +26,72 @@ export function SellQuickStart({ config }: { config: DealsConfig }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const canNext = step === 0 ? address.trim().length > 5 : step === 1 ? true : false;
-  const ready = name.trim().length > 1 && (phone.trim().length >= 7 || true);
+  const ready = name.trim().length > 1;
 
-  const body = [
-    "CASH OFFER REQUEST",
-    "",
-    `Property: ${address.trim()}`,
-    beds.trim() ? `Beds: ${beds.trim()}` : "",
-    baths.trim() ? `Baths: ${baths.trim()}` : "",
-    sqft.trim() ? `Square feet: ${sqft.trim()}` : "",
-    condition ? `Condition: ${condition}` : "",
-    "",
-    `Name: ${name.trim()}`,
-    phone.trim() ? `Phone: ${phone.trim()}` : "",
-    "",
-    "Sent from zonadesert.com"
-  ]
-    .filter((line) => line !== null)
-    .join("\n");
+  // Submits straight to the admin database via the server relay — no mail
+  // or SMS app involvement.
+  async function submitLead() {
+    if (!ready || sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: "quick-start",
+          fields: {
+            address: address.trim(),
+            beds: beds.trim(),
+            baths: baths.trim(),
+            sqft: sqft.trim(),
+            condition,
+            name: name.trim(),
+            phone: phone.trim()
+          },
+          page_url: typeof window !== "undefined" ? window.location.href : undefined,
+          ...extractUtmParams()
+        })
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSent(true);
+    } catch {
+      setError("Something went wrong — please try again in a moment.");
+    } finally {
+      setSending(false);
+    }
+  }
 
-  const mailtoHref = `mailto:${config.email}?subject=${encodeURIComponent(
-    `Cash offer request — ${address.trim() || "my property"}`
-  )}&body=${encodeURIComponent(body)}`;
-  const smsHref = `sms:${config.phone}?&body=${encodeURIComponent(body)}`;
-
-  // Persist the lead via the self-contained /api/lead-log pipe as soon as
-  // the visitor completes the last step, independent of mail/SMS sending.
-  function logLead() {
-    fetch("/api/lead-log", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        form_type: "quick-start",
-        fields: {
-          address: address.trim(),
-          beds: beds.trim(),
-          baths: baths.trim(),
-          sqft: sqft.trim(),
-          condition,
-          name: name.trim(),
-          phone: phone.trim()
-        },
-        page_url: typeof window !== "undefined" ? window.location.href : undefined,
-        ...extractUtmParams()
-      })
-    }).catch(() => {});
+  if (sent) {
+    return (
+      <div className="rounded-[20px] border border-zona-navy/[0.06] bg-white p-7 text-center shadow-card-float">
+        <span className="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-full bg-green-800/10 text-green-800">
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </span>
+        <h3 className="font-display text-xl font-semibold text-zona-navy">Request Received</h3>
+        <p className="mx-auto mt-2 max-w-[340px] text-[14.5px] leading-relaxed text-slate-600">
+          A real person is reviewing your property now — expect your offer within 24 hours.
+        </p>
+        <p className="mt-4 text-[13px] text-slate-500">
+          Need us sooner?{" "}
+          <a href={`tel:${config.phone}`} className="font-semibold text-zona-purple-mid">
+            Call
+          </a>{" "}
+          or{" "}
+          <a href={`sms:${config.phone}`} className="font-semibold text-zona-purple-mid">
+            text
+          </a>{" "}
+          anytime.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -203,29 +223,24 @@ export function SellQuickStart({ config }: { config: DealsConfig }) {
             >
               Back
             </button>
-            <a
-              href={ready ? mailtoHref : undefined}
-              aria-disabled={!ready}
-              onClick={ready ? logLead : undefined}
+            <button
+              type="button"
+              disabled={!ready || sending}
+              onClick={submitLead}
               className={`flex flex-1 items-center justify-center rounded-[10px] px-7 py-3.5 text-[15.5px] font-semibold transition ${
-                ready
+                ready && !sending
                   ? "bg-zona-purple-deep text-white shadow-btn hover:bg-[#3D1570] hover:shadow-btn-hover"
                   : "cursor-not-allowed bg-slate-200 text-slate-400"
               }`}
             >
-              Send My Request
-            </a>
+              {sending ? "Sending…" : "Get My Offer"}
+            </button>
           </div>
-          <a
-            href={ready ? smsHref : undefined}
-            aria-disabled={!ready}
-            onClick={ready ? logLead : undefined}
-            className={`block text-center text-[13px] font-medium ${
-              ready ? "text-zona-purple-mid hover:text-zona-purple-deep" : "text-slate-400"
-            }`}
-          >
-            Or send it as a text instead
-          </a>
+          {error && (
+            <p className="rounded-lg bg-red-50 px-3.5 py-2.5 text-[13px] font-semibold text-red-800">
+              {error}
+            </p>
+          )}
         </div>
       )}
 
