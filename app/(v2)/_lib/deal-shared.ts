@@ -328,8 +328,7 @@ export function validateDeal(candidate: unknown): string[] {
   if (typeof d.zip === "string" && !/^\d{5}$/.test(d.zip)) errors.push('"zip" must be 5 digits.');
   if (!["available", "pending", "sold"].includes(d.status as string))
     errors.push('"status" must be available, pending, or sold.');
-  if (!Array.isArray(d.photos) || d.photos.length === 0)
-    errors.push('"photos" needs at least one path or URL.');
+  if (!Array.isArray(d.photos)) errors.push('"photos" must be a list (may be empty while photos are pending).');
   if (!Array.isArray(d.highlights)) errors.push('"highlights" must be a list of strings.');
   const rental = d.rental as Record<string, unknown> | undefined;
   if (rental && (typeof rental.monthlyRent !== "number" || rental.monthlyRent <= 0))

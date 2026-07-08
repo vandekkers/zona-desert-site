@@ -336,7 +336,10 @@ export default function DealDetailPage({ params }: { params: { id: string } }) {
     { label: "Bedrooms", value: String(deal.beds) },
     { label: "Bathrooms", value: String(deal.baths) },
     { label: "Interior", value: `${deal.sqft.toLocaleString("en-US")} sqft` },
-    { label: "Lot size", value: `${deal.lotSqft.toLocaleString("en-US")} sqft` },
+    // Lot size may legitimately be unknown (0) — omit rather than show "0 sqft"
+    ...(deal.lotSqft > 0
+      ? [{ label: "Lot size", value: `${deal.lotSqft.toLocaleString("en-US")} sqft` }]
+      : []),
     { label: "Year built", value: String(deal.yearBuilt) },
     ...(deal.occupancy ? [{ label: "Occupancy", value: deal.occupancy }] : []),
     { label: "ZIP", value: deal.zip }

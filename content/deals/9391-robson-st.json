@@ -1,0 +1,37 @@
+{
+  "id": "9391-robson-st",
+  "status": "available",
+  "strategy": ["rental", "flip"],
+  "address": "9391 Robson St",
+  "city": "Detroit",
+  "state": "MI",
+  "zip": "48228",
+  "price": 49900,
+  "arv": 95000,
+  "estRehab": 30000,
+  "beds": 3,
+  "baths": 1,
+  "sqft": 931,
+  "lotSqft": 0,
+  "yearBuilt": 1948,
+  "propertyType": "Single Family — Ranch",
+  "occupancy": "Vacant at closing",
+  "description": "Three-bed ranch in 48228 with the classic Section 8 profile: Zillow rents it at $1,258 and voucher upside runs to roughly $1,500, subject to inspection and rent reasonableness. Rental-grade scope is $20–30k — trash-out, kitchen, bath refresh, flooring, paint, with an aging water heater and HVAC to plan around. Renovated values in the area support $90k–$100k, and taxes are light at about $942 a year. Delinquent tax liens are being cleared and verified through title — confirm in diligence.",
+  "highlights": [
+    "Section 8 upside to ~$1,500/mo (est., subject to inspection)",
+    "Taxes ~$942/yr — light carry",
+    "Rental-grade scope $20–30k",
+    "Vacant at closing"
+  ],
+  "photos": [],
+  "rental": {
+    "monthlyRent": 1258,
+    "taxesAnnual": 942,
+    "insuranceAnnual": 1080,
+    "vacancyPct": 5,
+    "section8": true
+  },
+  "terms": {
+    "closeMethod": "Assignment"
+  }
+}
