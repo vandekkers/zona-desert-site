@@ -185,13 +185,18 @@ export function DealGallery({ photos, alt }: Props) {
               Close ✕
             </button>
           </div>
-          <div className="relative flex flex-1 items-center justify-center px-4 pb-6">
+          <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 pb-6">
+            {/* Viewport-based size caps: percentage heights silently fail
+                inside nested flex on some browsers (iOS Safari), which let
+                the photo render at natural size — top visible, bottom cut
+                off. svh/vw constraints hold everywhere, for any aspect
+                ratio, and m-auto keeps the photo dead-centered. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photos[lightbox]}
               alt={`${alt} — photo ${lightbox + 1}`}
               onClick={(event) => event.stopPropagation()}
-              className="max-h-full max-w-full rounded-2xl object-contain"
+              className="m-auto block h-auto w-auto max-h-[80svh] max-w-[94vw] rounded-xl object-contain sm:max-h-[84vh] sm:max-w-[88vw]"
             />
             {count > 1 && (
               <>
