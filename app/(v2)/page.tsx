@@ -130,23 +130,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── AUDIENCE STRIP ───────────────────────────────────── */}
+      {/* AUDIENCE STRIP */}
       <div className="border-y border-zona-navy/[0.06] bg-white">
-        <div className="mx-auto flex w-full max-w-[1200px] items-center gap-6 overflow-x-auto px-5 py-5 lg:gap-8 lg:px-8">
-          <span className="whitespace-nowrap border-r border-zona-navy/[0.08] pr-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-400 lg:pr-7">
-            Built For
-          </span>
-          <div className="flex flex-1 items-center gap-8 font-display text-base font-semibold tracking-[0.01em] text-zona-navy/40 lg:gap-12">
-            <span className="whitespace-nowrap">LANDLORDS</span>
-            <span className="text-xs font-normal text-zona-navy/15">/</span>
-            <span className="whitespace-nowrap">FLIPPERS</span>
-            <span className="text-xs font-normal text-zona-navy/15">/</span>
-            <span className="whitespace-nowrap">BRRRR INVESTORS</span>
-            <span className="text-xs font-normal text-zona-navy/15">/</span>
-            <span className="whitespace-nowrap">AGENTS</span>
-            <span className="text-xs font-normal text-zona-navy/15">/</span>
-            <span className="whitespace-nowrap">WHOLESALERS</span>
-          </div>
+        <div className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-center gap-y-3 px-5 py-5 lg:px-8">
+          {["LANDLORDS", "FLIPPERS", "BRRRR INVESTORS", "SELLERS", "AGENTS", "WHOLESALERS"].map(
+            (audience, index) => (
+              <span key={audience} className="flex items-center">
+                {index > 0 && (
+                  <span className="mx-4 h-4 w-px bg-zona-navy/15 lg:mx-6" aria-hidden />
+                )}
+                <span className="whitespace-nowrap font-display text-base font-semibold tracking-[0.01em] text-zona-navy/40">
+                  {audience}
+                </span>
+              </span>
+            )
+          )}
         </div>
       </div>
 
