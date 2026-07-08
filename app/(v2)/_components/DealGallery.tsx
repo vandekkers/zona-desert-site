@@ -4,15 +4,41 @@
 //
 // Client island: Zillow-style photo mosaic (desktop) / main image + thumb
 // strip (mobile), with a full-screen lightbox — tap any photo to open,
-// arrows/Escape/backdrop to navigate and close.
+// arrows/Escape/backdrop to navigate and close, and swipe left/right on
+// touch (lightbox + mobile hero).
 // Plain <img> by design — photo entries are founder-edited JSON (local
 // paths or arbitrary https URLs) and must never break the build.
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   photos: string[];
   alt: string;
+}
+
+// Horizontal-swipe detector: fires onLeft/onRight when a touch drags past a
+// threshold and is more horizontal than vertical (so vertical scrolling on
+// the letterboxed lightbox isn't hijacked). Returns handlers to spread onto
+// the swipeable element.
+function useSwipe(onLeft: () => void, onRight: () => void) {
+  const start = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onTouchStart: (e: React.TouchEvent) => {
+      const t = e.touches[0];
+      start.current = { x: t.clientX, y: t.clientY };
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      if (!start.current) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - start.current.x;
+      const dy = t.clientY - start.current.y;
+      start.current = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        if (dx < 0) onLeft();
+        else onRight();
+      }
+    }
+  };
 }
 
 export function DealGallery({ photos, alt }: Props) {
@@ -32,6 +58,17 @@ export function DealGallery({ photos, alt }: Props) {
   };
 
   const fitClass = (index: number) => (portraits[index] ? "object-contain" : "object-cover");
+
+  const step = (dir: 1 | -1) =>
+    setLightbox((i) => (i === null ? i : (i + dir + count) % count));
+  const lightboxSwipe = useSwipe(
+    () => step(1),
+    () => step(-1)
+  );
+  const mobileSwipe = useSwipe(
+    () => setMobileIndex((i) => (i + 1) % count),
+    () => setMobileIndex((i) => (i - 1 + count) % count)
+  );
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -121,13 +158,14 @@ export function DealGallery({ photos, alt }: Props) {
         })}
       </div>
 
-      {/* Mobile: main image (tap to open lightbox) + thumb strip */}
+      {/* Mobile: main image (tap to open lightbox, swipe to change) + thumbs */}
       <div className="space-y-3 md:hidden">
         <button
           type="button"
           onClick={() => setLightbox(mobileIndex)}
+          {...mobileSwipe}
           aria-label={`Open photo ${mobileIndex + 1} of ${count}`}
-          className="relative block w-full overflow-hidden rounded-3xl bg-zona-navy"
+          className="relative block w-full touch-pan-y overflow-hidden rounded-3xl bg-zona-navy"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -185,7 +223,10 @@ export function DealGallery({ photos, alt }: Props) {
               Close ✕
             </button>
           </div>
-          <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 pb-6">
+          <div
+            className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center px-4 pb-6"
+            {...lightboxSwipe}
+          >
             {/* Viewport-based size caps: percentage heights silently fail
                 inside nested flex on some browsers (iOS Safari), which let
                 the photo render at natural size — top visible, bottom cut
