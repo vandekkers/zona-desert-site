@@ -1,0 +1,233 @@
+/* ============================================================
+   Zona Desert — Colors & Type — v1.1 (2026-07-09)
+   Canonical source: zona-admin DESIGN.md v1.0 + zonadesert.com
+   site v2 (reference implementation for marketing surfaces)
+   ============================================================ */
+
+/* ── BRAND FONTS ─────────────────────────────────────────────
+   Sora is self-hosted (brand files). Inter is served from Google Fonts.
+   Use Sora ONLY for brand hierarchy (display, headings, KPIs).
+   Use Inter for every piece of functional UI.
+   ──────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Sora';
+  src: url('fonts/Sora-VariableFont_wght.ttf') format('truetype-variations'),
+       url('fonts/Sora-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('fonts/Sora-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('fonts/Sora-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* ── BRAND COLORS (locked) ───────────────────────────────── */
+  --zd-purple-dark: #4A1988;   /* Primary anchor. Buttons, nav active, KPIs */
+  --zd-purple-mid:  #7025B6;   /* Accents, links, sub-heads */
+  --zd-orange:      #FE642D;   /* Urgency, destructive, highlight */
+  --zd-amber:       #FEA91E;   /* Warmth, warnings, sun accent */
+  --zd-navy:        #0E172A;   /* Primary text, dark surfaces */
+  --zd-off-white:   #F1F2EF;   /* ADMIN page backgrounds */
+  --zd-sand:        #FBF7F1;   /* MARKETING page backgrounds + input fills (v1.1) */
+  --zd-sand-deep:   #F4ECDD;   /* Marketing alternate sections (v1.1) */
+  --zd-white:       #FFFFFF;   /* Cards on off-white/sand */
+
+  /* Brand gradients */
+  --zd-gradient-purple: linear-gradient(180deg, #4A1988 0%, #7025B6 100%);
+  --zd-gradient-purple-diag: linear-gradient(135deg, #4A1988 0%, #7025B6 100%);
+  --zd-gradient-sun: linear-gradient(180deg, #FEA91E 0%, #FE642D 100%);
+  --zd-gradient-sun-diag: linear-gradient(135deg, #FEA91E 0%, #FE642D 100%);
+  /* v1.1 — one gradient word per display headline, background-clip: text */
+  --zd-gradient-sun-text: linear-gradient(120deg, #FE642D 0%, #FEA91E 70%);
+  /* v1.1 — full-bleed hero overlays (stack both over the photo, in order) */
+  --zd-hero-wash: linear-gradient(90deg, rgba(14,23,42,0.86) 0%, rgba(14,23,42,0.55) 45%, rgba(14,23,42,0.18) 100%);
+  --zd-hero-crown: linear-gradient(180deg, rgba(254,169,30,0.08) 0%, rgba(14,23,42,0) 35%, rgba(14,23,42,0.45) 100%);
+
+  /* ── FUNCTIONAL ─────────────────────────────────────────── */
+  --zd-text:         #0E172A;  /* body / fg1 */
+  --zd-text-muted:   #475569;  /* fg2 - secondary */
+  --zd-text-subtle:  #94A3B8;  /* fg3 - tertiary */
+  --zd-border:       #E2E8F0;
+  --zd-border-focus: #7025B6;
+  --zd-surface:      #FFFFFF;
+  --zd-surface-alt:  #F5F5F7;
+  --zd-surface-page: #F1F2EF;
+
+  /* ── SEMANTIC / STATUS ───────────────────────────────────── */
+  --zd-success-bg: #F0FDF4; --zd-success-fg: #166534; --zd-success-badge-bg: #DCFCE7;
+  --zd-warning-bg: #FFFBEB; --zd-warning-fg: #92400E; --zd-warning-badge-bg: #FEF3C7;
+  --zd-error-bg:   #FEF2F2; --zd-error-fg:   #991B1B; --zd-error-badge-bg:   #FEE2E2;
+  --zd-info-bg:    #EFF6FF; --zd-info-fg:    #1E40AF; --zd-info-badge-bg:    #DBEAFE;
+  --zd-neutral-bg: #F1F5F9; --zd-neutral-fg: #64748B;
+  --zd-review-bg:  #EDE9FE; --zd-review-fg:  #5B21B6;
+
+  /* ── SPACING (8px base) ──────────────────────────────────── */
+  --zd-s-1: 4px;
+  --zd-s-2: 8px;
+  --zd-s-3: 12px;
+  --zd-s-4: 16px;
+  --zd-s-6: 24px;
+  --zd-s-8: 32px;
+  --zd-s-12: 48px;
+  --zd-s-16: 64px;
+
+  /* ── RADII ────────────────────────────────────────────────── */
+  --zd-radius-sm: 4px;
+  --zd-radius: 8px;
+  --zd-radius-md: 10px;
+  --zd-radius-lg: 12px;
+  --zd-radius-xl: 16px;
+  --zd-radius-pill: 9999px;
+
+  /* ── SHADOWS / ELEVATION ────────────────────────────────── */
+  --zd-shadow-card: 0 2px 8px rgba(74, 25, 136, 0.08);
+  --zd-shadow-kpi:  0 4px 16px rgba(15, 23, 42, 0.06);
+  --zd-shadow-btn:  0 4px 14px rgba(74, 25, 136, 0.25);
+  --zd-shadow-btn-hover: 0 6px 18px rgba(74, 25, 136, 0.35);
+  --zd-shadow-surface: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --zd-shadow-modal: 0 20px 60px rgba(14, 23, 42, 0.2);
+  --zd-shadow-hover-lift: 0 12px 30px rgba(148, 163, 184, 0.18);
+  /* v1.1 — marketing elevation (matches site tailwind.config.ts) */
+  --zd-shadow-lift: 0 16px 36px rgba(74, 25, 136, 0.12);
+  --zd-shadow-card-float: 0 30px 60px -25px rgba(74, 25, 136, 0.25);
+  --zd-shadow-hero-photo: 0 30px 60px -20px rgba(74, 25, 136, 0.35), 0 10px 30px -10px rgba(254, 100, 45, 0.25);
+
+  /* ── TYPE FAMILIES (locked) ───────────────────────────────── */
+  --zd-font-display: 'Sora', system-ui, -apple-system, sans-serif;   /* SemiBold 600 only — brand hierarchy */
+  --zd-font-body:    'Inter', system-ui, -apple-system, sans-serif;  /* Regular 400 / Medium 500 — all UI */
+
+  /* ── TYPE SCALE (strict) ──────────────────────────────────── */
+  --zd-fs-display:   48px;   /* Sora — hero/display headline (default) */
+  --zd-fs-display-hero: 64px; /* v1.1 — marketing hero at desktop; 40px mobile / 52px sm. Tracking -0.025em, lh 1.02–1.05 */
+  --zd-fs-h1:        32px;   /* Sora — page title */
+  --zd-fs-h2:        24px;   /* Sora — section header */
+  --zd-fs-h3:        20px;   /* Sora — sub-section */
+  --zd-fs-metric:    40px;   /* Sora — KPI value */
+  --zd-fs-ui:        16px;   /* Inter — nav/button */
+  --zd-fs-body:      15px;   /* Inter — body copy */
+  --zd-fs-sm:        13px;   /* Inter — table cells, small */
+  --zd-fs-caption:   12px;   /* Inter — timestamps, helper */
+
+  --zd-lh-tight: 1.2;
+  --zd-lh-body:  1.55;
+}
+
+/* ── SEMANTIC ELEMENTS ──────────────────────────────────────── */
+
+body, .zd-body {
+  font-family: var(--zd-font-body);
+  font-weight: 400;
+  font-size: var(--zd-fs-body);
+  line-height: var(--zd-lh-body);
+  color: var(--zd-text);
+  background: var(--zd-surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.zd-display {
+  font-family: var(--zd-font-display);
+  font-weight: 600;
+  font-size: var(--zd-fs-display);
+  line-height: var(--zd-lh-tight);
+  letter-spacing: -0.02em;
+  color: var(--zd-text);
+}
+
+h1, .zd-h1 {
+  font-family: var(--zd-font-display);
+  font-weight: 600;
+  font-size: var(--zd-fs-h1);
+  line-height: var(--zd-lh-tight);
+  letter-spacing: -0.01em;
+  color: var(--zd-text);
+  margin: 0;
+}
+
+h2, .zd-h2 {
+  font-family: var(--zd-font-display);
+  font-weight: 600;
+  font-size: var(--zd-fs-h2);
+  line-height: var(--zd-lh-tight);
+  color: var(--zd-text);
+  margin: 0;
+}
+
+h3, .zd-h3 {
+  font-family: var(--zd-font-display);
+  font-weight: 600;
+  font-size: var(--zd-fs-h3);
+  line-height: var(--zd-lh-tight);
+  color: var(--zd-text);
+  margin: 0;
+}
+
+.zd-metric {
+  font-family: var(--zd-font-display);
+  font-weight: 600;
+  font-size: var(--zd-fs-metric);
+  line-height: 1;
+  color: var(--zd-text);
+}
+
+p, .zd-p {
+  font-family: var(--zd-font-body);
+  font-size: var(--zd-fs-body);
+  line-height: var(--zd-lh-body);
+  color: var(--zd-text);
+  margin: 0;
+}
+
+.zd-label-ui {
+  font-family: var(--zd-font-body);
+  font-weight: 500;
+  font-size: var(--zd-fs-ui);
+  color: var(--zd-text);
+}
+
+.zd-small {
+  font-family: var(--zd-font-body);
+  font-size: var(--zd-fs-sm);
+  color: var(--zd-text-muted);
+}
+
+.zd-caption {
+  font-family: var(--zd-font-body);
+  font-size: var(--zd-fs-caption);
+  color: var(--zd-text-subtle);
+  line-height: 1.4;
+}
+
+.zd-eyebrow {
+  font-family: var(--zd-font-body);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--zd-purple-mid);
+}
+
+/* ── LINKS ──────────────────────────────────────────────────── */
+.zd-link {
+  color: var(--zd-purple-mid);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.zd-link:hover { color: var(--zd-purple-dark); }
